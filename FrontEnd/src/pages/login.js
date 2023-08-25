@@ -1,11 +1,11 @@
 import Header from "@/components/header";
-import Recipes from "@/screens/recipes";
+import Login from "@/screens/login";
 
 export default function Home() {
   return (
-    <div className='bg-background h-screen'>
+    <div className='h-screen bg-background'>
       <Header />
-      <Recipes />
+      <Login />
     </div>
   );
 }
