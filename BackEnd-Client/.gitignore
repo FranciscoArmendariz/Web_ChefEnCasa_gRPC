@@ -1,6 +1,9 @@
-
-
 .vs/
 GrpcClient/obj/
 GrpcClientAPI/obj/
 GrpcService/obj/
+
+GrpcClientAPI/bin/Debug/net6.0/GrpcClientAPI.dll
+GrpcClientAPI/bin/Debug/net6.0/GrpcClientAPI.pdb
+GrpcService/bin/Debug/net6.0/GrpcService.dll
+GrpcService/bin/Debug/net6.0/GrpcService.pdb
