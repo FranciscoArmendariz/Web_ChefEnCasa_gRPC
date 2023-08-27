@@ -54,6 +54,14 @@ namespace GrpcService {
     static readonly grpc::Marshaller<global::GrpcService.HelloReply> __Marshaller_greet_HelloReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::GrpcService.HelloReply.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::GrpcService.HelloRequest, global::GrpcService.HelloReply> __Method_SayHelloAgain = new grpc::Method<global::GrpcService.HelloRequest, global::GrpcService.HelloReply>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "SayHelloAgain",
+        __Marshaller_greet_HelloRequest,
+        __Marshaller_greet_HelloReply);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::GrpcService.HelloRequest, global::GrpcService.HelloReply> __Method_SayHello = new grpc::Method<global::GrpcService.HelloRequest, global::GrpcService.HelloReply>(
         grpc::MethodType.Unary,
         __ServiceName,
@@ -78,6 +86,12 @@ namespace GrpcService {
       /// <param name="context">The context of the server-side call handler being invoked.</param>
       /// <returns>The response to send back to the client (wrapped by a task).</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::GrpcService.HelloReply> SayHelloAgain(global::GrpcService.HelloRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::GrpcService.HelloReply> SayHello(global::GrpcService.HelloRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
@@ -91,6 +105,7 @@ namespace GrpcService {
     public static grpc::ServerServiceDefinition BindService(GreeterBase serviceImpl)
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
+          .AddMethod(__Method_SayHelloAgain, serviceImpl.SayHelloAgain)
           .AddMethod(__Method_SayHello, serviceImpl.SayHello).Build();
     }
 
@@ -101,6 +116,7 @@ namespace GrpcService {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     public static void BindService(grpc::ServiceBinderBase serviceBinder, GreeterBase serviceImpl)
     {
+      serviceBinder.AddMethod(__Method_SayHelloAgain, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::GrpcService.HelloRequest, global::GrpcService.HelloReply>(serviceImpl.SayHelloAgain));
       serviceBinder.AddMethod(__Method_SayHello, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::GrpcService.HelloRequest, global::GrpcService.HelloReply>(serviceImpl.SayHello));
     }
 

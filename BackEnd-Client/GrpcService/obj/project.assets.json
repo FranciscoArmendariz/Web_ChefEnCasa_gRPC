@@ -712,7 +712,8 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Grpc.AspNetCore >= 2.40.0"
+      "Grpc.AspNetCore >= 2.40.0",
+      "Grpc.Tools >= 2.40.0"
     ]
   },
   "packageFolders": {
@@ -755,6 +756,12 @@
         "targetAlias": "net6.0",
         "dependencies": {
           "Grpc.AspNetCore": {
+            "target": "Package",
+            "version": "[2.40.0, )"
+          },
+          "Grpc.Tools": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
             "target": "Package",
             "version": "[2.40.0, )"
           }

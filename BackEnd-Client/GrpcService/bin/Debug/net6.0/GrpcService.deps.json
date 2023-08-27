@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v6.0": {
       "GrpcService/1.0.0": {
         "dependencies": {
-          "Grpc.AspNetCore": "2.40.0"
+          "Grpc.AspNetCore": "2.40.0",
+          "Grpc.Tools": "2.40.0"
         },
         "runtime": {
           "GrpcService.dll": {}
