@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcService";
+
+package user;
+
+service User {
+  rpc TraerUsuarios (TraerUsuariosRequest) returns (TraerUsuariosResponse);
+  rpc IniciarSesion (IniciarSesionRequest) returns (IniciarSesionResponse);
+  rpc AgregarUsuario (AgregarUsuarioRequest) returns (AgregarUsuarioResponse);
+  rpc SeguirUsuario (SeguirUsuarioRequest) returns (SeguirUsuarioResponse);
+  rpc DejarDeSeguirUsuario (DejarDeSeguirUsuarioRequest) returns (DejarDeSeguirUsuarioResponse);
+  rpc TraerUsuariosSeguidos (TraerUsuariosSeguidosRequest) returns (TraerUsuariosSeguidosResponse);
+}
+
+message TraerUsuariosSeguidosResponse {
+  string message = 1;
+}
+
+message TraerUsuariosSeguidosRequest {
+  int32 idUser = 1;
+}
+
+message DejarDeSeguirUsuarioResponse {
+  bool message = 1;
+}
+
+message DejarDeSeguirUsuarioRequest {
+  int32 idUser = 1;
+  int32 idSeguido = 2;
+}
+
+message SeguirUsuarioResponse {
+  bool message = 1;
+}
+
+message SeguirUsuarioRequest {
+  int32 idUser = 1;
+  int32 idUserASeguir = 2;
+}
+
+message AgregarUsuarioResponse {
+  bool message = 1;
+}
+
+message AgregarUsuarioRequest {
+  string name = 1;
+}
+
+message TraerUsuariosResponse {
+  string message = 1;
+}
+
+message TraerUsuariosRequest {
+  string name = 1;
+}
+
+message IniciarSesionResponse {
+  bool message = 1;
+}
+
+message IniciarSesionRequest {
+  string usuario = 1;
+  string password = 2;
+}

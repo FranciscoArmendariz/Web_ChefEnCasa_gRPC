@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcClientAPI";
+
+package receta;
+
+service Receta {
+  rpc GetRecetas (GetRecetasRequest) returns (GetRecetasResponse);
+  rpc AgregarReceta (AgregarRecetaRequest) returns (AgregarRecetaResponse);
+  rpc EditarReceta (EditarRecetaRequest) returns (EditarRecetaResponse);
+  rpc TraerRecetasPorUsuario (TraerRecetasPorUsuarioRequest) returns (TraerRecetasPorUsuarioResponse);
+  rpc AgregarFavorito (FavoritoRequest) returns (FavoritoResponse);
+  rpc RemoverFavorito (FavoritoRequest) returns (FavoritoResponse);
+  rpc TraerFavoritos (TraerFavoritosRequest) returns (TraerFavoritosResponse);
+  rpc TraerIngredientes (TraerIngredientesRequest) returns (TraerIngredientesResponse);
+
+}
+message TraerIngredientesRequest {
+  int32 idUsuario = 1;
+}
+
+message TraerIngredientesResponse {
+  string message = 1;
+}
+
+message TraerFavoritosResponse {
+  string message = 1;
+}
+
+message TraerFavoritosRequest {
+  int32 idUsuario = 1;
+  int32 idPagina = 2;
+}
+
+message FavoritoResponse {
+  bool message = 1;
+}
+
+message FavoritoRequest {
+  int32 idUsuario = 1;
+  int32 idReceta = 2;
+}
+
+message GetRecetasResponse {
+  string message = 1;
+}
+
+message GetRecetasRequest {
+  string name = 1;
+}
+
+message TraerRecetasPorUsuarioResponse {
+  string message = 1;
+}
+
+message TraerRecetasPorUsuarioRequest {
+  int32 id = 1;
+}
+
+message AgregarRecetaRequest {
+  string NombreReceta = 1;
+}
+
+message AgregarRecetaResponse {
+  bool message = 1;
+}
+
+message EditarRecetaRequest {
+  string NombreReceta = 1;
+}
+
+message EditarRecetaResponse {
+  bool message = 1;
+}
