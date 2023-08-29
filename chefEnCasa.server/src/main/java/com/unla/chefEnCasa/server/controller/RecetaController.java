@@ -18,7 +18,7 @@ import com.unla.chefEnCasa.server.dto.RecetaRequest;
 import com.unla.chefEnCasa.server.service.RecetaService;
 
 @RestController
-@RequestMapping("/api/recetas")
+@RequestMapping("/receta")
 public class RecetaController {
 
 	@Autowired

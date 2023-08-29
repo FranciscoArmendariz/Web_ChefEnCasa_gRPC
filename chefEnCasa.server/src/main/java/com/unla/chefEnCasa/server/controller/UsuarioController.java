@@ -18,7 +18,7 @@ import com.unla.chefEnCasa.server.service.InteraccionService;
 import com.unla.chefEnCasa.server.service.UsuarioService;
 
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/usuario")
 public class UsuarioController {
 
 	@Autowired
@@ -42,7 +42,7 @@ public class UsuarioController {
 		return new ResponseEntity<>(usuarioService.login(request), HttpStatus.OK);
 	}
 
-	@GetMapping("/recetas/usuario/{id}")
+	@GetMapping("/recetas/{id}")
 	public ResponseEntity<?> traerRecetasPorId(@PathVariable("id") long id) {
 		return new ResponseEntity<>(usuarioService.traerRecetasPorId(id), HttpStatus.OK);
 	}
