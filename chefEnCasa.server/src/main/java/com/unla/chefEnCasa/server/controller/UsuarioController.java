@@ -51,9 +51,15 @@ public class UsuarioController {
 	public ResponseEntity<?> seguirUsuario(@PathVariable("idSeguidor") long idSeguidor, @PathVariable("idSeguir") long idSeguir){
 		return new ResponseEntity<>(interaccionService.seguirUsuario(idSeguidor, idSeguir), HttpStatus.OK);
 	}
+	
 	@PostMapping("/{idSeguidor}/dejar-seguir/{idSeguido}")
 	public ResponseEntity<?> dejarDeSeguirUsuario(@PathVariable("idSeguidor") long idSeguidor, @PathVariable("idSeguido") long idSeguido){
 		return new ResponseEntity<>(interaccionService.dejarDeSeguirUsuario(idSeguidor, idSeguido), HttpStatus.OK);
+	}
+	
+	@GetMapping("/seguidos/{id}")
+	public ResponseEntity<?> traerUsuariosSeguidos(@PathVariable("id") long id){
+		return new ResponseEntity<>(usuarioService.traerUsuariosSeguidos(id), HttpStatus.OK);
 	}
 
 }

@@ -57,5 +57,16 @@ public class UsuarioService {
 		}
 		return response;
 	}
+	
+	public List<UsuarioResponse> traerUsuariosSeguidos(long id) {
+		Usuario usuario = usuarioRepository.findById(id)
+				.orElseThrow(() -> new ServerException("Usuario no encontrado", HttpStatus.NOT_FOUND));
+		
+		List<UsuarioResponse> response = new ArrayList<>();
+		for(Usuario u : usuario.getUsuariosSeguidos()) {
+			response.add(modelMapper.map(u, UsuarioResponse.class));
+		}
+		return response;
+	}
 
 }

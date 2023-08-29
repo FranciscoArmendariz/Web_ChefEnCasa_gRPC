@@ -44,5 +44,5 @@ public class InteraccionService {
 		usuarioRepository.save(seguidor);
 		return "dejaste de seguir al usuario correctamente";
 	}
-
+	
 }
