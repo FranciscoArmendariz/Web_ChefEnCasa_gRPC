@@ -23,8 +23,8 @@ public class Foto {
 	
 	private String url;
 	
-    @ManyToOne
-    @JoinColumn(name = "receta_id")
-    private Receta receta;
+   // @ManyToOne
+    //@JoinColumn(name = "receta_id")
+    //private Receta receta;
 
 }

@@ -33,6 +33,7 @@ public class Usuario {
 	private String usuario;
 	private String email;
 	private String clave;
+	private String rol;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "recetas_favoritas", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "receta_id"))
