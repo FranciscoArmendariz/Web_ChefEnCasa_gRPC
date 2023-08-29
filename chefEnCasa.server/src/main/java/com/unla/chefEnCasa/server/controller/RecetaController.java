@@ -20,31 +20,32 @@ import com.unla.chefEnCasa.server.service.RecetaService;
 @RestController
 @RequestMapping("/api/recetas")
 public class RecetaController {
-	
+
 	@Autowired
 	private RecetaService recetaService;
-	
-	
-	//Se manda por path el id del usuario ya que al no tener relacion bidireccional, necesitamos saber en que usuario guardamos la receta
+
+	// Se manda por path el id del usuario ya que al no tener relacion
+	// bidireccional, necesitamos saber en que usuario guardamos la receta
 	@PostMapping("/crear/{id}")
-	public ResponseEntity<?> crearReceta(@Valid @RequestBody RecetaRequest request, @PathVariable("id") long id){
+	public ResponseEntity<?> crearReceta(@Valid @RequestBody RecetaRequest request, @PathVariable("id") long id) {
 		return new ResponseEntity<>(recetaService.crearReceta(request, id), HttpStatus.CREATED);
 	}
-	
-	//Se manda por path el id de la receta a editar
+
+	// Se manda por path el id de la receta a editar
 	@PutMapping("/editar/{id}")
-	public ResponseEntity<?> editarReceta(@Valid @RequestBody RecetaRequest request, @PathVariable("id") long id){
+	public ResponseEntity<?> editarReceta(@Valid @RequestBody RecetaRequest request, @PathVariable("id") long id) {
 		return new ResponseEntity<>(recetaService.editarReceta(request, id), HttpStatus.OK);
 	}
-	
+
 	@GetMapping
 	public ResponseEntity<?> traerRecetas(@RequestParam(value = "titulo", defaultValue = "") String titulo,
 			@RequestParam(value = "categoria", defaultValue = "") String categoria,
 			@RequestParam(value = "page", defaultValue = "1") int page,
 			@RequestParam(value = "size", defaultValue = "999999") int size,
 			@RequestParam(value = "orderBy", defaultValue = "asc") String orderBy,
-			@RequestParam(value = "sortBy", defaultValue = "id") String soryBy){
-		return new ResponseEntity<>(recetaService.traerRecetas(titulo, categoria, page, size, orderBy, soryBy), HttpStatus.OK);
+			@RequestParam(value = "sortBy", defaultValue = "id") String soryBy) {
+		return new ResponseEntity<>(recetaService.traerRecetas(titulo, categoria, page, size, orderBy, soryBy),
+				HttpStatus.OK);
 	}
 
 }
