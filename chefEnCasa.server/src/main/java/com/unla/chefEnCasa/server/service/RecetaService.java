@@ -77,21 +77,21 @@ public class RecetaService {
 		editReceta.setCategoria(request.getCategoria());
 		editReceta.setTiempoAprox(request.getTiempoAprox());
 
-		List<Ingrediente> ingredientes = new ArrayList<>();
-		for (Ingrediente i : request.getIngredientes()) {
-			Ingrediente ingrediente = new Ingrediente();
-			ingrediente.setNombre(i.getNombre());
-			ingrediente.setCantidad(i.getCantidad());
+		List<Ingrediente> ingredientes = editReceta.getIngredientes();
+		for (int i=0; i<request.getIngredientes().size(); i++) {
+			Ingrediente ingrediente = ingredientes.get(i);
+			ingrediente.setNombre(request.getIngredientes().get(i).getNombre());
+			ingrediente.setCantidad(request.getIngredientes().get(i).getCantidad());
 			ingrediente.setReceta(editReceta);
 			ingredientes.add(ingrediente);
 		}
 		editReceta.setIngredientes(ingredientes);
 
-		List<Paso> pasos = new ArrayList<>();
-		for (Paso p : request.getPasos()) {
-			Paso paso = new Paso();
-			paso.setNumero(p.getNumero());
-			paso.setDescripcion(p.getDescripcion());
+		List<Paso> pasos = editReceta.getPasos();
+		for (int i=0; i<request.getPasos().size(); i++) {
+			Paso paso = pasos.get(i);
+			paso.setNumero(request.getPasos().get(i).getNumero());
+			paso.setDescripcion(request.getPasos().get(i).getDescripcion());
 			paso.setReceta(editReceta);
 			pasos.add(paso);
 		}
