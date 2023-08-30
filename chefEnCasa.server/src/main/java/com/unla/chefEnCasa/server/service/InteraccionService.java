@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.unla.chefEnCasa.server.entity.Receta;
 import com.unla.chefEnCasa.server.entity.Usuario;
 import com.unla.chefEnCasa.server.exceptions.ServerException;
+import com.unla.chefEnCasa.server.repository.RecetaRepository;
 import com.unla.chefEnCasa.server.repository.UsuarioRepository;
 
 @Service
@@ -15,6 +17,9 @@ public class InteraccionService {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private RecetaRepository recetaRepository;
 	
 	public String seguirUsuario(long idSeguidor, long idSeguir) {
 		Usuario seguidor = usuarioRepository.findById(idSeguidor)
@@ -43,6 +48,33 @@ public class InteraccionService {
 		seguidos.remove(seguido);
 		usuarioRepository.save(seguidor);
 		return "dejaste de seguir al usuario correctamente";
+	}
+	
+	public String agregarFavorito(long idUsuario, long idReceta) {
+		Usuario usuario = usuarioRepository.findById(idUsuario)
+				.orElseThrow(() -> new ServerException("no existe un usuario con id: "+idUsuario, HttpStatus.NOT_FOUND));
+		Receta receta = recetaRepository.findById(idReceta).orElseThrow(() -> new ServerException("no existe una receta con id: "+idReceta, HttpStatus.NOT_FOUND));
+		List<Receta> recetas = usuario.getRecetasFavoritas();
+			if(recetas.contains(receta)) {
+				throw new ServerException("ya tenes esa receta en tu lista de favoritos", HttpStatus.BAD_REQUEST);
+			}
+		recetas.add(receta);
+		usuario.setRecetasFavoritas(recetas);
+		usuarioRepository.save(usuario);
+		return "receta añadida a favoritos correctamente";
+	}
+	public String removerFavorito(long idUsuario, long idReceta) {
+		Usuario usuario = usuarioRepository.findById(idUsuario)
+				.orElseThrow(() -> new ServerException("no existe un usuario con id: "+idUsuario, HttpStatus.NOT_FOUND));
+		Receta receta = recetaRepository.findById(idReceta).orElseThrow(() -> new ServerException("no existe una receta con id: "+idReceta, HttpStatus.NOT_FOUND));
+		List<Receta> recetas = usuario.getRecetasFavoritas();
+			if(!recetas.contains(receta)) {
+				throw new ServerException("no tenes esa receta en tu lista de favoritos", HttpStatus.BAD_REQUEST);
+			}
+		
+		recetas.remove(receta);
+		usuarioRepository.save(usuario);
+		return "receta removida de favoritos correctamente";
 	}
 	
 }

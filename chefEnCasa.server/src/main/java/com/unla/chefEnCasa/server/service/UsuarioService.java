@@ -46,17 +46,6 @@ public class UsuarioService {
 		}
 		return usuario;
 	}
-
-	public List<RecetaResponse> traerRecetasPorId(long id) {
-		Usuario usuario = usuarioRepository.findById(id)
-				.orElseThrow(() -> new ServerException("Usuario no encontrado", HttpStatus.NOT_FOUND));
-
-		List<RecetaResponse> response = new ArrayList<>();
-		for (Receta r : usuario.getRecetasCreadas()) {
-			response.add(modelMapper.map(r, RecetaResponse.class));
-		}
-		return response;
-	}
 	
 	public List<UsuarioResponse> traerUsuariosSeguidos(long id) {
 		Usuario usuario = usuarioRepository.findById(id)
@@ -68,5 +57,17 @@ public class UsuarioService {
 		}
 		return response;
 	}
+	
+	public List<RecetaResponse> traerFavoritos(long idUsuario) {
+		Usuario usuario = usuarioRepository.findById(idUsuario)
+				.orElseThrow(() -> new ServerException("no existe un usuario con id: "+idUsuario, HttpStatus.NOT_FOUND));
+		
+		List<RecetaResponse> response = new ArrayList<>();
+		for (Receta r : usuario.getRecetasFavoritas()) {
+			response.add(modelMapper.map(r, RecetaResponse.class));
+		}
+		return response;
+	}
+
 
 }

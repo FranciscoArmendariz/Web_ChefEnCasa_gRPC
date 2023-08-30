@@ -48,4 +48,9 @@ public class RecetaController {
 				HttpStatus.OK);
 	}
 
+	@GetMapping("/recetas/{id}")
+	public ResponseEntity<?> traerRecetasPorId(@PathVariable("idUsuario") long idUsuario) {
+		return new ResponseEntity<>(recetaService.traerRecetasPorId(idUsuario), HttpStatus.OK);
+	}
+
 }

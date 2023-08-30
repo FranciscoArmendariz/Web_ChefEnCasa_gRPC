@@ -41,11 +41,6 @@ public class UsuarioController {
 	public ResponseEntity<?> login(@Valid @RequestBody Login request) {
 		return new ResponseEntity<>(usuarioService.login(request), HttpStatus.OK);
 	}
-
-	@GetMapping("/recetas/{id}")
-	public ResponseEntity<?> traerRecetasPorId(@PathVariable("id") long id) {
-		return new ResponseEntity<>(usuarioService.traerRecetasPorId(id), HttpStatus.OK);
-	}
 	
 	@PostMapping("/{idSeguidor}/seguir/{idSeguir}")
 	public ResponseEntity<?> seguirUsuario(@PathVariable("idSeguidor") long idSeguidor, @PathVariable("idSeguir") long idSeguir){
@@ -60,6 +55,21 @@ public class UsuarioController {
 	@GetMapping("/seguidos/{id}")
 	public ResponseEntity<?> traerUsuariosSeguidos(@PathVariable("id") long id){
 		return new ResponseEntity<>(usuarioService.traerUsuariosSeguidos(id), HttpStatus.OK);
+	}
+	
+	@PostMapping("/{idUsuario}/favorito/{idReceta}")
+	public ResponseEntity<?> agregarFavorito(@PathVariable("idUsuario") long idUsuario, @PathVariable("idReceta") long idReceta){
+		return new ResponseEntity<>(interaccionService.agregarFavorito(idUsuario, idReceta), HttpStatus.OK);
+	}
+	
+	@PostMapping("/{idUsuario}/remover-favorito/{idReceta}")
+	public ResponseEntity<?> removerFavorito(@PathVariable("idUsuario") long idUsuario, @PathVariable("idReceta") long idReceta){
+		return new ResponseEntity<>(interaccionService.removerFavorito(idUsuario, idReceta), HttpStatus.OK);
+	}
+	
+	@GetMapping("/recetas-favoritas/{idUsuario}")
+	public ResponseEntity<?> traerFavoritos(@PathVariable("idUsuario") long idUsuario){
+		return new ResponseEntity<>(usuarioService.traerFavoritos(idUsuario), HttpStatus.OK);
 	}
 
 }

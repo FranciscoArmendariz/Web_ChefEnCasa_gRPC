@@ -126,5 +126,15 @@ public class RecetaService {
 			throw new ServerException("error al listas las recetas", HttpStatus.BAD_REQUEST);
 		}
 	}
+	public List<RecetaResponse> traerRecetasPorId(long id) {
+		Usuario usuario = usuarioRepository.findById(id)
+				.orElseThrow(() -> new ServerException("Usuario no encontrado", HttpStatus.NOT_FOUND));
+
+		List<RecetaResponse> response = new ArrayList<>();
+		for (Receta r : usuario.getRecetasCreadas()) {
+			response.add(modelMapper.map(r, RecetaResponse.class));
+		}
+		return response;
+	}
 
 }
