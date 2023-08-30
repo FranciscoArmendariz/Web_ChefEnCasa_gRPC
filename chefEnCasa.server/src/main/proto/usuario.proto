@@ -2,24 +2,52 @@ syntax= "proto3" ;
 
 option java_multiple_files =true;
 option java_package= "com.chefservicegrpc.grpc";
+import "receta.proto";
 
 service usuario{
-   rpc crearUsuario (UsuarioRequest) returns (UsuarioResponse);
+    rpc CrearUsuario(UsuarioRequest2) returns (UsuarioResponse){}
+    rpc TraerUsuarios(Empty) returns (stream UsuarioResponse){}
+    rpc Login(LoginUsuario) returns (Usuario){}
+    rpc TraerUsuariosSeguidos(UsuarioRequest1) returns (stream UsuarioResponse){}
+}
 
-
+message Empty{
 
 }
-message UsuarioRequest{
-     
-	 string nombre=1;
+
+message Usuario {
+    int64 id = 1;
+    string nombre = 2;
+    string usuario = 3;
+    string email = 4;
+    string clave = 5;
+    string rol = 6;
+    repeated RecetaRequest recetas_favoritas = 7;
+    repeated RecetaRequest recetas_creadas = 8;
+    repeated Usuario usuarios_seguidos = 9;
+}
+
+
+message UsuarioRequest2 {
+    string nombre=1;
 	 string usuario=2;
 	 string email=3;
 	 string clave=4;
 }
-message UsuarioResponse{
+message UsuarioRequest1{
+    int64 id=1;
+}
+
+
+message UsuarioResponse {
     int64 id = 1;
     string nombre = 2;
     string usuario = 3;
     string email = 4;
 
+}
+
+message LoginUsuario {
+    string usuario = 1;
+    string clave = 2;
 }
