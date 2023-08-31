@@ -9,11 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.unla.chefEnCasa.server.dto.Login;
-import com.unla.chefEnCasa.server.dto.RecetaResponse;
-import com.unla.chefEnCasa.server.dto.UsuarioRequest;
-import com.unla.chefEnCasa.server.dto.UsuarioResponse;
-import com.unla.chefEnCasa.server.entity.Receta;
+import com.unla.chefEnCasa.server.dto.LoginDto;
+import com.unla.chefEnCasa.server.dto.UsuarioRequestDto;
+import com.unla.chefEnCasa.server.dto.UsuarioResponseDto;
 import com.unla.chefEnCasa.server.entity.Usuario;
 import com.unla.chefEnCasa.server.exceptions.ServerException;
 import com.unla.chefEnCasa.server.repository.UsuarioRepository;
@@ -26,19 +24,19 @@ public class UsuarioService {
 
 	private ModelMapper modelMapper = new ModelMapper();
 
-	public UsuarioResponse crearUsuario(UsuarioRequest request) {
+	public UsuarioResponseDto crearUsuario(UsuarioRequestDto request) {
 		Usuario usuario = modelMapper.map(request, Usuario.class);
 		usuarioRepository.save(usuario);
-		return modelMapper.map(usuario, UsuarioResponse.class);
+		return modelMapper.map(usuario, UsuarioResponseDto.class);
 	}
 
-	public List<UsuarioResponse> traerUsuarios() {
+	public List<UsuarioResponseDto> traerUsuarios() {
 		List<Usuario> usuarios = usuarioRepository.findAll();
-		return usuarios.stream().map(usuario -> modelMapper.map(usuario, UsuarioResponse.class))
+		return usuarios.stream().map(usuario -> modelMapper.map(usuario, UsuarioResponseDto.class))
 				.collect(Collectors.toList());
 	}
 
-	public Usuario login(Login request) {
+	public Usuario login(LoginDto request) {
 		Usuario usuario = usuarioRepository.findByUsuario(request.getUsuario())
 				.orElseThrow(() -> new ServerException("Usuario no encontrado", HttpStatus.NOT_FOUND));
 		if (!usuario.getClave().equals(request.getClave())) {
@@ -47,27 +45,15 @@ public class UsuarioService {
 		return usuario;
 	}
 	
-	public List<UsuarioResponse> traerUsuariosSeguidos(long id) {
+	public List<UsuarioResponseDto> traerUsuariosSeguidos(long id) {
 		Usuario usuario = usuarioRepository.findById(id)
 				.orElseThrow(() -> new ServerException("Usuario no encontrado", HttpStatus.NOT_FOUND));
 		
-		List<UsuarioResponse> response = new ArrayList<>();
+		List<UsuarioResponseDto> response = new ArrayList<>();
 		for(Usuario u : usuario.getUsuariosSeguidos()) {
-			response.add(modelMapper.map(u, UsuarioResponse.class));
+			response.add(modelMapper.map(u, UsuarioResponseDto.class));
 		}
 		return response;
 	}
-	
-	public List<RecetaResponse> traerFavoritos(long idUsuario) {
-		Usuario usuario = usuarioRepository.findById(idUsuario)
-				.orElseThrow(() -> new ServerException("no existe un usuario con id: "+idUsuario, HttpStatus.NOT_FOUND));
-		
-		List<RecetaResponse> response = new ArrayList<>();
-		for (Receta r : usuario.getRecetasFavoritas()) {
-			response.add(modelMapper.map(r, RecetaResponse.class));
-		}
-		return response;
-	}
-
 
 }

@@ -1,14 +1,16 @@
 syntax= "proto3" ;
 
 option java_multiple_files =true;
-option java_package= "com.chefservicegrpc.grpc";
+option java_package= "com.unla.chefEnCasa.grpc";
+
 import "receta.proto";
 
+
 service usuario{
-    rpc CrearUsuario(UsuarioRequest2) returns (UsuarioResponse){}
+    rpc CrearUsuario(UsuarioRequest) returns (UsuarioResponse){}
     rpc TraerUsuarios(Empty) returns (stream UsuarioResponse){}
     rpc Login(LoginUsuario) returns (Usuario){}
-    rpc TraerUsuariosSeguidos(UsuarioRequest1) returns (stream UsuarioResponse){}
+    rpc TraerUsuariosSeguidos(UsuarioRequestById) returns (stream UsuarioResponse){}
 }
 
 message Empty{
@@ -28,13 +30,14 @@ message Usuario {
 }
 
 
-message UsuarioRequest2 {
+message UsuarioRequest {
     string nombre=1;
 	 string usuario=2;
 	 string email=3;
 	 string clave=4;
+     string rol=5;
 }
-message UsuarioRequest1{
+message UsuarioRequestById{
     int64 id=1;
 }
 
@@ -44,6 +47,7 @@ message UsuarioResponse {
     string nombre = 2;
     string usuario = 3;
     string email = 4;
+    string rol = 5;
 
 }
 

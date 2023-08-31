@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Login {
+public class LoginDto {
 	
 	@NotBlank(message = "el usuario no debe estar vacio")
 	@Size(max = 250, message = "el usuario no debe tener más de {max} caracteres")

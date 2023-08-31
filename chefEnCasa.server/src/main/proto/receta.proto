@@ -1,14 +1,15 @@
 syntax= "proto3";
 
 option java_multiple_files =true;
-option java_package= "com.chefservicegrpc.grpc";
+option java_package= "com.unla.chefEnCasa.grpc";
 
 
 service receta {
     rpc CrearReceta(RecetaRequest) returns (RecetaResponse){}
-    rpc EditarReceta(RecetaRequest) returns (RecetaResponse){}
-    rpc TraerRecetasPorId(UsuarioRequest3) returns (stream RecetaResponse){}
+    rpc EditarReceta(RecetaUpdateRequest) returns (RecetaResponse){}
+    rpc TraerRecetasPorId(UsuarioRequestByUserId) returns (stream RecetaResponse){}
     rpc TraerRecetas(ListaRecetasRequest) returns (stream RecetaResponse){}
+    rpc TraerFavoritos(RecetaRequest) returns (stream RecetaResponse){}
 }
 message Receta {
     int64 id = 1;
@@ -19,7 +20,7 @@ message Receta {
     repeated Ingrediente ingredientes = 6;
     repeated Paso pasos = 7;
 }
-message UsuarioRequest3{
+message UsuarioRequestByUserId{
     int64 id=1;
 }
 message Ingrediente {
@@ -41,6 +42,15 @@ message RecetaRequest {
     repeated Ingrediente ingredientes = 6;
     repeated Paso pasos = 7;
 }
+message RecetaUpdateRequest {
+    int64 idReceta=1;
+    string titulo = 2;
+    string descripcion = 3;
+    string categoria = 4;
+    int32 tiempo_aprox = 5;
+    repeated Ingrediente ingredientes = 6;
+    repeated Paso pasos = 7;
+}
 
 message RecetaResponse {
     int64 id = 1;
@@ -50,11 +60,6 @@ message RecetaResponse {
     int32 tiempo_aprox = 5;
     repeated Ingrediente ingredientes = 6;
     repeated Paso pasos = 7;
-}
-
-
-message UsuarioRequest{
-    int64 id=1;
 }
 
 message ListaRecetasRequest {

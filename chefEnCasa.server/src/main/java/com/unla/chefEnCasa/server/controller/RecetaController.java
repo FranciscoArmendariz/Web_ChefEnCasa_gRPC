@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.unla.chefEnCasa.server.dto.RecetaRequest;
+import com.unla.chefEnCasa.server.dto.RecetaRequestDto;
 import com.unla.chefEnCasa.server.service.RecetaService;
 
 @RestController
@@ -27,13 +27,13 @@ public class RecetaController {
 	// Se manda por path el id del usuario ya que al no tener relacion
 	// bidireccional, necesitamos saber en que usuario guardamos la receta
 	@PostMapping("/crear/{id}")
-	public ResponseEntity<?> crearReceta(@Valid @RequestBody RecetaRequest request, @PathVariable("id") long id) {
+	public ResponseEntity<?> crearReceta(@Valid @RequestBody RecetaRequestDto request, @PathVariable("id") long id) {
 		return new ResponseEntity<>(recetaService.crearReceta(request, id), HttpStatus.CREATED);
 	}
 
 	// Se manda por path el id de la receta a editar
 	@PutMapping("/editar/{id}")
-	public ResponseEntity<?> editarReceta(@Valid @RequestBody RecetaRequest request, @PathVariable("id") long id) {
+	public ResponseEntity<?> editarReceta(@Valid @RequestBody RecetaRequestDto request, @PathVariable("id") long id) {
 		return new ResponseEntity<>(recetaService.editarReceta(request, id), HttpStatus.OK);
 	}
 

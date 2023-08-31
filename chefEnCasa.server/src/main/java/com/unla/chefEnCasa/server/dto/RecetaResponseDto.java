@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RecetaResponse {
+public class RecetaResponseDto {
 	
 
 	private long id;

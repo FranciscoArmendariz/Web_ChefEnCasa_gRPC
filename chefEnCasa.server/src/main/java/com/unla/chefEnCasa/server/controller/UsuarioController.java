@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.unla.chefEnCasa.server.dto.Login;
-import com.unla.chefEnCasa.server.dto.UsuarioRequest;
+import com.unla.chefEnCasa.server.dto.LoginDto;
+import com.unla.chefEnCasa.server.dto.UsuarioRequestDto;
 import com.unla.chefEnCasa.server.service.InteraccionService;
+import com.unla.chefEnCasa.server.service.RecetaService;
 import com.unla.chefEnCasa.server.service.UsuarioService;
 
 @RestController
@@ -26,9 +27,12 @@ public class UsuarioController {
 	
 	@Autowired
 	private InteraccionService interaccionService;
+	
+	@Autowired
+	private RecetaService recetaService;
 
 	@PostMapping("/crear")
-	public ResponseEntity<?> crearUsuario(@Valid @RequestBody UsuarioRequest request) {
+	public ResponseEntity<?> crearUsuario(@Valid @RequestBody UsuarioRequestDto request) {
 		return new ResponseEntity<>(usuarioService.crearUsuario(request), HttpStatus.CREATED);
 	}
 
@@ -38,7 +42,7 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@Valid @RequestBody Login request) {
+	public ResponseEntity<?> login(@Valid @RequestBody LoginDto request) {
 		return new ResponseEntity<>(usuarioService.login(request), HttpStatus.OK);
 	}
 	
@@ -69,7 +73,7 @@ public class UsuarioController {
 	
 	@GetMapping("/recetas-favoritas/{idUsuario}")
 	public ResponseEntity<?> traerFavoritos(@PathVariable("idUsuario") long idUsuario){
-		return new ResponseEntity<>(usuarioService.traerFavoritos(idUsuario), HttpStatus.OK);
+		return new ResponseEntity<>(recetaService.traerFavoritos(idUsuario), HttpStatus.OK);
 	}
 
 }

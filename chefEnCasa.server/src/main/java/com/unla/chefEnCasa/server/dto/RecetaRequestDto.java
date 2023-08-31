@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RecetaRequest {
+public class RecetaRequestDto {
 	
 	@NotBlank(message = "el titulo no debe estar vacio")
 	@Size(max = 250, message = "el titulo no debe tener más de {max} caracteres")

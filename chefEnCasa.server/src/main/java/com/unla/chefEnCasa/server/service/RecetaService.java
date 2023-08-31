@@ -12,8 +12,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.unla.chefEnCasa.server.dto.RecetaRequest;
-import com.unla.chefEnCasa.server.dto.RecetaResponse;
+import com.unla.chefEnCasa.server.dto.RecetaRequestDto;
+import com.unla.chefEnCasa.server.dto.RecetaResponseDto;
 import com.unla.chefEnCasa.server.entity.Ingrediente;
 import com.unla.chefEnCasa.server.entity.Paso;
 import com.unla.chefEnCasa.server.entity.Receta;
@@ -33,7 +33,7 @@ public class RecetaService {
 
 	private ModelMapper modelMapper = new ModelMapper();
 
-	public RecetaResponse crearReceta(RecetaRequest request, long id) {
+	public RecetaResponseDto crearReceta(RecetaRequestDto request, long id) {
 		Usuario usuario = usuarioRepository.findById(id)
 				.orElseThrow(() -> new ServerException("Usuario no encontrado", HttpStatus.NOT_FOUND));
 		Receta newReceta = new Receta();
@@ -65,11 +65,11 @@ public class RecetaService {
 
 		recetaRepository.save(newReceta);
 
-		RecetaResponse response = modelMapper.map(newReceta, RecetaResponse.class);
+		RecetaResponseDto response = modelMapper.map(newReceta, RecetaResponseDto.class);
 		return response;
 	}
 
-	public RecetaResponse editarReceta(RecetaRequest request, long id) {
+	public RecetaResponseDto editarReceta(RecetaRequestDto request, long id) {
 		Receta editReceta = recetaRepository.findById(id)
 				.orElseThrow(() -> new ServerException("Receta no encontrada", HttpStatus.NOT_FOUND));
 		editReceta.setTitulo(request.getTitulo());
@@ -98,11 +98,11 @@ public class RecetaService {
 		editReceta.setPasos(pasos);
 		recetaRepository.save(editReceta);
 		
-		RecetaResponse response = modelMapper.map(editReceta, RecetaResponse.class);
+		RecetaResponseDto response = modelMapper.map(editReceta, RecetaResponseDto.class);
 		return response;
 	}
 
-	public List<RecetaResponse> traerRecetas(String titulo, String categoria, int page, int size, String orderBy,
+	public List<RecetaResponseDto> traerRecetas(String titulo, String categoria, int page, int size, String orderBy,
 			String sortBy) {
 		try {
 			if (page < 1)
@@ -117,24 +117,37 @@ public class RecetaService {
 			} else {
 				pageTipo = recetaRepository.findByCategoriaContaining(categoria, pageable);
 			}
-			List<RecetaResponse> response = new ArrayList<>();
+			List<RecetaResponseDto> response = new ArrayList<>();
 			for (Receta r : pageTipo.getContent()) {
-				response.add(modelMapper.map(r, RecetaResponse.class));
+				response.add(modelMapper.map(r, RecetaResponseDto.class));
 			}
 			return response;
 		} catch (Exception e) {
 			throw new ServerException("error al listas las recetas", HttpStatus.BAD_REQUEST);
 		}
 	}
-	public List<RecetaResponse> traerRecetasPorId(long id) {
+	public List<RecetaResponseDto> traerRecetasPorId(long id) {
 		Usuario usuario = usuarioRepository.findById(id)
 				.orElseThrow(() -> new ServerException("Usuario no encontrado", HttpStatus.NOT_FOUND));
 
-		List<RecetaResponse> response = new ArrayList<>();
+		List<RecetaResponseDto> response = new ArrayList<>();
 		for (Receta r : usuario.getRecetasCreadas()) {
-			response.add(modelMapper.map(r, RecetaResponse.class));
+			response.add(modelMapper.map(r, RecetaResponseDto.class));
 		}
 		return response;
 	}
+	
+	
+	public List<RecetaResponseDto> traerFavoritos(long idUsuario) {
+		Usuario usuario = usuarioRepository.findById(idUsuario)
+				.orElseThrow(() -> new ServerException("no existe un usuario con id: "+idUsuario, HttpStatus.NOT_FOUND));
+		
+		List<RecetaResponseDto> response = new ArrayList<>();
+		for (Receta r : usuario.getRecetasFavoritas()) {
+			response.add(modelMapper.map(r, RecetaResponseDto.class));
+		}
+		return response;
+	}
+
 
 }
