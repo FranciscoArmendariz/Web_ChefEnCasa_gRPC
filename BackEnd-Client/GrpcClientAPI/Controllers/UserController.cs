@@ -16,56 +16,38 @@ namespace GrpcClientAPI.Controllers
 
         [HttpGet()]
         [Route("[action]")]
-        public async Task<string> TraerUsuarios()
+        public async Task<getUsuarios> TraerUsuarios(Empty request)
         {
-            var reply = await Client.TraerUsuariosAsync(new TraerUsuariosRequest { Name = "TraerUsuariosRequest" });
+            var reply = await Client.TraerUsuariosAsync(request);
 
-            return reply.Message;
+            return reply;
         }
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<bool> IniciarSesion(IniciarSesionRequest request)
+        public async Task<UsuarioResponse> Login(LoginUsuario request)
         {
-            var reply = await Client.IniciarSesionAsync(request);
+            var reply = await Client.LoginAsync(request);
 
-            return reply.Message;
+            return reply;
         }
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<bool> AgregarUsuario(AgregarUsuarioRequest request)
+        public async Task<getCreado> CrearUsuario(UsuarioRequest request)
         {
-            var reply = await Client.AgregarUsuarioAsync(request);
+            var reply = await Client.CrearUsuarioAsync(request);
 
-            return reply.Message;
+            return reply;
         }
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<bool> SeguirUsuario(SeguirUsuarioRequest request)
-        {
-            var reply = await Client.SeguirUsuarioAsync(request);
-
-            return reply.Message;
-        }
-
-        [HttpPost()]
-        [Route("[action]")]
-        public async Task<bool> DejarDeSeguirUsuario(DejarDeSeguirUsuarioRequest request)
-        {
-            var reply = await Client.DejarDeSeguirUsuarioAsync(request);
-
-            return reply.Message;
-        }
-
-        [HttpPost()]
-        [Route("[action]")]
-        public async Task<string> TraerUsuariosSeguidos(TraerUsuariosSeguidosRequest request)
+        public async Task<getUsuarios> TraerUsuariosSeguidos(UsuarioRequestById request)
         {
             var reply = await Client.TraerUsuariosSeguidosAsync(request);
 
-            return reply.Message;
+            return reply;
         }
     }
 }

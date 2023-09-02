@@ -17,74 +17,56 @@ namespace GrpcClientAPI.Controllers
 
         [HttpGet()]
         [Route("[action]")]
-        public async Task<string> GetRecetas()
+        public async Task<getRecetas> TraerRecetas(RecetaRequestFilter request)
         {
-            var reply = await Client.GetRecetasAsync(new GetRecetasRequest { Name = "GetRecetasRequest" });
+            var reply = await Client.TraerRecetasAsync(request);
 
-            return reply.Message;
+            return reply;
         }
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<bool> AgregarReceta(AgregarRecetaRequest request)
+        public async Task<getRecetaCreada> CrearReceta(RecetaRequest request)
         {
-            var reply = await Client.AgregarRecetaAsync(request);
+            var reply = await Client.CrearRecetaAsync(request);
 
-            return reply.Message;
+            return reply;
         }
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<bool> EditarReceta(EditarRecetaRequest request)
+        public async Task<getRecetaEditada> EditarReceta(RecetaUpdateRequest request)
         {
             var reply = await Client.EditarRecetaAsync(request);
 
-            return reply.Message;
+            return reply;
         }
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<string> TraerRecetasPorUsuario(TraerRecetasPorUsuarioRequest request)
+        public async Task<getRecetas> TraerRecetasPorId(UsuarioRequestByUserId request)
         {
-            var reply = await Client.TraerRecetasPorUsuarioAsync(request);
+            var reply = await Client.TraerRecetasPorIdAsync(request);
 
-            return reply.Message;
-        }
-
-        [HttpPost()]
-        [Route("[action]")]
-        public async Task<bool> AgregarFavorito(FavoritoRequest request)
-        {
-            var reply = await Client.AgregarFavoritoAsync(request);
-
-            return reply.Message;
-        }
-
-        [HttpPost()]
-        [Route("[action]")]
-        public async Task<bool> RemoverFavorito(FavoritoRequest request)
-        {
-            var reply = await Client.RemoverFavoritoAsync(request);
-
-            return reply.Message;
+            return reply;
         }
         
         [HttpPost()]
         [Route("[action]")]
-        public async Task<string> TraerFavoritos(TraerFavoritosRequest request)
+        public async Task<getRecetas> TraerRecetasFavoritas(UsuarioRequestByUserId request)
         {
-            var reply = await Client.TraerFavoritosAsync(request);
+            var reply = await Client.TraerRecetasFavoritasAsync(request);
 
-            return reply.Message;
+            return reply;
         }
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<string> TraerIngredientes(TraerIngredientesRequest request)
+        public async Task<ListaIngredientes> TraerIngredientes(RecetaRequestById request)
         {
             var reply = await Client.TraerIngredientesAsync(request);
 
-            return reply.Message;
+            return reply;
         }
     }
 }

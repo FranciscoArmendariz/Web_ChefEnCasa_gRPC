@@ -6,9 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
+    <None Remove="Protos\interaccion.proto" />
     <None Remove="Protos\user.proto" />
-  </ItemGroup>
+  </ItemGroup>-->
 
   <!--<ItemGroup>
     <None Remove="Protos\receta.proto" />
@@ -27,11 +28,13 @@
   <ItemGroup>
     <Protobuf Include="Protos\receta.proto" GrpcServices="Client" />
     <Protobuf Include="Protos\user.proto" GrpcServices="Client" />
+    <Protobuf Include="Protos\interaccion.proto" GrpcServices="Client" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="Protos\receta.proto"><GrpcServices>Client</GrpcServices></None>
     <None Update="Protos\user.proto"><GrpcServices>Client</GrpcServices></None>
+    <None Update="Protos\interaccion.proto"><GrpcServices>Client</GrpcServices></None>
   </ItemGroup>
 
 </Project>

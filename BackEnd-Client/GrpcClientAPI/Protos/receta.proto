@@ -5,70 +5,101 @@ option csharp_namespace = "GrpcClientAPI";
 package receta;
 
 service Receta {
-  rpc GetRecetas (GetRecetasRequest) returns (GetRecetasResponse);
-  rpc AgregarReceta (AgregarRecetaRequest) returns (AgregarRecetaResponse);
-  rpc EditarReceta (EditarRecetaRequest) returns (EditarRecetaResponse);
-  rpc TraerRecetasPorUsuario (TraerRecetasPorUsuarioRequest) returns (TraerRecetasPorUsuarioResponse);
-  rpc AgregarFavorito (FavoritoRequest) returns (FavoritoResponse);
-  rpc RemoverFavorito (FavoritoRequest) returns (FavoritoResponse);
-  rpc TraerFavoritos (TraerFavoritosRequest) returns (TraerFavoritosResponse);
-  rpc TraerIngredientes (TraerIngredientesRequest) returns (TraerIngredientesResponse);
-
-}
-message TraerIngredientesRequest {
-  int32 idUsuario = 1;
+    rpc CrearReceta(RecetaRequest) returns (getRecetaCreada);
+    rpc EditarReceta(RecetaUpdateRequest) returns (getRecetaEditada);
+    rpc TraerRecetasPorId(UsuarioRequestByUserId) returns (getRecetas);
+    rpc TraerRecetas(RecetaRequestFilter) returns (getRecetas);
+    rpc TraerRecetasFavoritas(UsuarioRequestByUserId) returns (getRecetas);
+    rpc TraerIngredientes(RecetaRequestById) returns (ListaIngredientes);
 }
 
-message TraerIngredientesResponse {
-  string message = 1;
+message RecetaObj {
+    int64 id = 1;
+    string titulo = 2;
+    string descripcion = 3;
+    string categoria = 4;
+    int32 tiempo_aprox = 5;
+    repeated Ingrediente ingredientes = 6;
+    repeated Paso pasos = 7;
+    repeated Foto fotos = 8;
 }
 
-message TraerFavoritosResponse {
-  string message = 1;
+message Foto {
+    string url = 1;
 }
 
-message TraerFavoritosRequest {
-  int32 idUsuario = 1;
-  int32 idPagina = 2;
+message RecetaRequestById{
+    int64 idReceta=1;
 }
 
-message FavoritoResponse {
-  bool message = 1;
+message ListaIngredientes{
+    repeated Ingrediente ingrediente=1;
 }
 
-message FavoritoRequest {
-  int32 idUsuario = 1;
-  int32 idReceta = 2;
+message Ingrediente {
+    string nombre = 1;
+    string cantidad = 2;
 }
 
-message GetRecetasResponse {
-  string message = 1;
+message Paso {
+    int32 numero = 1;
+    string descripcion = 2;
 }
 
-message GetRecetasRequest {
-  string name = 1;
+message RecetaRequest {
+    int64 idUsuario=1;
+    string titulo = 2;
+    string descripcion = 3;
+    string categoria = 4;
+    int32 tiempo_aprox = 5;
+    repeated Ingrediente ingredientes = 6;
+    repeated Paso pasos = 7;
+    repeated Foto fotos = 8;
 }
 
-message TraerRecetasPorUsuarioResponse {
-  string message = 1;
+message getRecetaCreada{
+    bool creada = 1;
 }
 
-message TraerRecetasPorUsuarioRequest {
-  int32 id = 1;
+message RecetaUpdateRequest {
+    int64 idReceta=1;
+    string titulo = 2;
+    string descripcion = 3;
+    string categoria = 4;
+    int32 tiempo_aprox = 5;
+    repeated Ingrediente ingredientes = 6;
+    repeated Paso pasos = 7;
+    repeated Foto fotos = 8;
 }
 
-message AgregarRecetaRequest {
-  string NombreReceta = 1;
+message getRecetaEditada{
+    bool editada = 1;
+}   
+
+message UsuarioRequestByUserId{
+    int64 id=1;
 }
 
-message AgregarRecetaResponse {
-  bool message = 1;
+message getRecetas{
+    repeated RecetaResponse recetas = 1;
 }
 
-message EditarRecetaRequest {
-  string NombreReceta = 1;
+message RecetaRequestFilter {
+    string titulo = 1;
+    string categoria = 2;
+    int32 page = 3;
+    int32 size = 4;
+    string order_by = 5;
+    string sort_by = 6;
 }
 
-message EditarRecetaResponse {
-  bool message = 1;
+message RecetaResponse {
+    int64 id = 1;
+    string titulo = 2;
+    string descripcion = 3;
+    string categoria = 4;
+    int32 tiempo_aprox = 5;
+    repeated Ingrediente ingredientes = 6;
+    repeated Paso pasos = 7;
+    repeated Foto fotos = 8;
 }

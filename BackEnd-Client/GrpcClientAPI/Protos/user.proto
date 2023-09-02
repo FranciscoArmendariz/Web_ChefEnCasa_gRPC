@@ -5,61 +5,45 @@ option csharp_namespace = "GrpcClientAPI";
 package user;
 
 service User {
-  rpc TraerUsuarios (TraerUsuariosRequest) returns (TraerUsuariosResponse);
-  rpc IniciarSesion (IniciarSesionRequest) returns (IniciarSesionResponse);
-  rpc AgregarUsuario (AgregarUsuarioRequest) returns (AgregarUsuarioResponse);
-  rpc SeguirUsuario (SeguirUsuarioRequest) returns (SeguirUsuarioResponse);
-  rpc DejarDeSeguirUsuario (DejarDeSeguirUsuarioRequest) returns (DejarDeSeguirUsuarioResponse);
-  rpc TraerUsuariosSeguidos (TraerUsuariosSeguidosRequest) returns (TraerUsuariosSeguidosResponse);
+    rpc CrearUsuario(UsuarioRequest) returns (getCreado);
+    rpc TraerUsuarios(Empty) returns (getUsuarios);
+    rpc Login(LoginUsuario) returns (UsuarioResponse);
+    rpc TraerUsuariosSeguidos(UsuarioRequestById) returns (getUsuarios);
 }
 
-message TraerUsuariosSeguidosResponse {
-  string message = 1;
+message Empty{
+
 }
 
-message TraerUsuariosSeguidosRequest {
-  int32 idUser = 1;
+message getUsuarios{
+    repeated UsuarioResponse usuarios = 1;
 }
 
-message DejarDeSeguirUsuarioResponse {
-  bool message = 1;
+message UsuarioRequest {
+    string nombre=1;
+	 string usuario=2;
+	 string email=3;
+	 string clave=4;
+     string rol=5;
+}
+message UsuarioRequestById{
+    int64 id=1;
 }
 
-message DejarDeSeguirUsuarioRequest {
-  int32 idUser = 1;
-  int32 idSeguido = 2;
+message UsuarioResponse {
+    int64 id = 1;
+    string nombre = 2;
+    string usuario = 3;
+    string email = 4;
+    string rol = 5;
+
 }
 
-message SeguirUsuarioResponse {
-  bool message = 1;
+message LoginUsuario {
+    string usuario = 1;
+    string clave = 2;
 }
 
-message SeguirUsuarioRequest {
-  int32 idUser = 1;
-  int32 idUserASeguir = 2;
-}
-
-message AgregarUsuarioResponse {
-  bool message = 1;
-}
-
-message AgregarUsuarioRequest {
-  string name = 1;
-}
-
-message TraerUsuariosResponse {
-  string message = 1;
-}
-
-message TraerUsuariosRequest {
-  string name = 1;
-}
-
-message IniciarSesionResponse {
-  bool message = 1;
-}
-
-message IniciarSesionRequest {
-  string usuario = 1;
-  string password = 2;
+message getCreado{
+    bool creado = 1;
 }
