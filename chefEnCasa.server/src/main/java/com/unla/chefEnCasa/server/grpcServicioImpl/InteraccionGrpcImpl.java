@@ -47,7 +47,7 @@ public class InteraccionGrpcImpl extends interaccionImplBase {
         }
     }
     //REVISAR MAÑANA
-    /*
+    
     @Override
     public void agregarFavorito(favorito request, StreamObserver<StringSeguido> responseObserver) {
         String agregarFavorito = interaccionService.agregarFavorito(request.getIdUsuario(), request.getIdReceta());
@@ -74,6 +74,6 @@ public class InteraccionGrpcImpl extends interaccionImplBase {
         } catch (ServerException e) {
             responseObserver.onError(Status.UNKNOWN.withDescription(e.getMensaje()).asRuntimeException());
         }
-    }*/
+    }
 
 }

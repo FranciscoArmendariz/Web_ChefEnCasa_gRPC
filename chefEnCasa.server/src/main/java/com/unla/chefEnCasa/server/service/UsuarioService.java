@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.unla.chefEnCasa.server.dto.LoginDto;
 import com.unla.chefEnCasa.server.dto.UsuarioRequestDto;
@@ -49,6 +50,7 @@ public class UsuarioService {
 		return usuario;
 	}
 	
+	@Transactional
 	public List<UsuarioResponseDto> traerUsuariosSeguidos(long id) {
 		Usuario usuario = usuarioRepository.findById(id)
 				.orElseThrow(() -> new ServerException("Usuario no encontrado", HttpStatus.NOT_FOUND));

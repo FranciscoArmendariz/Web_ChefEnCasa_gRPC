@@ -53,8 +53,8 @@ public class InteraccionService {
 		usuarioRepository.save(seguidor);
 		return "dejaste de seguir al usuario correctamente";
 	}
-	//REVISAR MAÑANA 3/9
-	/*public String agregarFavorito(long idUsuario, long idReceta) {
+	//REVISAR MAÑANA 
+	public String agregarFavorito(long idUsuario, long idReceta) {
 		Usuario usuario = usuarioRepository.findById(idUsuario)
 				.orElseThrow(() -> new ServerException("no existe un usuario con id: "+idUsuario, HttpStatus.NOT_FOUND));
 		Receta receta = recetaRepository.findById(idReceta).orElseThrow(() -> new ServerException("no existe una receta con id: "+idReceta, HttpStatus.NOT_FOUND));
@@ -79,6 +79,6 @@ public class InteraccionService {
 		recetas.remove(receta);
 		usuarioRepository.save(usuario);
 		return "receta removida de favoritos correctamente";
-	}*/
+	}
 	
 }
