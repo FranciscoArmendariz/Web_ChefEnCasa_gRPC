@@ -11,7 +11,8 @@ namespace GrpcClientAPI.Controllers
 
         public InteraccionController()
         {
-            Client = new Interaccion.InteraccionClient(GrpcChannel.ForAddress("https://localhost:7072"));
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+            Client = new Interaccion.InteraccionClient(GrpcChannel.ForAddress("https://localhost:9090"));
         }
 
         [HttpPost()]

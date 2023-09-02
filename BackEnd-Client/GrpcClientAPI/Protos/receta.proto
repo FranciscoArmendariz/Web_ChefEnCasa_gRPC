@@ -5,12 +5,13 @@ option csharp_namespace = "GrpcClientAPI";
 package receta;
 
 service Receta {
-    rpc CrearReceta(RecetaRequest) returns (getRecetaCreada);
-    rpc EditarReceta(RecetaUpdateRequest) returns (getRecetaEditada);
-    rpc TraerRecetasPorId(UsuarioRequestByUserId) returns (getRecetas);
-    rpc TraerRecetas(RecetaRequestFilter) returns (getRecetas);
-    rpc TraerRecetasFavoritas(UsuarioRequestByUserId) returns (getRecetas);
-    rpc TraerIngredientes(RecetaRequestById) returns (ListaIngredientes);
+    rpc CrearReceta(RecetaRequest) returns (getRecetaCreada){}
+    rpc EditarReceta(RecetaUpdateRequest) returns (getRecetaEditada){}
+    rpc TraerRecetasPorId(UsuarioRequestByUserId) returns (getRecetas){}
+    rpc TraerRecetas(RecetaRequestFilter) returns (getRecetas){}
+    rpc TraerTodasLasRecetas(Empty2) returns (getRecetas){}
+    rpc TraerRecetasFavoritas(UsuarioRequestByUserId) returns (getRecetas){}
+    rpc TraerIngredientes(RecetaRequestById) returns (ListaIngredientes){}
 }
 
 message RecetaObj {
@@ -22,6 +23,10 @@ message RecetaObj {
     repeated Ingrediente ingredientes = 6;
     repeated Paso pasos = 7;
     repeated Foto fotos = 8;
+}
+
+message Empty2{
+
 }
 
 message Foto {

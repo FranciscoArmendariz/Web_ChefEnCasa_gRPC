@@ -12,7 +12,8 @@ namespace GrpcClientAPI.Controllers
 
         public RecetaController()
         {
-            Client = new Receta.RecetaClient(GrpcChannel.ForAddress("https://localhost:7072"));
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+            Client = new Receta.RecetaClient(GrpcChannel.ForAddress("https://localhost:9090"));
         }
 
         [HttpGet()]
