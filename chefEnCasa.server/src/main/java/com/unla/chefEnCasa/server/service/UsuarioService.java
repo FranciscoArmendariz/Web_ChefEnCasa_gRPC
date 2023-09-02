@@ -24,10 +24,14 @@ public class UsuarioService {
 
 	private ModelMapper modelMapper = new ModelMapper();
 
-	public UsuarioResponseDto crearUsuario(UsuarioRequestDto request) {
+	public boolean crearUsuario(UsuarioRequestDto request) {
 		Usuario usuario = modelMapper.map(request, Usuario.class);
-		usuarioRepository.save(usuario);
-		return modelMapper.map(usuario, UsuarioResponseDto.class);
+		try{
+			usuarioRepository.save(usuario);
+			return true;
+		}catch(Exception e){
+			return false;
+		}
 	}
 
 	public List<UsuarioResponseDto> traerUsuarios() {
@@ -38,7 +42,7 @@ public class UsuarioService {
 
 	public Usuario login(LoginDto request) {
 		Usuario usuario = usuarioRepository.findByUsuario(request.getUsuario())
-				.orElseThrow(() -> new ServerException("Usuario no encontrado", HttpStatus.NOT_FOUND));
+				.orElseThrow(() -> new ServerException("Usuario o contraseña incorrecta", HttpStatus.NOT_FOUND));
 		if (!usuario.getClave().equals(request.getClave())) {
 			throw new ServerException("Usuario o contraseña incorrecta", HttpStatus.BAD_REQUEST);
 		}

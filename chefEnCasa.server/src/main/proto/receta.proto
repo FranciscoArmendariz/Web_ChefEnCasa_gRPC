@@ -5,12 +5,13 @@ option java_package= "com.unla.chefEnCasa.grpc";
 
 
 service receta {
-    rpc CrearReceta(RecetaRequest) returns (RecetaResponse){}
-    rpc EditarReceta(RecetaUpdateRequest) returns (RecetaResponse){}
-    rpc TraerRecetasPorId(UsuarioRequestByUserId) returns (stream RecetaResponse){}
-    rpc TraerRecetas(ListaRecetasRequest) returns (stream RecetaResponse){}
-    rpc TraerFavoritos(RecetaRequest) returns (stream RecetaResponse){}
+    rpc CrearReceta(RecetaRequest) returns (getRecetaCreada){}
+    rpc EditarReceta(RecetaUpdateRequest) returns (getRecetaEditada){}
+    rpc TraerRecetasPorId(UsuarioRequestByUserId) returns (getRecetas){}
+    rpc TraerRecetas(RecetaRequestFilter) returns (getRecetas){}
+    rpc TraerRecetasFavoritas(RecetaRequest) returns (getRecetas){}
 }
+
 message Receta {
     int64 id = 1;
     string titulo = 2;
@@ -20,9 +21,7 @@ message Receta {
     repeated Ingrediente ingredientes = 6;
     repeated Paso pasos = 7;
 }
-message UsuarioRequestByUserId{
-    int64 id=1;
-}
+
 message Ingrediente {
     string nombre = 1;
     string cantidad = 2;
@@ -42,6 +41,11 @@ message RecetaRequest {
     repeated Ingrediente ingredientes = 6;
     repeated Paso pasos = 7;
 }
+
+message getRecetaCreada{
+    bool creada = 1;
+}
+
 message RecetaUpdateRequest {
     int64 idReceta=1;
     string titulo = 2;
@@ -52,6 +56,27 @@ message RecetaUpdateRequest {
     repeated Paso pasos = 7;
 }
 
+message getRecetaEditada{
+    bool editada = 1;
+}   
+
+message UsuarioRequestByUserId{
+    int64 id=1;
+}
+
+message getRecetas{
+    repeated RecetaResponse recetas = 1;
+}
+
+message RecetaRequestFilter {
+    string titulo = 1;
+    string categoria = 2;
+    int32 page = 3;
+    int32 size = 4;
+    string order_by = 5;
+    string sort_by = 6;
+}
+
 message RecetaResponse {
     int64 id = 1;
     string titulo = 2;
@@ -60,13 +85,4 @@ message RecetaResponse {
     int32 tiempo_aprox = 5;
     repeated Ingrediente ingredientes = 6;
     repeated Paso pasos = 7;
-}
-
-message ListaRecetasRequest {
-    string titulo = 1;
-    string categoria = 2;
-    int32 page = 3;
-    int32 size = 4;
-    string order_by = 5;
-    string sort_by = 6;
 }
