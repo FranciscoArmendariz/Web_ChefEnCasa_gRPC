@@ -7,6 +7,8 @@ const recetaApi = {
   getRecetasFavoritas: ({ idUsuario, idPagina }) =>
     api.post(`${RUTA}`, { idUsuario, idPagina }),
   getRecetasPorUsuario: ({ idUsuario }) => api.post(`${RUTA}`, { idUsuario }),
+  getRecetasPorId: ({ idReceta }) =>
+    api.post(`/TraerRecetasPorId`, { id: idReceta }),
   createRecipe: (recipe) => api.post("/recipes", recipe),
 };
 

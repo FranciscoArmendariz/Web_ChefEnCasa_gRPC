@@ -1,6 +1,7 @@
 import LoadingWrapper from "@/components/LoadingWrapper";
 import { RECETAS } from "@/constants/recetas";
 import { traer } from "@/redux/recetas/actions";
+import recetaApi from "@/services/receta";
 import Image from "next/image";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +13,7 @@ export default function Receta({ idReceta }) {
       dispach(
         traer({
           campo: "recetaPorId",
-          service: RECETAS.find((receta) => receta.id === idReceta),
+          service: recetaApi.getRecetasPorId({ idReceta }),
         })
       );
     }
