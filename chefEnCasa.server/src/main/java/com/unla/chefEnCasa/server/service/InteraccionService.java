@@ -54,6 +54,7 @@ public class InteraccionService {
 		return "dejaste de seguir al usuario correctamente";
 	}
 	//REVISAR MAÑANA 
+	@Transactional
 	public String agregarFavorito(long idUsuario, long idReceta) {
 		Usuario usuario = usuarioRepository.findById(idUsuario)
 				.orElseThrow(() -> new ServerException("no existe un usuario con id: "+idUsuario, HttpStatus.NOT_FOUND));
@@ -67,6 +68,7 @@ public class InteraccionService {
 		usuarioRepository.save(usuario);
 		return "receta añadida a favoritos correctamente";
 	}
+	@Transactional
 	public String removerFavorito(long idUsuario, long idReceta) {
 		Usuario usuario = usuarioRepository.findById(idUsuario)
 				.orElseThrow(() -> new ServerException("no existe un usuario con id: "+idUsuario, HttpStatus.NOT_FOUND));

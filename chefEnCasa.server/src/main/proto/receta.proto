@@ -9,7 +9,7 @@ service receta {
     rpc EditarReceta(RecetaUpdateRequest) returns (getRecetaEditada){}
     rpc TraerRecetasPorId(UsuarioRequestByUserId) returns (getRecetas){}
     rpc TraerRecetas(RecetaRequestFilter) returns (getRecetas){}
-    rpc TraerRecetasFavoritas(RecetaRequest) returns (getRecetas){}
+    rpc TraerRecetasFavoritas(UsuarioRequestByUserId) returns (getRecetas){}
     rpc TraerIngredientes(RecetaRequestById) returns (ListaIngredientes){}
 }
 

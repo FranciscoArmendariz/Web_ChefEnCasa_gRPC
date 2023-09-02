@@ -197,8 +197,29 @@ public class RecetaGrpcImpl extends recetaImplBase {
     }
 
     @Override
-    public void traerRecetasFavoritas(RecetaRequest request, StreamObserver<getRecetas> responseObserver) {
-       List <RecetaResponseDto> traerRecetas=recetaService.traerFavoritos(request.getIdUsuario());
+    public void traerIngredientes(RecetaRequestById request, StreamObserver<ListaIngredientes> responseObserver) {
+        List<com.unla.chefEnCasa.server.entity.Ingrediente> traerIngredientes= recetaService.traerIngredientes(request.getIdReceta());
+        List<Ingrediente>ingredienteGrpcList=new ArrayList<>();
+        for(int i=0;i<traerIngredientes.size();i++){
+             Ingrediente ingredienteGrpcAdd=Ingrediente.newBuilder()
+            .setCantidad(traerIngredientes.get(i).getCantidad())
+            .setNombre(traerIngredientes.get(i).getNombre())
+            .build();
+            ingredienteGrpcList.add(ingredienteGrpcAdd);
+        }
+        ListaIngredientes list= ListaIngredientes.newBuilder()
+        .addAllIngrediente(ingredienteGrpcList)
+        .build();
+        
+        responseObserver.onNext(list);
+        responseObserver.onCompleted();
+
+        
+    }
+
+    @Override
+    public void traerRecetasFavoritas(UsuarioRequestByUserId request, StreamObserver<getRecetas> responseObserver) {
+     List <RecetaResponseDto> traerRecetas=recetaService.traerFavoritos(request.getId());
         List <RecetaResponse>recetaGrpcList=new ArrayList<>();
         
        for(int i=0;i<traerRecetas.size();i++){
@@ -237,30 +258,7 @@ public class RecetaGrpcImpl extends recetaImplBase {
        .build();
        responseObserver.onNext(recetasLista);
        responseObserver.onCompleted();
-
-      
-    }
-
-    @Override
-    public void traerIngredientes(RecetaRequestById request, StreamObserver<ListaIngredientes> responseObserver) {
-        List<com.unla.chefEnCasa.server.entity.Ingrediente> traerIngredientes= recetaService.traerIngredientes(request.getIdReceta());
-        List<Ingrediente>ingredienteGrpcList=new ArrayList<>();
-        for(int i=0;i<traerIngredientes.size();i++){
-             Ingrediente ingredienteGrpcAdd=Ingrediente.newBuilder()
-            .setCantidad(traerIngredientes.get(i).getCantidad())
-            .setNombre(traerIngredientes.get(i).getNombre())
-            .build();
-            ingredienteGrpcList.add(ingredienteGrpcAdd);
-        }
-        ListaIngredientes list= ListaIngredientes.newBuilder()
-        .addAllIngrediente(ingredienteGrpcList)
-        .build();
-        
-        responseObserver.onNext(list);
-        responseObserver.onCompleted();
-
-        
     }
     
 
-}
+} 
