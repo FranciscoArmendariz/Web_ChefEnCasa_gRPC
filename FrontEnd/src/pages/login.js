@@ -1,10 +1,10 @@
 import Header from "@/components/header";
 import Login from "@/screens/login";
 
-export default function Home() {
+export default function LoginPage() {
   return (
     <div className='h-screen bg-background'>
-      <Header />
+      <Header hideButtons />
       <Login />
     </div>
   );
