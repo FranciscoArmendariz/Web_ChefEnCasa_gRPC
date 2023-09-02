@@ -2,6 +2,8 @@ export default function user(
   state = {
     usuario: null,
     contrasenia: null,
+    nombre: null,
+    mail: null,
     id: null,
     isLogged: false,
     listaUsuarios: null,
@@ -14,6 +16,8 @@ export default function user(
         ...state,
         usuario: action.payload.usuario,
         contrasenia: action.payload.contrasenia,
+        nombre: "NombrePrueba",
+        mail: "Mail_de_prueba@Tmail.com",
         isLogged: true,
       };
     case "LOGOUT":

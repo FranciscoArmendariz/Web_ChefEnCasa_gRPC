@@ -65,7 +65,7 @@ export default function Header({ hideButtons }) {
         </button>
         <div
           className={cn(
-            "absolute bg-gray-50 border border-gray-600 rounded-xl px-6 py-4 w-48 top-12 -left-8",
+            "absolute bg-gray-50 border border-gray-600 rounded-xl px-6 py-4 w-48 top-12 -left-8 z-10",
             { hidden: !mostrarOpciones }
           )}
         >
