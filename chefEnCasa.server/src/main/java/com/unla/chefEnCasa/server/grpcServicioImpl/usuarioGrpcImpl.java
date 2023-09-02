@@ -24,7 +24,7 @@ import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 
 @GrpcService
-public class UsuarioGrpcImpl extends usuarioImplBase {
+public class usuarioGrpcImpl extends usuarioImplBase {
 
     @Autowired
     private UsuarioService usuarioService;

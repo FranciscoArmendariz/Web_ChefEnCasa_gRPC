@@ -6,9 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.unla.chefEnCasa.grpc.Ingrediente;
+import com.unla.chefEnCasa.grpc.ListaIngredientes;
 import com.unla.chefEnCasa.grpc.Paso;
 import com.unla.chefEnCasa.grpc.RecetaRequest;
+import com.unla.chefEnCasa.grpc.RecetaRequestById;
 import com.unla.chefEnCasa.grpc.RecetaRequestFilter;
+import com.unla.chefEnCasa.grpc.RecetaResponse;
 //import com.unla.chefEnCasa.grpc.RecetaResponse;
 import com.unla.chefEnCasa.grpc.RecetaUpdateRequest;
 import com.unla.chefEnCasa.grpc.UsuarioRequestByUserId;
@@ -17,6 +20,7 @@ import com.unla.chefEnCasa.grpc.getRecetaEditada;
 import com.unla.chefEnCasa.grpc.getRecetas;
 import com.unla.chefEnCasa.grpc.recetaGrpc.recetaImplBase;
 import com.unla.chefEnCasa.server.dto.RecetaRequestDto;
+import com.unla.chefEnCasa.server.dto.RecetaResponseDto;
 import com.unla.chefEnCasa.server.exceptions.ServerException;
 //import com.unla.chefEnCasa.server.dto.RecetaResponseDto;
 import com.unla.chefEnCasa.server.service.RecetaService;
@@ -105,17 +109,158 @@ public class RecetaGrpcImpl extends recetaImplBase {
 
     @Override
     public void traerRecetasPorId(UsuarioRequestByUserId request, StreamObserver<getRecetas> responseObserver) {
-        // valen
+      List <RecetaResponseDto> traerRecetas=recetaService.traerRecetasPorId(request.getId());
+        List <RecetaResponse>recetaGrpcList=new ArrayList<>();
+        
+       for(int i=0;i<traerRecetas.size();i++){
+        List<Ingrediente>ingredienteData=new ArrayList<>();
+        List<Paso>pasoData=new ArrayList<>();
+        for(int j=0; j<traerRecetas.get(i).getIngredientes().size();j++){
+            Ingrediente ingredienteGrpcAdd=Ingrediente.newBuilder()
+            .setCantidad(traerRecetas.get(i).getIngredientes().get(j).getCantidad())
+            .setNombre(traerRecetas.get(i).getIngredientes().get(j).getNombre())
+            .build();
+            ingredienteData.add(ingredienteGrpcAdd);
+        }
+        for(int y=0; y<traerRecetas.get(i).getPasos().size();y++){
+            Paso pasoGrpcAdd=Paso.newBuilder()
+            .setDescripcion(traerRecetas.get(i).getPasos().get(y).getDescripcion())
+            .setNumero(traerRecetas.get(i).getPasos().get(y).getNumero())
+            .build();
+            pasoData.add(pasoGrpcAdd);
+        }
+        RecetaResponse  response=RecetaResponse.newBuilder()
+        .setId(traerRecetas.get(i).getId())
+        .setCategoria(traerRecetas.get(i).getCategoria())
+        .setDescripcion(traerRecetas.get(i).getDescripcion())
+        .setTiempoAprox(traerRecetas.get(i).getTiempoAprox())
+        .setTitulo(traerRecetas.get(i).getTitulo())
+        .addAllIngredientes(ingredienteData)
+        .addAllPasos(pasoData)
+        .build();
+        
+        recetaGrpcList.add(response);
+
+
+       }
+       getRecetas recetasLista= getRecetas.newBuilder()
+       .addAllRecetas(recetaGrpcList)
+       .build();
+       responseObserver.onNext(recetasLista);
+       responseObserver.onCompleted();
+
     }
 
     @Override
     public void traerRecetas(RecetaRequestFilter request, StreamObserver<getRecetas> responseObserver) {
-        // VALEN
+       List <RecetaResponseDto> traerRecetas=recetaService.traerRecetas(request.getTitulo(),request.getCategoria(),request.getPage(),
+       request.getSize(),request.getOrderBy(),request.getSortBy());
+        List <RecetaResponse>recetaGrpcList=new ArrayList<>();
+        
+       for(int i=0;i<traerRecetas.size();i++){
+        List<Ingrediente>ingredienteData=new ArrayList<>();
+        List<Paso>pasoData=new ArrayList<>();
+        for(int j=0; j<traerRecetas.get(i).getIngredientes().size();j++){
+            Ingrediente ingredienteGrpcAdd=Ingrediente.newBuilder()
+            .setCantidad(traerRecetas.get(i).getIngredientes().get(j).getCantidad())
+            .setNombre(traerRecetas.get(i).getIngredientes().get(j).getNombre())
+            .build();
+            ingredienteData.add(ingredienteGrpcAdd);
+        }
+        for(int y=0; y<traerRecetas.get(i).getPasos().size();y++){
+            Paso pasoGrpcAdd=Paso.newBuilder()
+            .setDescripcion(traerRecetas.get(i).getPasos().get(y).getDescripcion())
+            .setNumero(traerRecetas.get(i).getPasos().get(y).getNumero())
+            .build();
+            pasoData.add(pasoGrpcAdd);
+        }
+        RecetaResponse  response=RecetaResponse.newBuilder()
+        .setId(traerRecetas.get(i).getId())
+        .setCategoria(traerRecetas.get(i).getCategoria())
+        .setDescripcion(traerRecetas.get(i).getDescripcion())
+        .setTiempoAprox(traerRecetas.get(i).getTiempoAprox())
+        .setTitulo(traerRecetas.get(i).getTitulo())
+        .addAllIngredientes(ingredienteData)
+        .addAllPasos(pasoData)
+        .build();
+        
+        recetaGrpcList.add(response);
+
+
+       }
+       getRecetas recetasLista= getRecetas.newBuilder()
+       .addAllRecetas(recetaGrpcList)
+       .build();
+       responseObserver.onNext(recetasLista);
+       responseObserver.onCompleted();
+
     }
 
     @Override
     public void traerRecetasFavoritas(RecetaRequest request, StreamObserver<getRecetas> responseObserver) {
-        // VALEN
+       List <RecetaResponseDto> traerRecetas=recetaService.traerFavoritos(request.getIdUsuario());
+        List <RecetaResponse>recetaGrpcList=new ArrayList<>();
+        
+       for(int i=0;i<traerRecetas.size();i++){
+        List<Ingrediente>ingredienteData=new ArrayList<>();
+        List<Paso>pasoData=new ArrayList<>();
+        for(int j=0; j<traerRecetas.get(i).getIngredientes().size();j++){
+            Ingrediente ingredienteGrpcAdd=Ingrediente.newBuilder()
+            .setCantidad(traerRecetas.get(i).getIngredientes().get(j).getCantidad())
+            .setNombre(traerRecetas.get(i).getIngredientes().get(j).getNombre())
+            .build();
+            ingredienteData.add(ingredienteGrpcAdd);
+        }
+        for(int y=0; y<traerRecetas.get(i).getPasos().size();y++){
+            Paso pasoGrpcAdd=Paso.newBuilder()
+            .setDescripcion(traerRecetas.get(i).getPasos().get(y).getDescripcion())
+            .setNumero(traerRecetas.get(i).getPasos().get(y).getNumero())
+            .build();
+            pasoData.add(pasoGrpcAdd);
+        }
+        RecetaResponse  response=RecetaResponse.newBuilder()
+        .setId(traerRecetas.get(i).getId())
+        .setCategoria(traerRecetas.get(i).getCategoria())
+        .setDescripcion(traerRecetas.get(i).getDescripcion())
+        .setTiempoAprox(traerRecetas.get(i).getTiempoAprox())
+        .setTitulo(traerRecetas.get(i).getTitulo())
+        .addAllIngredientes(ingredienteData)
+        .addAllPasos(pasoData)
+        .build();
+        
+        recetaGrpcList.add(response);
+
+
+       }
+       getRecetas recetasLista= getRecetas.newBuilder()
+       .addAllRecetas(recetaGrpcList)
+       .build();
+       responseObserver.onNext(recetasLista);
+       responseObserver.onCompleted();
+
+      
     }
+
+    @Override
+    public void traerIngredientes(RecetaRequestById request, StreamObserver<ListaIngredientes> responseObserver) {
+        List<com.unla.chefEnCasa.server.entity.Ingrediente> traerIngredientes= recetaService.traerIngredientes(request.getIdReceta());
+        List<Ingrediente>ingredienteGrpcList=new ArrayList<>();
+        for(int i=0;i<traerIngredientes.size();i++){
+             Ingrediente ingredienteGrpcAdd=Ingrediente.newBuilder()
+            .setCantidad(traerIngredientes.get(i).getCantidad())
+            .setNombre(traerIngredientes.get(i).getNombre())
+            .build();
+            ingredienteGrpcList.add(ingredienteGrpcAdd);
+        }
+        ListaIngredientes list= ListaIngredientes.newBuilder()
+        .addAllIngrediente(ingredienteGrpcList)
+        .build();
+        
+        responseObserver.onNext(list);
+        responseObserver.onCompleted();
+
+        
+    }
+    
 
 }

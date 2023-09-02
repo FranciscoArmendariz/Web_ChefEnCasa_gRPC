@@ -107,7 +107,7 @@ public class RecetaService {
 			return false;
 		}
 	}
-
+	@Transactional
 	public List<RecetaResponseDto> traerRecetas(String titulo, String categoria, int page, int size, String orderBy,
 			String sortBy) {
 		try {
@@ -132,7 +132,7 @@ public class RecetaService {
 			throw new ServerException("error al listas las recetas", HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	@Transactional
 	public List<RecetaResponseDto> traerRecetasPorId(long id) {
 		Usuario usuario = usuarioRepository.findById(id)
 				.orElseThrow(() -> new ServerException("Usuario no encontrado", HttpStatus.NOT_FOUND));
@@ -143,7 +143,7 @@ public class RecetaService {
 		}
 		return response;
 	}
-
+	@Transactional
 	public List<RecetaResponseDto> traerFavoritos(long idUsuario) {
 		Usuario usuario = usuarioRepository.findById(idUsuario)
 				.orElseThrow(
@@ -152,6 +152,16 @@ public class RecetaService {
 		List<RecetaResponseDto> response = new ArrayList<>();
 		for (Receta r : usuario.getRecetasFavoritas()) {
 			response.add(modelMapper.map(r, RecetaResponseDto.class));
+		}
+		return response;
+	}
+	@Transactional
+	public List<Ingrediente> traerIngredientes(long idReceta){
+		Receta receta=recetaRepository.findById(idReceta)
+		.orElseThrow(() -> new ServerException("no existe la receta con id: "+idReceta, HttpStatus.NOT_FOUND));
+		List <Ingrediente> response=new ArrayList<>();
+		for(Ingrediente r:receta.getIngredientes() ){
+			response.add(modelMapper.map(r, Ingrediente.class));
 		}
 		return response;
 	}

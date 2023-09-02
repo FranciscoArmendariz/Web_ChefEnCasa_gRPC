@@ -10,7 +10,9 @@ service receta {
     rpc TraerRecetasPorId(UsuarioRequestByUserId) returns (getRecetas){}
     rpc TraerRecetas(RecetaRequestFilter) returns (getRecetas){}
     rpc TraerRecetasFavoritas(RecetaRequest) returns (getRecetas){}
+    rpc TraerIngredientes(RecetaRequestById) returns (ListaIngredientes){}
 }
+
 
 message Receta {
     int64 id = 1;
@@ -20,6 +22,12 @@ message Receta {
     int32 tiempo_aprox = 5;
     repeated Ingrediente ingredientes = 6;
     repeated Paso pasos = 7;
+}
+message RecetaRequestById{
+    int64 idReceta=1;
+}
+message ListaIngredientes{
+    repeated Ingrediente ingrediente=1;
 }
 
 message Ingrediente {
