@@ -2,7 +2,7 @@ import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 
 export default function ListaUsuarios({ usuarios }) {
   return (
-    <div className='grid grid-cols-3  max-h-full gap-1'>
+    <div className='grid grid-cols-3 w-max items-center max-h-full gap-x-4 gap-y-2'>
       {usuarios.map((usuario) => {
         return (
           <button
