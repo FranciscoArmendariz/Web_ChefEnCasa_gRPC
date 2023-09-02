@@ -2,9 +2,9 @@ syntax = "proto3";
 
 option csharp_namespace = "GrpcClientAPI";
 
-package user;
 
-service User {
+
+service usuario{
     rpc CrearUsuario(UsuarioRequest) returns (getCreado){}
     rpc TraerUsuarios(Empty) returns (getUsuarios){}
     rpc Login(LoginUsuario) returns (UsuarioResponse){}

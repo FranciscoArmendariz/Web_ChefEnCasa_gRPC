@@ -2,9 +2,8 @@ syntax = "proto3";
 
 option csharp_namespace = "GrpcClientAPI";
 
-package receta;
 
-service Receta {
+service receta {
     rpc CrearReceta(RecetaRequest) returns (getRecetaCreada){}
     rpc EditarReceta(RecetaUpdateRequest) returns (getRecetaEditada){}
     rpc TraerRecetasPorId(UsuarioRequestByUserId) returns (getRecetas){}
@@ -13,6 +12,7 @@ service Receta {
     rpc TraerRecetasFavoritas(UsuarioRequestByUserId) returns (getRecetas){}
     rpc TraerIngredientes(RecetaRequestById) returns (ListaIngredientes){}
 }
+
 
 message RecetaObj {
     int64 id = 1;

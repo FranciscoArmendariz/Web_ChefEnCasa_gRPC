@@ -7,12 +7,11 @@ namespace GrpcClientAPI.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        public User.UserClient Client { get; set; }
+        public usuario.usuarioClient Client { get; set; }
 
         public UserController()
         {
-            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-            Client = new User.UserClient(GrpcChannel.ForAddress("https://localhost:9090"));
+            Client = new usuario.usuarioClient(GrpcChannel.ForAddress("http://localhost:9090"));
         }
 
         [HttpGet()]

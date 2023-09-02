@@ -2,9 +2,8 @@ syntax = "proto3";
 
 option csharp_namespace = "GrpcClientAPI";
 
-package interaccion;
 
-service Interaccion {
+service interaccion{
       rpc seguirUsuario(IdSeguirUsuario) returns(StringSeguido){}
       rpc dejarDeSeguirUsuario(IdSeguirUsuario) returns (StringSeguido){}
       rpc agregarFavorito(favorito) returns (StringSeguido){}

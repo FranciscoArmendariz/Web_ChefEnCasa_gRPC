@@ -5,15 +5,13 @@ using System.Threading.Channels;
 namespace GrpcClientAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class RecetaController : ControllerBase
     {
-        public Receta.RecetaClient Client { get; set; }
+        public receta.recetaClient Client { get; set; }
 
         public RecetaController()
         {
-            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-            Client = new Receta.RecetaClient(GrpcChannel.ForAddress("https://localhost:9090"));
+            Client = new receta.recetaClient(GrpcChannel.ForAddress("http://localhost:9090"));
         }
 
         [HttpGet()]
