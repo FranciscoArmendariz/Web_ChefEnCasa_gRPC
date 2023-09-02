@@ -1,10 +1,19 @@
-import { applyMiddleware, combineReducers as CR, compose, legacy_createStore as createStore } from 'redux';
-import thunk from 'redux-thunk';
-import { fetchMiddleware, configureMergeState, wrapCombineReducers } from 'redux-recompose';
-import { createWrapper } from 'next-redux-wrapper';
+import {
+  applyMiddleware,
+  combineReducers as CR,
+  compose,
+  legacy_createStore as createStore,
+} from "redux";
+import thunk from "redux-thunk";
+import {
+  fetchMiddleware,
+  configureMergeState,
+  wrapCombineReducers,
+} from "redux-recompose";
+import { createWrapper } from "next-redux-wrapper";
 
-import hydrate from './hydrate/reducer';
-import counter from './counter/reducer';
+import recetas from "./recetas/reducer";
+import user from "./user/reducer";
 
 configureMergeState((state, diff) => state.merge(diff));
 
@@ -12,8 +21,8 @@ const combineReducers = wrapCombineReducers(CR);
 
 // Add reducers here
 const reducers = combineReducers({
-  hydrate,
-  counter,
+  recetas,
+  user,
 });
 
 const middlewares = [thunk, fetchMiddleware];
@@ -23,8 +32,8 @@ const enhancers = [];
 enhancers.push(applyMiddleware(...middlewares));
 
 const debug =
-  process.env.NODE_ENV === 'development' &&
-  typeof window !== 'undefined' &&
+  process.env.NODE_ENV === "development" &&
+  typeof window !== "undefined" &&
   // eslint-disable-next-line no-underscore-dangle
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 
