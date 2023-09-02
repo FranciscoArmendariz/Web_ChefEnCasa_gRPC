@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.unla.chefEnCasa.server.dto.RecetaRequestDto;
 import com.unla.chefEnCasa.server.dto.RecetaResponseDto;
+import com.unla.chefEnCasa.server.entity.Foto;
 import com.unla.chefEnCasa.server.entity.Ingrediente;
 import com.unla.chefEnCasa.server.entity.Paso;
 import com.unla.chefEnCasa.server.entity.Receta;
@@ -42,6 +43,15 @@ public class RecetaService {
 		newReceta.setDescripcion(request.getDescripcion());
 		newReceta.setCategoria(request.getCategoria());
 		newReceta.setTiempoAprox(request.getTiempoAprox());
+
+		List<Foto> fotos = new ArrayList<>();
+		for(Foto f : request.getFotos()) {
+			Foto foto = new Foto();
+			foto.setUrl(f.getUrl());
+			foto.setReceta(newReceta);
+			fotos.add(foto);
+		}
+		newReceta.setFotos(fotos);
 
 		List<Ingrediente> ingredientes = new ArrayList<>();
 		for (Ingrediente i : request.getIngredientes()) {
@@ -71,7 +81,7 @@ public class RecetaService {
 			return false;
 		}
 	}
-
+	
 	@Transactional
 	public boolean editarReceta(RecetaRequestDto request, long id) {
 		Receta editReceta = recetaRepository.findById(id)
@@ -80,6 +90,15 @@ public class RecetaService {
 		editReceta.setDescripcion(request.getDescripcion());
 		editReceta.setCategoria(request.getCategoria());
 		editReceta.setTiempoAprox(request.getTiempoAprox());
+
+		List<Foto> fotos = editReceta.getFotos();
+		for(int i=0; i<request.getFotos().size();i++){
+			Foto foto = fotos.get(i);
+			foto.setUrl(request.getFotos().get(i).getUrl());
+			foto.setReceta(editReceta);
+			fotos.add(foto);
+		}
+		editReceta.setFotos(fotos);
 
 		List<Ingrediente> ingredientes = editReceta.getIngredientes();
 		for (int i = 0; i < request.getIngredientes().size(); i++) {

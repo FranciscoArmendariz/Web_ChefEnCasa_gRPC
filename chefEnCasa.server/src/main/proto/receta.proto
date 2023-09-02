@@ -22,10 +22,17 @@ message Receta {
     int32 tiempo_aprox = 5;
     repeated Ingrediente ingredientes = 6;
     repeated Paso pasos = 7;
+    repeated Foto fotos = 8;
 }
+
+message Foto {
+    string url = 1;
+}
+
 message RecetaRequestById{
     int64 idReceta=1;
 }
+
 message ListaIngredientes{
     repeated Ingrediente ingrediente=1;
 }
@@ -48,6 +55,7 @@ message RecetaRequest {
     int32 tiempo_aprox = 5;
     repeated Ingrediente ingredientes = 6;
     repeated Paso pasos = 7;
+    repeated Foto fotos = 8;
 }
 
 message getRecetaCreada{
@@ -62,6 +70,7 @@ message RecetaUpdateRequest {
     int32 tiempo_aprox = 5;
     repeated Ingrediente ingredientes = 6;
     repeated Paso pasos = 7;
+    repeated Foto fotos = 8;
 }
 
 message getRecetaEditada{
@@ -93,4 +102,5 @@ message RecetaResponse {
     int32 tiempo_aprox = 5;
     repeated Ingrediente ingredientes = 6;
     repeated Paso pasos = 7;
+    repeated Foto fotos = 8;
 }

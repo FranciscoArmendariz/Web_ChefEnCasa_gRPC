@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.unla.chefEnCasa.grpc.Foto;
 import com.unla.chefEnCasa.grpc.Ingrediente;
 import com.unla.chefEnCasa.grpc.ListaIngredientes;
 import com.unla.chefEnCasa.grpc.Paso;
@@ -12,7 +13,6 @@ import com.unla.chefEnCasa.grpc.RecetaRequest;
 import com.unla.chefEnCasa.grpc.RecetaRequestById;
 import com.unla.chefEnCasa.grpc.RecetaRequestFilter;
 import com.unla.chefEnCasa.grpc.RecetaResponse;
-//import com.unla.chefEnCasa.grpc.RecetaResponse;
 import com.unla.chefEnCasa.grpc.RecetaUpdateRequest;
 import com.unla.chefEnCasa.grpc.UsuarioRequestByUserId;
 import com.unla.chefEnCasa.grpc.getRecetaCreada;
@@ -22,7 +22,6 @@ import com.unla.chefEnCasa.grpc.recetaGrpc.recetaImplBase;
 import com.unla.chefEnCasa.server.dto.RecetaRequestDto;
 import com.unla.chefEnCasa.server.dto.RecetaResponseDto;
 import com.unla.chefEnCasa.server.exceptions.ServerException;
-//import com.unla.chefEnCasa.server.dto.RecetaResponseDto;
 import com.unla.chefEnCasa.server.service.RecetaService;
 
 import io.grpc.Status;
@@ -42,7 +41,13 @@ public class RecetaGrpcImpl extends recetaImplBase {
         receta.setCategoria(request.getCategoria());
         receta.setDescripcion(request.getDescripcion());
         receta.setTiempoAprox(request.getTiempoAprox());
-
+        List<com.unla.chefEnCasa.server.entity.Foto> lstFotos = new ArrayList<>();
+        for(Foto f : request.getFotosList()) {
+            com.unla.chefEnCasa.server.entity.Foto foto = new com.unla.chefEnCasa.server.entity.Foto();
+            foto.setUrl(f.getUrl());
+            lstFotos.add(foto);
+        }
+        receta.setFotos(lstFotos);
         List<com.unla.chefEnCasa.server.entity.Ingrediente> lstIngredientes = new ArrayList<>();
         for (Ingrediente i : request.getIngredientesList()) {
             com.unla.chefEnCasa.server.entity.Ingrediente ingrediente = new com.unla.chefEnCasa.server.entity.Ingrediente();
@@ -79,6 +84,13 @@ public class RecetaGrpcImpl extends recetaImplBase {
         receta.setDescripcion(request.getDescripcion());
         receta.setTiempoAprox(request.getTiempoAprox());
 
+        List<com.unla.chefEnCasa.server.entity.Foto> lstFotos = new ArrayList<>();
+        for(Foto f : request.getFotosList()) {
+            com.unla.chefEnCasa.server.entity.Foto foto = new com.unla.chefEnCasa.server.entity.Foto();
+            foto.setUrl(f.getUrl());
+            lstFotos.add(foto);
+        }
+        receta.setFotos(lstFotos);
         List<com.unla.chefEnCasa.server.entity.Ingrediente> lstIngredientes = new ArrayList<>();
         for (Ingrediente i : request.getIngredientesList()) {
             com.unla.chefEnCasa.server.entity.Ingrediente ingrediente = new com.unla.chefEnCasa.server.entity.Ingrediente();
@@ -109,7 +121,8 @@ public class RecetaGrpcImpl extends recetaImplBase {
 
     @Override
     public void traerRecetasPorId(UsuarioRequestByUserId request, StreamObserver<getRecetas> responseObserver) {
-      List <RecetaResponseDto> traerRecetas=recetaService.traerRecetasPorId(request.getId());
+      try{
+        List <RecetaResponseDto> traerRecetas=recetaService.traerRecetasPorId(request.getId());
         List <RecetaResponse>recetaGrpcList=new ArrayList<>();
         
        for(int i=0;i<traerRecetas.size();i++){
@@ -148,11 +161,15 @@ public class RecetaGrpcImpl extends recetaImplBase {
        .build();
        responseObserver.onNext(recetasLista);
        responseObserver.onCompleted();
+    }catch(ServerException e){
+        responseObserver.onError(Status.UNKNOWN.withDescription(e.getMensaje()).asRuntimeException());
+    }
 
     }
 
     @Override
     public void traerRecetas(RecetaRequestFilter request, StreamObserver<getRecetas> responseObserver) {
+        try{
        List <RecetaResponseDto> traerRecetas=recetaService.traerRecetas(request.getTitulo(),request.getCategoria(),request.getPage(),
        request.getSize(),request.getOrderBy(),request.getSortBy());
         List <RecetaResponse>recetaGrpcList=new ArrayList<>();
@@ -193,11 +210,15 @@ public class RecetaGrpcImpl extends recetaImplBase {
        .build();
        responseObserver.onNext(recetasLista);
        responseObserver.onCompleted();
+    }catch(ServerException e ){
+        responseObserver.onError(Status.UNKNOWN.withDescription(e.getMensaje()).asRuntimeException());
+    }
 
     }
 
     @Override
     public void traerIngredientes(RecetaRequestById request, StreamObserver<ListaIngredientes> responseObserver) {
+       try{ 
         List<com.unla.chefEnCasa.server.entity.Ingrediente> traerIngredientes= recetaService.traerIngredientes(request.getIdReceta());
         List<Ingrediente>ingredienteGrpcList=new ArrayList<>();
         for(int i=0;i<traerIngredientes.size();i++){
@@ -213,12 +234,16 @@ public class RecetaGrpcImpl extends recetaImplBase {
         
         responseObserver.onNext(list);
         responseObserver.onCompleted();
+    }catch(ServerException e){
+        responseObserver.onError(Status.UNKNOWN.withDescription(e.getMensaje()).asRuntimeException());
+    }
 
         
     }
 
     @Override
     public void traerRecetasFavoritas(UsuarioRequestByUserId request, StreamObserver<getRecetas> responseObserver) {
+      try{  
      List <RecetaResponseDto> traerRecetas=recetaService.traerFavoritos(request.getId());
         List <RecetaResponse>recetaGrpcList=new ArrayList<>();
         
@@ -258,6 +283,9 @@ public class RecetaGrpcImpl extends recetaImplBase {
        .build();
        responseObserver.onNext(recetasLista);
        responseObserver.onCompleted();
+    }catch(ServerException e){
+        responseObserver.onError(Status.UNKNOWN.withDescription(e.getMensaje()).asRuntimeException());
+    }
     }
     
 

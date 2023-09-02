@@ -8,10 +8,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -23,8 +25,30 @@ public class Foto {
 	
 	private String url;
 	
-   // @ManyToOne
-    //@JoinColumn(name = "receta_id")
-    //private Receta receta;
+    @ManyToOne
+    @JoinColumn(name = "receta_id")
+    private Receta receta;
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Foto other = (Foto) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
 
 }

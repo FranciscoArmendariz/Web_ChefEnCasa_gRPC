@@ -2,6 +2,7 @@ package com.unla.chefEnCasa.server.dto;
 
 import java.util.List;
 
+import com.unla.chefEnCasa.server.entity.Foto;
 import com.unla.chefEnCasa.server.entity.Ingrediente;
 import com.unla.chefEnCasa.server.entity.Paso;
 
@@ -22,6 +23,7 @@ public class RecetaResponseDto {
 	private Integer tiempoAprox;
 	private List<Ingrediente> ingredientes;
 	private List<Paso> pasos;
+	private List<Foto> fotos;
 
 
 }

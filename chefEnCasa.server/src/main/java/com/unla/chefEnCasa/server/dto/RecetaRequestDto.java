@@ -6,6 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.unla.chefEnCasa.server.entity.Foto;
 import com.unla.chefEnCasa.server.entity.Ingrediente;
 import com.unla.chefEnCasa.server.entity.Paso;
 
@@ -31,5 +32,6 @@ public class RecetaRequestDto {
 	private Integer tiempoAprox;
 	private List<Ingrediente> ingredientes;
 	private List<Paso> pasos;
+	private List<Foto> fotos;
 
 }

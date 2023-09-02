@@ -90,6 +90,7 @@ public class usuarioGrpcImpl extends usuarioImplBase {
 
     @Override
     public void traerUsuariosSeguidos(UsuarioRequestById request, StreamObserver<getUsuarios> responseObserver) {
+       try{
         List<UsuarioResponseDto> traerUsuarios = usuarioService.traerUsuariosSeguidos(request.getId());
         List<UsuarioResponse> usuarios = new ArrayList<>();
         for (int i = 0; i < traerUsuarios.size(); i++) {
@@ -107,6 +108,9 @@ public class usuarioGrpcImpl extends usuarioImplBase {
                 .build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
+        } catch(ServerException e){
+            responseObserver.onError(Status.UNKNOWN.withDescription(e.getMensaje()).asRuntimeException());
+        }
     }
 
 }

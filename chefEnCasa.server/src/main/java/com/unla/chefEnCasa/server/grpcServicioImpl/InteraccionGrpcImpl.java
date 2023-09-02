@@ -46,12 +46,10 @@ public class InteraccionGrpcImpl extends interaccionImplBase {
             responseObserver.onError(Status.UNKNOWN.withDescription(e.getMensaje()).asRuntimeException());
         }
     }
-    //REVISAR MAÑANA
-    
     @Override
-    public void agregarFavorito(favorito request, StreamObserver<StringSeguido> responseObserver) {
-        String agregarFavorito = interaccionService.agregarFavorito(request.getIdUsuario(), request.getIdReceta());
+    public void agregarFavorito(favorito request, StreamObserver<StringSeguido> responseObserver) {  
         try {
+            String agregarFavorito = interaccionService.agregarFavorito(request.getIdUsuario(), request.getIdReceta());
             StringSeguido response = StringSeguido.newBuilder()
                     .setSeguido(agregarFavorito)
                     .build();
@@ -64,8 +62,8 @@ public class InteraccionGrpcImpl extends interaccionImplBase {
 
     @Override
     public void removerFavorito(favorito request, StreamObserver<StringSeguido> responseObserver) {
-        String removerFavorito = interaccionService.removerFavorito(request.getIdUsuario(), request.getIdReceta());
         try {
+            String removerFavorito = interaccionService.removerFavorito(request.getIdUsuario(), request.getIdReceta());
             StringSeguido response = StringSeguido.newBuilder()
                     .setSeguido(removerFavorito)
                     .build();

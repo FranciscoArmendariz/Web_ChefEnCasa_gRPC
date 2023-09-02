@@ -53,7 +53,6 @@ public class InteraccionService {
 		usuarioRepository.save(seguidor);
 		return "dejaste de seguir al usuario correctamente";
 	}
-	//REVISAR MAÑANA 
 	@Transactional
 	public String agregarFavorito(long idUsuario, long idReceta) {
 		Usuario usuario = usuarioRepository.findById(idUsuario)

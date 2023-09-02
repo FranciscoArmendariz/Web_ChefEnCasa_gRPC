@@ -31,8 +31,8 @@ public class Receta {
 	private String categoria;
 	private int tiempoAprox;
 
-	// @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL)
-	// private List<Foto> fotos;
+	@OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Foto> fotos;
 	@OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Ingrediente> ingredientes;
 	@OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
