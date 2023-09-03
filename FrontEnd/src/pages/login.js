@@ -1,11 +1,11 @@
 import Header from "@/components/header";
-import Recetas from "@/screens/recetas";
+import Login from "@/screens/login";
 
-export default function RecetasPage() {
+export default function LoginPage() {
   return (
     <div className='h-screen bg-background overflow-y-auto'>
-      <Header />
-      <Recetas />
+      <Header hideButtons />
+      <Login />
     </div>
   );
 }

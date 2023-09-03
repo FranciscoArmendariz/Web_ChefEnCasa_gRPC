@@ -1,6 +1,7 @@
 package com.unla.chefEnCasa.server.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
@@ -151,6 +152,14 @@ public class RecetaService {
 			throw new ServerException("error al listas las recetas", HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@Transactional
+	public List<RecetaResponseDto> traerTodasLasRecetas(){
+		List<Receta> recetas = recetaRepository.findAll();
+		return recetas.stream().map(receta -> modelMapper.map(receta, RecetaResponseDto.class))
+				.collect(Collectors.toList());
+	}
+
 	@Transactional
 	public List<RecetaResponseDto> traerRecetasPorId(long id) {
 		Usuario usuario = usuarioRepository.findById(id)

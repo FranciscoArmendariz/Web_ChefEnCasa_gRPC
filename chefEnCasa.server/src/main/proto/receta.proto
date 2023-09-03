@@ -9,12 +9,13 @@ service receta {
     rpc EditarReceta(RecetaUpdateRequest) returns (getRecetaEditada){}
     rpc TraerRecetasPorId(UsuarioRequestByUserId) returns (getRecetas){}
     rpc TraerRecetas(RecetaRequestFilter) returns (getRecetas){}
+    rpc TraerTodasLasRecetas(Empty2) returns (getRecetas){}
     rpc TraerRecetasFavoritas(UsuarioRequestByUserId) returns (getRecetas){}
     rpc TraerIngredientes(RecetaRequestById) returns (ListaIngredientes){}
 }
 
 
-message Receta {
+message RecetaObj {
     int64 id = 1;
     string titulo = 2;
     string descripcion = 3;
@@ -23,6 +24,9 @@ message Receta {
     repeated Ingrediente ingredientes = 6;
     repeated Paso pasos = 7;
     repeated Foto fotos = 8;
+}
+message Empty2{
+
 }
 
 message Foto {

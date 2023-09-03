@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.unla.chefEnCasa.grpc.Empty2;
 import com.unla.chefEnCasa.grpc.Foto;
 import com.unla.chefEnCasa.grpc.Ingrediente;
 import com.unla.chefEnCasa.grpc.ListaIngredientes;
@@ -128,6 +129,7 @@ public class RecetaGrpcImpl extends recetaImplBase {
        for(int i=0;i<traerRecetas.size();i++){
         List<Ingrediente>ingredienteData=new ArrayList<>();
         List<Paso>pasoData=new ArrayList<>();
+        List<Foto>fotoData=new ArrayList<>();
         for(int j=0; j<traerRecetas.get(i).getIngredientes().size();j++){
             Ingrediente ingredienteGrpcAdd=Ingrediente.newBuilder()
             .setCantidad(traerRecetas.get(i).getIngredientes().get(j).getCantidad())
@@ -142,6 +144,13 @@ public class RecetaGrpcImpl extends recetaImplBase {
             .build();
             pasoData.add(pasoGrpcAdd);
         }
+         for(int z=0;z<traerRecetas.get(i).getFotos().size();z++){
+            Foto fotoGrpcAdd=Foto.newBuilder()
+            .setUrl(traerRecetas.get(i).getFotos().get(z).getUrl())
+            .build();
+            fotoData.add(fotoGrpcAdd);
+
+        }
         RecetaResponse  response=RecetaResponse.newBuilder()
         .setId(traerRecetas.get(i).getId())
         .setCategoria(traerRecetas.get(i).getCategoria())
@@ -150,6 +159,7 @@ public class RecetaGrpcImpl extends recetaImplBase {
         .setTitulo(traerRecetas.get(i).getTitulo())
         .addAllIngredientes(ingredienteData)
         .addAllPasos(pasoData)
+        .addAllFotos(fotoData)
         .build();
         
         recetaGrpcList.add(response);
@@ -177,6 +187,7 @@ public class RecetaGrpcImpl extends recetaImplBase {
        for(int i=0;i<traerRecetas.size();i++){
         List<Ingrediente>ingredienteData=new ArrayList<>();
         List<Paso>pasoData=new ArrayList<>();
+        List<Foto>fotoData=new ArrayList<>();
         for(int j=0; j<traerRecetas.get(i).getIngredientes().size();j++){
             Ingrediente ingredienteGrpcAdd=Ingrediente.newBuilder()
             .setCantidad(traerRecetas.get(i).getIngredientes().get(j).getCantidad())
@@ -191,6 +202,13 @@ public class RecetaGrpcImpl extends recetaImplBase {
             .build();
             pasoData.add(pasoGrpcAdd);
         }
+        for(int z=0;z<traerRecetas.get(i).getFotos().size();z++){
+            Foto fotoGrpcAdd=Foto.newBuilder()
+            .setUrl(traerRecetas.get(i).getFotos().get(z).getUrl())
+            .build();
+            fotoData.add(fotoGrpcAdd);
+
+        }
         RecetaResponse  response=RecetaResponse.newBuilder()
         .setId(traerRecetas.get(i).getId())
         .setCategoria(traerRecetas.get(i).getCategoria())
@@ -199,6 +217,7 @@ public class RecetaGrpcImpl extends recetaImplBase {
         .setTitulo(traerRecetas.get(i).getTitulo())
         .addAllIngredientes(ingredienteData)
         .addAllPasos(pasoData)
+        .addAllFotos(fotoData)
         .build();
         
         recetaGrpcList.add(response);
@@ -245,11 +264,12 @@ public class RecetaGrpcImpl extends recetaImplBase {
     public void traerRecetasFavoritas(UsuarioRequestByUserId request, StreamObserver<getRecetas> responseObserver) {
       try{  
      List <RecetaResponseDto> traerRecetas=recetaService.traerFavoritos(request.getId());
-        List <RecetaResponse>recetaGrpcList=new ArrayList<>();
+         List <RecetaResponse>recetaGrpcList=new ArrayList<>();
         
        for(int i=0;i<traerRecetas.size();i++){
         List<Ingrediente>ingredienteData=new ArrayList<>();
         List<Paso>pasoData=new ArrayList<>();
+        List<Foto>fotoData=new ArrayList<>();
         for(int j=0; j<traerRecetas.get(i).getIngredientes().size();j++){
             Ingrediente ingredienteGrpcAdd=Ingrediente.newBuilder()
             .setCantidad(traerRecetas.get(i).getIngredientes().get(j).getCantidad())
@@ -264,6 +284,13 @@ public class RecetaGrpcImpl extends recetaImplBase {
             .build();
             pasoData.add(pasoGrpcAdd);
         }
+        for(int z=0;z<traerRecetas.get(i).getFotos().size();z++){
+            Foto fotoGrpcAdd=Foto.newBuilder()
+            .setUrl(traerRecetas.get(i).getFotos().get(z).getUrl())
+            .build();
+            fotoData.add(fotoGrpcAdd);
+
+        }
         RecetaResponse  response=RecetaResponse.newBuilder()
         .setId(traerRecetas.get(i).getId())
         .setCategoria(traerRecetas.get(i).getCategoria())
@@ -272,6 +299,7 @@ public class RecetaGrpcImpl extends recetaImplBase {
         .setTitulo(traerRecetas.get(i).getTitulo())
         .addAllIngredientes(ingredienteData)
         .addAllPasos(pasoData)
+        .addAllFotos(fotoData)
         .build();
         
         recetaGrpcList.add(response);
@@ -287,6 +315,59 @@ public class RecetaGrpcImpl extends recetaImplBase {
         responseObserver.onError(Status.UNKNOWN.withDescription(e.getMensaje()).asRuntimeException());
     }
     }
-    
 
-} 
+    @Override
+    public void traerTodasLasRecetas(Empty2 request, StreamObserver<getRecetas> responseObserver) {
+        List <RecetaResponseDto> traerRecetas=recetaService.traerTodasLasRecetas();
+         List <RecetaResponse>recetaGrpcList=new ArrayList<>();
+        
+       for(int i=0;i<traerRecetas.size();i++){
+        List<Ingrediente>ingredienteData=new ArrayList<>();
+        List<Paso>pasoData=new ArrayList<>();
+        List<Foto>fotoData=new ArrayList<>();
+        for(int j=0; j<traerRecetas.get(i).getIngredientes().size();j++){
+            Ingrediente ingredienteGrpcAdd=Ingrediente.newBuilder()
+            .setCantidad(traerRecetas.get(i).getIngredientes().get(j).getCantidad())
+            .setNombre(traerRecetas.get(i).getIngredientes().get(j).getNombre())
+            .build();
+            ingredienteData.add(ingredienteGrpcAdd);
+        }
+        for(int y=0; y<traerRecetas.get(i).getPasos().size();y++){
+            Paso pasoGrpcAdd=Paso.newBuilder()
+            .setDescripcion(traerRecetas.get(i).getPasos().get(y).getDescripcion())
+            .setNumero(traerRecetas.get(i).getPasos().get(y).getNumero())
+            .build();
+            pasoData.add(pasoGrpcAdd);
+        }
+        for(int z=0;z<traerRecetas.get(i).getFotos().size();z++){
+            Foto fotoGrpcAdd=Foto.newBuilder()
+            .setUrl(traerRecetas.get(i).getFotos().get(z).getUrl())
+            .build();
+            fotoData.add(fotoGrpcAdd);
+
+        }
+        RecetaResponse  response=RecetaResponse.newBuilder()
+        .setId(traerRecetas.get(i).getId())
+        .setCategoria(traerRecetas.get(i).getCategoria())
+        .setDescripcion(traerRecetas.get(i).getDescripcion())
+        .setTiempoAprox(traerRecetas.get(i).getTiempoAprox())
+        .setTitulo(traerRecetas.get(i).getTitulo())
+        .addAllIngredientes(ingredienteData)
+        .addAllPasos(pasoData)
+        .addAllFotos(fotoData)
+        .build();
+        
+        recetaGrpcList.add(response);
+
+
+       }
+       getRecetas recetasLista= getRecetas.newBuilder()
+       .addAllRecetas(recetaGrpcList)
+       .build();
+       responseObserver.onNext(recetasLista);
+       responseObserver.onCompleted();
+    }
+    
+}
+
+
