@@ -14,7 +14,7 @@ namespace GrpcClientAPI.Controllers
             Client = new receta.recetaClient(GrpcChannel.ForAddress("http://localhost:9090"));
         }
 
-        [HttpGet()]
+        [HttpPost()]
         [Route("[action]")]
         public async Task<getRecetas> TraerRecetas(RecetaRequestFilter request)
         {

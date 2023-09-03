@@ -14,7 +14,7 @@ namespace GrpcClientAPI.Controllers
             Client = new usuario.usuarioClient(GrpcChannel.ForAddress("http://localhost:9090"));
         }
 
-        [HttpGet()]
+        [HttpPost()]
         [Route("[action]")]
         public async Task<getUsuarios> TraerUsuarios(Empty request)
         {
