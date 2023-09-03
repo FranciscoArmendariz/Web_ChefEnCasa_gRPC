@@ -11,6 +11,7 @@ service receta {
     rpc TraerTodasLasRecetas(Empty2) returns (getRecetas){}
     rpc TraerRecetasFavoritas(UsuarioRequestByUserId) returns (getRecetas){}
     rpc TraerIngredientes(RecetaRequestById) returns (ListaIngredientes){}
+    rpc TraerRecetasPorIdReceta(RecetaRequestById) returns (getRecetas){}
 }
 
 
