@@ -16,15 +16,12 @@ import com.unla.chefEnCasa.grpc.RecetaRequestFilter;
 import com.unla.chefEnCasa.grpc.RecetaResponse;
 import com.unla.chefEnCasa.grpc.RecetaUpdateRequest;
 import com.unla.chefEnCasa.grpc.UsuarioRequestByUserId;
-import com.unla.chefEnCasa.grpc.UsuarioResponse;
 import com.unla.chefEnCasa.grpc.getRecetaCreada;
 import com.unla.chefEnCasa.grpc.getRecetaEditada;
 import com.unla.chefEnCasa.grpc.getRecetas;
-import com.unla.chefEnCasa.grpc.getUsuarios;
 import com.unla.chefEnCasa.grpc.recetaGrpc.recetaImplBase;
 import com.unla.chefEnCasa.server.dto.RecetaRequestDto;
 import com.unla.chefEnCasa.server.dto.RecetaResponseDto;
-import com.unla.chefEnCasa.server.dto.UsuarioResponseDto;
 import com.unla.chefEnCasa.server.exceptions.ServerException;
 import com.unla.chefEnCasa.server.service.RecetaService;
 
@@ -132,6 +129,7 @@ public class RecetaGrpcImpl extends recetaImplBase {
        for(int i=0;i<traerRecetas.size();i++){
         List<Ingrediente>ingredienteData=new ArrayList<>();
         List<Paso>pasoData=new ArrayList<>();
+        List<Foto>fotoData=new ArrayList<>();
         for(int j=0; j<traerRecetas.get(i).getIngredientes().size();j++){
             Ingrediente ingredienteGrpcAdd=Ingrediente.newBuilder()
             .setCantidad(traerRecetas.get(i).getIngredientes().get(j).getCantidad())
@@ -146,6 +144,13 @@ public class RecetaGrpcImpl extends recetaImplBase {
             .build();
             pasoData.add(pasoGrpcAdd);
         }
+         for(int z=0;z<traerRecetas.get(i).getFotos().size();z++){
+            Foto fotoGrpcAdd=Foto.newBuilder()
+            .setUrl(traerRecetas.get(i).getFotos().get(z).getUrl())
+            .build();
+            fotoData.add(fotoGrpcAdd);
+
+        }
         RecetaResponse  response=RecetaResponse.newBuilder()
         .setId(traerRecetas.get(i).getId())
         .setCategoria(traerRecetas.get(i).getCategoria())
@@ -154,6 +159,7 @@ public class RecetaGrpcImpl extends recetaImplBase {
         .setTitulo(traerRecetas.get(i).getTitulo())
         .addAllIngredientes(ingredienteData)
         .addAllPasos(pasoData)
+        .addAllFotos(fotoData)
         .build();
         
         recetaGrpcList.add(response);
@@ -211,6 +217,7 @@ public class RecetaGrpcImpl extends recetaImplBase {
         .setTitulo(traerRecetas.get(i).getTitulo())
         .addAllIngredientes(ingredienteData)
         .addAllPasos(pasoData)
+        .addAllFotos(fotoData)
         .build();
         
         recetaGrpcList.add(response);
@@ -292,6 +299,7 @@ public class RecetaGrpcImpl extends recetaImplBase {
         .setTitulo(traerRecetas.get(i).getTitulo())
         .addAllIngredientes(ingredienteData)
         .addAllPasos(pasoData)
+        .addAllFotos(fotoData)
         .build();
         
         recetaGrpcList.add(response);
@@ -346,6 +354,7 @@ public class RecetaGrpcImpl extends recetaImplBase {
         .setTitulo(traerRecetas.get(i).getTitulo())
         .addAllIngredientes(ingredienteData)
         .addAllPasos(pasoData)
+        .addAllFotos(fotoData)
         .build();
         
         recetaGrpcList.add(response);

@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.unla.chefEnCasa.server.dto.RecetaRequestDto;
 import com.unla.chefEnCasa.server.dto.RecetaResponseDto;
-import com.unla.chefEnCasa.server.dto.UsuarioResponseDto;
 import com.unla.chefEnCasa.server.entity.Foto;
 import com.unla.chefEnCasa.server.entity.Ingrediente;
 import com.unla.chefEnCasa.server.entity.Paso;
