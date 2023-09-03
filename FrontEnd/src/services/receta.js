@@ -1,9 +1,9 @@
-import api from "@/config/api";
+import api from "@/api";
 
-const RUTA = "/Receta";
+const RUTA = "";
 
 const recetaApi = {
-  getRecetas: () => api.get(`${RUTA}`),
+  getRecetas: (value) => api.post(`${RUTA}/TraerRecetas`, value),
   getRecetasFavoritas: ({ idUsuario, idPagina }) =>
     api.post(`${RUTA}`, { idUsuario, idPagina }),
   getRecetasPorUsuario: ({ idUsuario }) => api.post(`${RUTA}`, { idUsuario }),

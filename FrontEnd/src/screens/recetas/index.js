@@ -5,12 +5,25 @@ import LoadingWrapper from "@/components/LoadingWrapper";
 import { useDispatch, useSelector } from "react-redux";
 import { traer } from "@/redux/recetas/actions";
 import { RECETAS } from "@/constants/recetas";
+import recetaApi from "@/services/receta";
 
 export default function Recetas() {
   const dispach = useDispatch();
 
   useEffect(() => {
-    dispach(traer({ campo: "listaRecetas", service: RECETAS }));
+    dispach(
+      traer({
+        campo: "listaRecetas",
+        service: () => {
+          recetaApi.getRecetas({
+            titulo: "",
+            categoria: "",
+            page: 1,
+            size: 12,
+          });
+        },
+      })
+    );
   }, []);
 
   const recetas = useSelector((state) => state.recetas.listaRecetas);

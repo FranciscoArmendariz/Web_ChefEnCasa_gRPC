@@ -7,6 +7,7 @@ import {
 import { useDispatch } from "react-redux";
 import { setFiltro, traer } from "@/redux/recetas/actions";
 import { RECETAS } from "@/constants/recetas";
+import recetaApi from "@/services/receta";
 
 export default function FormularioFiltros() {
   const { control, register, handleSubmit } = useForm({
@@ -25,7 +26,19 @@ export default function FormularioFiltros() {
   const dispach = useDispatch();
   const onSubmit = (data) => {
     dispach(setFiltro(data));
-    dispach(traer({ campo: "listaRecetas", service: RECETAS }));
+    dispach(
+      traer({
+        campo: "listaRecetas",
+        service: () => {
+          recetaApi.getRecetas({
+            titulo: data.titulo,
+            categoria: data.categoria,
+            page: 1,
+            size: 12,
+          });
+        },
+      })
+    );
   };
 
   return (

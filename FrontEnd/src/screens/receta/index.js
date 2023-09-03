@@ -1,6 +1,6 @@
 import LoadingWrapper from "@/components/LoadingWrapper";
 import { RECETAS } from "@/constants/recetas";
-import { traer } from "@/redux/recetas/actions";
+import { traer, traerRecetaPorId } from "@/redux/recetas/actions";
 import recetaApi from "@/services/receta";
 import Image from "next/image";
 import { useEffect } from "react";
@@ -10,12 +10,7 @@ export default function Receta({ idReceta }) {
   const dispach = useDispatch();
   useEffect(() => {
     if (!!idReceta) {
-      dispach(
-        traer({
-          campo: "recetaPorId",
-          service: recetaApi.getRecetasPorId({ idReceta }),
-        })
-      );
+      dispach(traerRecetaPorId(idReceta));
     }
   }, [dispach, idReceta]);
 
@@ -33,7 +28,7 @@ export default function Receta({ idReceta }) {
           <li>
             INGREDIENTES:
             <ul className='list-disc pl-10'>
-              {receta?.ingredientes.map((ingrediente) => {
+              {receta?.ingredientes?.map((ingrediente) => {
                 return (
                   <li key={`${ingrediente.id}-${ingrediente.nombre}`}>
                     {ingrediente.nombre}: {ingrediente.cantidad}
@@ -45,7 +40,7 @@ export default function Receta({ idReceta }) {
           <li>
             PASOS:
             <ul className='list-decimal pl-10'>
-              {receta?.pasos.map((paso) => {
+              {receta?.pasos?.map((paso) => {
                 return (
                   <li key={`${paso.id}-${paso.numero}`}>{paso.descripcion}</li>
                 );
@@ -55,7 +50,7 @@ export default function Receta({ idReceta }) {
           <li>
             IMPÁGENES:
             <div className='pl-6'>
-              {receta?.imagenes.map((imagen) => {
+              {receta?.imagenes?.map((imagen) => {
                 return (
                   <Image key={imagen} src={imagen} width={150} height={150} />
                 );

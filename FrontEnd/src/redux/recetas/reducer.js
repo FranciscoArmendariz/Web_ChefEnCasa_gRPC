@@ -1,3 +1,5 @@
+import recetaApi from "@/services/receta";
+
 export default function recetas(
   state = {
     filtroActual: {},
@@ -17,6 +19,11 @@ export default function recetas(
           typeof action.payload.service === "function"
             ? action.payload.service()
             : action.payload.service,
+      };
+    case "TRAER_POR_ID":
+      return {
+        ...state,
+        recetaPorId: recetaApi.getRecetasPorId(action.payload),
       };
     default:
       return state;
