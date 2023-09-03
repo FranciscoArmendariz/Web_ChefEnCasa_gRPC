@@ -22,7 +22,6 @@ import com.unla.chefEnCasa.grpc.getRecetas;
 import com.unla.chefEnCasa.grpc.recetaGrpc.recetaImplBase;
 import com.unla.chefEnCasa.server.dto.RecetaRequestDto;
 import com.unla.chefEnCasa.server.dto.RecetaResponseDto;
-import com.unla.chefEnCasa.server.entity.Receta;
 import com.unla.chefEnCasa.server.exceptions.ServerException;
 import com.unla.chefEnCasa.server.service.RecetaService;
 
