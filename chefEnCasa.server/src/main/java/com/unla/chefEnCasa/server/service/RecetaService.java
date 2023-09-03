@@ -193,5 +193,15 @@ public class RecetaService {
 		}
 		return response;
 	}
+	 @Transactional
+	public RecetaResponseDto traerRecetasPorIdReceta(long idReceta){
+		Receta receta= recetaRepository.findById(idReceta)
+		.orElseThrow(() -> new ServerException("no existe la receta con id: "+idReceta, HttpStatus.NOT_FOUND));
+		return modelMapper.map(receta, RecetaResponseDto.class);
+				
+
+		
+
+	}
 
 }

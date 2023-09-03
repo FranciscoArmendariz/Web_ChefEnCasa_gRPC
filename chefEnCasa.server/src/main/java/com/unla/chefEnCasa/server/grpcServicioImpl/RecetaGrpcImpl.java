@@ -22,6 +22,7 @@ import com.unla.chefEnCasa.grpc.getRecetas;
 import com.unla.chefEnCasa.grpc.recetaGrpc.recetaImplBase;
 import com.unla.chefEnCasa.server.dto.RecetaRequestDto;
 import com.unla.chefEnCasa.server.dto.RecetaResponseDto;
+import com.unla.chefEnCasa.server.entity.Receta;
 import com.unla.chefEnCasa.server.exceptions.ServerException;
 import com.unla.chefEnCasa.server.service.RecetaService;
 
@@ -367,6 +368,54 @@ public class RecetaGrpcImpl extends recetaImplBase {
        responseObserver.onNext(recetasLista);
        responseObserver.onCompleted();
     }
+
+    @Override
+    public void traerRecetasPorIdReceta(RecetaRequestById request, StreamObserver<RecetaResponse> responseObserver) {
+        try{
+        RecetaResponseDto traerRecetas=recetaService.traerRecetasPorIdReceta(request.getIdReceta());
+        List<Ingrediente>ingredienteData=new ArrayList<>();
+        List<Paso>pasoData=new ArrayList<>();
+        List<Foto>fotoData=new ArrayList<>();
+        for(int j=0; j<traerRecetas.getIngredientes().size();j++){
+            Ingrediente ingredienteGrpcAdd=Ingrediente.newBuilder()
+            .setCantidad(traerRecetas.getIngredientes().get(j).getCantidad())
+            .setNombre(traerRecetas.getIngredientes().get(j).getNombre())
+            .build();
+            ingredienteData.add(ingredienteGrpcAdd);
+        }
+        for(int y=0; y<traerRecetas.getPasos().size();y++){
+            Paso pasoGrpcAdd=Paso.newBuilder()
+            .setDescripcion(traerRecetas.getPasos().get(y).getDescripcion())
+            .setNumero(traerRecetas.getPasos().get(y).getNumero())
+            .build();
+            pasoData.add(pasoGrpcAdd);
+        }
+        for(int z=0;z<traerRecetas.getFotos().size();z++){
+            Foto fotoGrpcAdd=Foto.newBuilder()
+            .setUrl(traerRecetas.getFotos().get(z).getUrl())
+            .build();
+            fotoData.add(fotoGrpcAdd);
+
+        }
+        RecetaResponse response= RecetaResponse.newBuilder()
+        .setId(traerRecetas.getId())
+        .setCategoria(traerRecetas.getCategoria())
+        .setDescripcion(traerRecetas.getDescripcion())
+        .setTiempoAprox(traerRecetas.getTiempoAprox())
+        .setTitulo(traerRecetas.getTitulo())
+        .addAllIngredientes(ingredienteData)
+        .addAllPasos(pasoData)
+        .addAllFotos(fotoData)
+        .build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+        }catch(ServerException e){
+        responseObserver.onError(Status.UNKNOWN.withDescription(e.getMensaje()).asRuntimeException());
+    }
+
+    }
+    
+    
     
 }
 
