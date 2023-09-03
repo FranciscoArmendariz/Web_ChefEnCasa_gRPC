@@ -70,7 +70,7 @@ namespace GrpcClientAPI.Controllers
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<getRecetas> TraerRecetasPorIdReceta(RecetaRequestById request)
+        public async Task<RecetaResponse> TraerRecetasPorIdReceta(RecetaRequestById request)
         {
             var reply = await Client.TraerRecetasPorIdRecetaAsync(request);
 
