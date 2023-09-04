@@ -76,5 +76,14 @@ namespace GrpcClientAPI.Controllers
 
             return reply;
         }
+
+        [HttpPost()]
+        [Route("[action]")]
+        public async Task<ListaIngredienteSinCantidad> TraerTodosLosIngredientes(Empty2 request)
+        {
+            var reply = await Client.TraerTodosLosIngredientesAsync(request);
+
+            return reply;
+        }
     }
 }
