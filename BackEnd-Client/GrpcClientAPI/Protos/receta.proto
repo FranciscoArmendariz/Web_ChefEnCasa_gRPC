@@ -30,7 +30,7 @@ message Empty2{
 
 }
 
-message Foto {
+ message Foto {
     string url = 1;
 }
 
@@ -69,6 +69,7 @@ message RecetaRequest {
     repeated Ingrediente ingredientes = 6;
     repeated Paso pasos = 7;
     repeated Foto fotos = 8;
+
 }
 
 message getRecetaCreada{

@@ -1,3 +1,6 @@
+using GrpcClientAPI;
+using Microsoft.OpenApi.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,7 +19,14 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.MapType<Ingrediente>(() => new OpenApiSchema { Type = "array", Items = new OpenApiSchema { Type = "string" } });
+    c.MapType<Paso>(() => new OpenApiSchema { Type = "array", Items = new OpenApiSchema { Type = "string" } });
+    c.MapType<Foto>(() => new OpenApiSchema { Type = "array", Items = new OpenApiSchema { Type = "string" } });
+});
 
 var app = builder.Build();
 

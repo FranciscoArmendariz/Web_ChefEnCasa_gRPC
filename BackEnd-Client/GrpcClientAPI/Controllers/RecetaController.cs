@@ -1,4 +1,5 @@
-﻿using Grpc.Net.Client;
+﻿using Google.Protobuf.Collections;
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Channels;
 
@@ -25,9 +26,35 @@ namespace GrpcClientAPI.Controllers
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<getRecetaCreada> CrearReceta(RecetaRequest request)
+        public  void Test(Test request)
         {
-            var reply = await Client.CrearRecetaAsync(request);
+            RecetaRequest receta = new RecetaRequest();
+            //receta.Fotos.Add(request.Fotos);
+            //foreach (var foto in request.Fotos)
+            //{
+
+            //}
+        }
+
+        [HttpPost()]
+        [Route("[action]")]
+        public async Task<getRecetaCreada> CrearReceta(RecetaObj request)
+        {
+            RecetaRequest receta = request.Receta;
+
+            foreach (var item in request.Ingredientes)
+            {
+                receta.Ingredientes.Add(new Ingrediente() { Cantidad= item.Cantidad, Nombre = item.Nombre});
+            }
+            foreach (var item in request.Fotos)
+            {
+                receta.Fotos.Add(new Foto() { Url=item.Url });
+            }
+            foreach (var item in request.Pasos)
+            {
+                receta.Pasos.Add(new Paso() { Descripcion = item.Descripcion, Numero = item.Numero });
+            }
+            var reply = await Client.CrearRecetaAsync(receta);
 
             return reply;
         }
@@ -85,5 +112,35 @@ namespace GrpcClientAPI.Controllers
 
             return reply;
         }
+    }
+
+    public class Test
+    {
+        public List<FotoObj> Fotos { get; set; }
+    }
+
+    public class FotoObj
+    {
+        public string Url { get; set; }
+    }
+
+    public class IngredienteObj
+    {
+        public string Nombre { get; set; }
+        public string Cantidad { get; set; }
+    }
+
+    public class PasoObj
+    {
+        public int Numero { get; set; }
+        public string Descripcion { get; set; }
+    }
+
+    public class RecetaObj
+    {
+        public RecetaRequest Receta { get; set; }
+        public List<FotoObj> Fotos { get; set; }
+        public List<IngredienteObj> Ingredientes { get; set; }
+        public List<PasoObj> Pasos { get; set; }
     }
 }
