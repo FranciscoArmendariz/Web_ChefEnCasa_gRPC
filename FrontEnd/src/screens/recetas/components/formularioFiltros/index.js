@@ -56,7 +56,8 @@ export default function FormularioFiltros() {
           );
         })}
       </select>
-      <label>Tiempo de preparación</label>
+
+      {/*<label>Tiempo de preparación</label>
       <div className='flex flex-row gap-2'>
         <div className='flex flex-col flex-1'>
           <label htmlFor='rangoDeTiempoMin'>MIN</label>
@@ -120,7 +121,7 @@ export default function FormularioFiltros() {
         onClick={append}
       >
         +
-      </button>
+      </button>*/}
 
       <button
         className='py-2 px-7 bg-blue-600 text-white font-bold w-min m-auto my-2 rounded-lg'
