@@ -1,19 +1,30 @@
 import { login } from "@/redux/user/actions";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Login() {
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, getValues } = useForm({
     defaultValues: { usuario: "", contrasenia: "" },
   });
   const router = useRouter();
   const dispach = useDispatch();
+  const loginSucces = useSelector((state) => state.user.isLogged);
+  const loginFailure = useSelector((state) => state.user.loginError);
+  useEffect(() => {
+    if (loginSucces) {
+      const campos = getValues();
+      localStorage.setItem(
+        "loginData",
+        `${campos.usuario}_${campos.contrasenia}`
+      );
+      router.push("/");
+    }
+  }, [loginSucces]);
 
   const onSubmit = (data) => {
     dispach(login({ usuario: data.usuario, contrasenia: data.contrasenia }));
-    localStorage.setItem("loginData", `${data.usuario}_${data.contrasenia}`);
-    router.push("/");
   };
 
   return (
@@ -36,6 +47,11 @@ export default function Login() {
           {...register("contrasenia", { required: "Contraseña obligatoria" })}
           placeholder='contraseña...'
         />
+        {loginFailure && (
+          <div className=' rounded-md border-2 text-red-800 bg-red-100 p-1 font-semibold border-red-800'>
+            Usuario o Contraseña Incorrectos
+          </div>
+        )}
         <button
           type='submit'
           className='bg-gradient-to-b from-blue-400 to-blue-500 text-white font-bold border h-10 w-2/3 border-gray-600 rounded-lg'

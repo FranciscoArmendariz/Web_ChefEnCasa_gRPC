@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 export default function Header({ hideButtons }) {
   const router = useRouter();
   const [mostrarOpciones, setMostrarOpciones] = useState(false);
-  const { usuario } = useSelector((state) => state.user);
+  const usuario = useSelector((state) => state.user.usuarioActual);
   const dispach = useDispatch();
   const goToPage = (url) => {
     router.push(url);
@@ -77,7 +77,7 @@ export default function Header({ hideButtons }) {
             { hidden: !mostrarOpciones }
           )}
         >
-          <div className='font-semibold mb-3'>usuario: {usuario}</div>
+          <div className='font-semibold mb-3'>usuario: {usuario?.nombre}</div>
           <button
             className='bg-red-600 text-white p-1 rounded-lg font-bold'
             onClick={cerrarSesion}

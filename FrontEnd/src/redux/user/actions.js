@@ -1,6 +1,39 @@
-export function login({ usuario, contrasenia }) {
-  return { type: "LOGIN", payload: { usuario, contrasenia } };
-}
+import { userApi } from "@/services/user";
+
+export const login =
+  ({ usuario, contrasenia }) =>
+  async (dispatch) => {
+    userApi.login({ usuario, clave: contrasenia }).then((response) => {
+      if (response.ok) {
+        dispatch({ type: "LOGIN", payload: response.data });
+      } else {
+        dispatch({ type: "LOGIN_ERROR", error: response.problem });
+      }
+    });
+  };
+
+export const traerUsuarios = () => async (dispatch) => {
+  userApi.traerUsuarios().then((response) => {
+    if (response.ok) {
+      dispatch({ type: "TRAER_USUARIOS", payload: response.data });
+    } else {
+      dispatch({ type: "TRAER_USUARIOS_ERROR", error: response.problem });
+    }
+  });
+};
+
+export const traerUsuariosSeguidos = (id) => async (dispatch) => {
+  userApi.traerUsuariosSeguidos(id).then((response) => {
+    if (response.ok) {
+      dispatch({ type: "TRAER_USUARIOS_SEGUIDOS", payload: response.data });
+    } else {
+      dispatch({
+        type: "TRAER_USUARIOS_SEGUIDOS_ERROR",
+        error: response.problem,
+      });
+    }
+  });
+};
 
 export function logout() {
   return { type: "LOGOUT" };
