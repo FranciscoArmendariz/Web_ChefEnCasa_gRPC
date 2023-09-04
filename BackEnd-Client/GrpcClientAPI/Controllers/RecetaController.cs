@@ -26,18 +26,6 @@ namespace GrpcClientAPI.Controllers
 
         [HttpPost()]
         [Route("[action]")]
-        public  void Test(Test request)
-        {
-            RecetaRequest receta = new RecetaRequest();
-            //receta.Fotos.Add(request.Fotos);
-            //foreach (var foto in request.Fotos)
-            //{
-
-            //}
-        }
-
-        [HttpPost()]
-        [Route("[action]")]
         public async Task<getRecetaCreada> CrearReceta(RecetaObj request)
         {
             RecetaRequest receta = request.Receta;
