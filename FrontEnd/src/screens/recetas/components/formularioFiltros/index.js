@@ -25,18 +25,14 @@ export default function FormularioFiltros() {
 
   const dispach = useDispatch();
   const onSubmit = (data) => {
-    dispach(setFiltro(data));
     dispach(
-      traer({
-        campo: "listaRecetas",
-        service: () => {
-          recetaApi.getRecetas({
-            titulo: data.titulo,
-            categoria: data.categoria,
-            page: 1,
-            size: 12,
-          });
-        },
+      setFiltro({
+        titulo: data.titulo,
+        categoria: data.categoria,
+        page: 1,
+        size: 12,
+        orderBy: "asc",
+        sortBy: "id",
       })
     );
   };
@@ -60,7 +56,8 @@ export default function FormularioFiltros() {
           );
         })}
       </select>
-      <label>Tiempo de preparación</label>
+
+      {/*<label>Tiempo de preparación</label>
       <div className='flex flex-row gap-2'>
         <div className='flex flex-col flex-1'>
           <label htmlFor='rangoDeTiempoMin'>MIN</label>
@@ -124,9 +121,14 @@ export default function FormularioFiltros() {
         onClick={append}
       >
         +
-      </button>
+      </button>*/}
 
-      <button type='submit'>Filtrar</button>
+      <button
+        className='py-2 px-7 bg-blue-600 text-white font-bold w-min m-auto my-2 rounded-lg'
+        type='submit'
+      >
+        Filtrar
+      </button>
     </form>
   );
 }

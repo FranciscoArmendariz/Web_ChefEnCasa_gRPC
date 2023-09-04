@@ -2,8 +2,9 @@ export const CATEGORIAS = [
   "Acompañamiento",
   "Postre",
   "Bebida",
-  "Carne",
-  "Vegana",
+  "Almuerzo",
+  "Cena",
+  "Comida",
 ];
 
 export const INGREDIENTES = [

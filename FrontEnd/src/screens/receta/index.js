@@ -1,7 +1,5 @@
 import LoadingWrapper from "@/components/LoadingWrapper";
-import { RECETAS } from "@/constants/recetas";
-import { traer, traerRecetaPorId } from "@/redux/recetas/actions";
-import recetaApi from "@/services/receta";
+import { traerRecetaPorId } from "@/redux/recetas/actions";
 import Image from "next/image";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -50,9 +48,14 @@ export default function Receta({ idReceta }) {
           <li>
             IMPÁGENES:
             <div className='pl-6'>
-              {receta?.imagenes?.map((imagen) => {
+              {receta?.fotos?.map((foto) => {
                 return (
-                  <Image key={imagen} src={imagen} width={150} height={150} />
+                  <Image
+                    key={foto.url}
+                    src={foto.url}
+                    width={150}
+                    height={150}
+                  />
                 );
               })}
             </div>
