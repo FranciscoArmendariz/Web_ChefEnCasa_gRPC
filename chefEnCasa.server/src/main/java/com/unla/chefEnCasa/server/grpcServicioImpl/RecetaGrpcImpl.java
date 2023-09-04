@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.unla.chefEnCasa.grpc.Empty2;
 import com.unla.chefEnCasa.grpc.Foto;
 import com.unla.chefEnCasa.grpc.Ingrediente;
+import com.unla.chefEnCasa.grpc.IngredienteSinCantidad;
+import com.unla.chefEnCasa.grpc.ListaIngredienteSinCantidad;
 import com.unla.chefEnCasa.grpc.ListaIngredientes;
 import com.unla.chefEnCasa.grpc.Paso;
 import com.unla.chefEnCasa.grpc.RecetaRequest;
@@ -256,8 +258,30 @@ public class RecetaGrpcImpl extends recetaImplBase {
     }catch(ServerException e){
         responseObserver.onError(Status.UNKNOWN.withDescription(e.getMensaje()).asRuntimeException());
     }
+    }
+         
+  
 
+    @Override
+    public void traerTodosLosIngredientes(Empty2 request, StreamObserver<ListaIngredienteSinCantidad> responseObserver) {
+      try{ 
+        List<com.unla.chefEnCasa.server.entity.Ingrediente> traerIngredientes= recetaService.traerTodosLosIngredientes();
+        List<IngredienteSinCantidad>ingredienteGrpcList=new ArrayList<>();
+        for(int i=0;i<traerIngredientes.size();i++){
+             IngredienteSinCantidad ingredienteGrpcAdd=IngredienteSinCantidad.newBuilder()
+            .setNombre(traerIngredientes.get(i).getNombre())
+            .build();
+            ingredienteGrpcList.add(ingredienteGrpcAdd);
+        }
+        ListaIngredienteSinCantidad list= ListaIngredienteSinCantidad.newBuilder()
+        .addAllIngredienteSin(ingredienteGrpcList)
+        .build();
         
+        responseObserver.onNext(list);
+        responseObserver.onCompleted();
+    }catch(ServerException e){
+        responseObserver.onError(Status.UNKNOWN.withDescription(e.getMensaje()).asRuntimeException());
+    }
     }
 
     @Override
@@ -417,5 +441,4 @@ public class RecetaGrpcImpl extends recetaImplBase {
     
     
 }
-
 

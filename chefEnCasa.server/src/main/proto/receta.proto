@@ -13,6 +13,7 @@ service receta {
     rpc TraerRecetasFavoritas(UsuarioRequestByUserId) returns (getRecetas){}
     rpc TraerIngredientes(RecetaRequestById) returns (ListaIngredientes){}
     rpc TraerRecetasPorIdReceta(RecetaRequestById) returns (RecetaResponse){}
+    rpc TraerTodosLosIngredientes(Empty2) returns(ListaIngredienteSinCantidad){}
 }
 
 
@@ -45,6 +46,14 @@ message ListaIngredientes{
 message Ingrediente {
     string nombre = 1;
     string cantidad = 2;
+}
+
+message ListaIngredienteSinCantidad{
+    repeated IngredienteSinCantidad ingredienteSin=1;
+}
+
+message IngredienteSinCantidad{
+    string nombre=1;
 }
 
 message Paso {

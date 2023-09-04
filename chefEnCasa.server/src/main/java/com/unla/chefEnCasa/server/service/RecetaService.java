@@ -22,6 +22,7 @@ import com.unla.chefEnCasa.server.entity.Paso;
 import com.unla.chefEnCasa.server.entity.Receta;
 import com.unla.chefEnCasa.server.entity.Usuario;
 import com.unla.chefEnCasa.server.exceptions.ServerException;
+import com.unla.chefEnCasa.server.repository.IngredienteRepository;
 import com.unla.chefEnCasa.server.repository.RecetaRepository;
 import com.unla.chefEnCasa.server.repository.UsuarioRepository;
 
@@ -33,6 +34,8 @@ public class RecetaService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	@Autowired
+	private IngredienteRepository ingredienteRepository;
 
 	private ModelMapper modelMapper = new ModelMapper();
 
@@ -198,10 +201,13 @@ public class RecetaService {
 		Receta receta= recetaRepository.findById(idReceta)
 		.orElseThrow(() -> new ServerException("no existe la receta con id: "+idReceta, HttpStatus.NOT_FOUND));
 		return modelMapper.map(receta, RecetaResponseDto.class);
-				
+	
 
-		
-
+	}
+		@Transactional
+	public List<Ingrediente> traerTodosLosIngredientes(){
+		List <Ingrediente> response=ingredienteRepository.findAll();
+		return response;
 	}
 
 }
