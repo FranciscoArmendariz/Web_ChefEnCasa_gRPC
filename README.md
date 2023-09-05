@@ -1,35 +1,30 @@
 Autores ✒️
+Nicolas Fiasche - Desarrollo cliente.
+Franco Ponce - Desarrollo servidor.
+Francisco Armendariz - Desarrollo Front End.
+Valentin Topssian Oliva - Desarrollo servidor.
+Giuliano Bacon – Desarrollo servidor.
+Prerrequisitos Frontend
+Asegúrate de cumplir con los siguientes requisitos antes de ejecutar el servidor de la vista:
 
-●     Nicolas Fiasche  - Desarrollo cliente.
-●     Franco Ponce - Desarrollo servidor.
-●     Francisco Armendariz - Desarrollo Front End.
-●     Valentin Topssian Oliva - Desarrollo servidor.
-●    Giuliano Bacon  – Desarrollo servidor.
+Visual Studio Code instalado.
+Node.js instalado.
+Para ejecutar el servidor de vista, sigue estos pasos:
 
-Prerequisitos Front ends
-Instalado Visual Studio Code. https://code.visualstudio.com/
+Ubícate dentro de la carpeta FrontEnd.
+Ejecuta el comando yarn install en tu terminal para instalar las dependencias de Node.
+Ejecuta el comando yarn dev.
+La vista se ejecutará en el puerto 3000, http://localhost:3000.
 
-Instalado NodeJS. https://nodejs.org/es/
+Prerrequisitos Backend - Servidor
+Para configurar el backend del servidor, sigue estos pasos:
 
-Para ejecutar el servidor de vista se debe ubicar dentro de la carpeta FrontEnd
+Instala Gradle.
+Asegúrate de tener instalado MySQL Workbench y crea una base de datos llamada init_db.
+En una terminal que apunte a la carpeta chefEnCasa.server, ejecuta el comando gradle build para generar los archivos correspondientes de gRPC.
+Compila el servidor.
+Prerrequisitos Backend - Cliente
+Para configurar el backend del cliente, sigue estos pasos:
 
-Por medio de terminal ejecutar el comando yarn install para instalar las dependencias de node.
-
-Ejecutar el comando yarn dev.
-
-La vista se ejecutara en puerto 3000 , http://localhost:3000
-
-Prerequisitos Back End Servidor
-
-Instalar gradle https://gradle.org/install/
-Tener instalado MySql Workvench y crear una base de datos ( create database init_db )
-En una terminal que apunte a la carpeta chefEnCasa.server ejecutar el comando: gradle build  para generar los archivos correspondientes de grpc
-Luego compilar el servidor.
-
-
-Prerequisitos Back End Cliente
-
-Instalar visual studio con configuracion para desarrollo en .NET
-Abrir la carpeta BackEnd-Client dentro de visual y compilar el archivo GrpcClientApi
-
-
+Instala Visual Studio con la configuración para desarrollo en .NET.
+Abre la carpeta BackEnd-Client dentro de Visual Studio y compila el archivo GrpcClientApi.
