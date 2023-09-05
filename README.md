@@ -1,9 +1,34 @@
-# Web_ChefEnCasa_gRPC
+Autores ✒️
+●     Nicolas Fiasche  - Desarrollo cliente.
+●     Franco Ponce - Desarrollo servidor.
+●     Francisco Armendariz - Desarrollo Front End.
+●     Valentin Topssian Oliva - Desarrollo servidor.
+●    Giuliano Bacon  – Desarrollo servidor.
 
-Pagina Web de Recetas utilizando gRPC para la comunicacion de un backEnd cliente y otro servidor
+Prerequisitos Front ends
+Instalado Visual Studio Code. https://code.visualstudio.com/
 
-**Imgur Client id:**
-49ba1fb5fd3370a
+Instalado NodeJS. https://nodejs.org/es/
 
-**Cliente secret:**
-c33ba01bbe4f78e5c5431677c50b23841253b5b7
+Para ejecutar el servidor de vista se debe ubicar dentro de la carpeta FrontEnd
+
+Por medio de terminal ejecutar el comando yarn install para instalar las dependencias de node.
+
+Ejecutar el comando yarn dev.
+
+La vista se ejecutara en puerto 3000 , http://localhost:3000
+
+Prerequisitos Back End Servidor
+
+Instalar gradle https://gradle.org/install/
+Tener instalado MySql Workvench y crear una base de datos ( create database init_db )
+En una terminal que apunte a la carpeta chefEnCasa.server ejecutar el comando: gradle build  para generar los archivos correspondientes de grpc
+Luego compilar el servidor.
+
+
+Prerequisitos Back End Cliente
+
+Instalar visual studio con configuracion para desarrollo en .NET
+Abrir la carpeta BackEnd-Client dentro de visual y compilar el archivo GrpcClientApi
+
+
