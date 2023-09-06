@@ -7,9 +7,10 @@ const recetaApi = {
     api.post(`${RUTA}/TraerRecetas`, filtros),
   traerRecetas: () => api.post(`${RUTA}/TraerTodasLasRecetas`),
   crearReceta: (value) => api.post(`${RUTA}/CrearReceta`, value),
-  editarReceta: (value) => api.post(`${RUTA}/EditarReceta`, value),
+  editarReceta: (value) =>
+    console.log("value", value) || api.post(`${RUTA}/EditarReceta`, value),
   traerRecetasPorUsuario: (idUsuario) =>
-    api.post(`${RUTA}/TraerRecetasPorId`, idUsuario),
+    api.post(`${RUTA}/TraerRecetasPorId`, { id: idUsuario }),
   traerRecetasFavoritas: (idUsuario) =>
     api.post(`${RUTA}/TraerRecetasFavoritas`, { id: idUsuario }),
   traerIngredientes: () => api.post(`${RUTA}/TraerIngredientes`),

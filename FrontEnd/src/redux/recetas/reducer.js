@@ -12,6 +12,7 @@ export default function recetas(
     },
     listaRecetas: null,
     listaRecetasFavoritas: null,
+    listaRecetasPorUsuario: null,
     recetaPorId: null,
   },
   action
@@ -19,6 +20,43 @@ export default function recetas(
   switch (action.type) {
     case "SET_FILTRO":
       return { ...state, filtroActual: action.payload };
+    case "LIMPIAR_LISTAS":
+      return {
+        ...state,
+        listaRecetasFavoritas: null,
+        listaRecetasPorUsuario: null,
+        recetaPorId: null,
+      };
+    case "LIMPIAR_RESPUESTAS":
+      return {
+        ...state,
+        crearRecetaRespuesta: null,
+        crearRecetaError: null,
+        editarRecetaRespuesta: null,
+        editarRecetaError: null,
+      };
+    case "CREAR_RECETA":
+      return {
+        ...state,
+        crearRecetaRespuesta: action.payload,
+        crearRecetaError: null,
+      };
+    case "CREAR_RECETA_ERROR":
+      return {
+        ...state,
+        crearRecetaError: action.error,
+      };
+    case "EDITAR_RECETA":
+      return {
+        ...state,
+        editarRecetaRespuesta: action.payload,
+        editarRecetaError: null,
+      };
+    case "EDITAR_RECETA_ERROR":
+      return {
+        ...state,
+        editarRecetaError: action.error,
+      };
     case "TRAER_RECETAS_CON_FILTOS":
       return {
         ...state,
@@ -51,6 +89,17 @@ export default function recetas(
       return {
         ...state,
         recetaPorIderror: action.error,
+      };
+    case "TRAER_RECETAS_USUARIO":
+      return {
+        ...state,
+        listaRecetasPorUsuario: action.payload,
+        recetasPorUsuarioerror: null,
+      };
+    case "TRAER_RECETAS_USUARIO_ERROR":
+      return {
+        ...state,
+        recetasPorUsuarioerror: action.error,
       };
     default:
       return state;

@@ -1,16 +1,17 @@
 import LoadingWrapper from "@/components/LoadingWrapper";
-import { traerRecetaPorId } from "@/redux/recetas/actions";
+import { limpiarListas, traerRecetaPorId } from "@/redux/recetas/actions";
 import Image from "next/image";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Receta({ idReceta }) {
-  const dispach = useDispatch();
+  const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(limpiarListas());
     if (!!idReceta) {
-      dispach(traerRecetaPorId(idReceta));
+      dispatch(traerRecetaPorId(idReceta));
     }
-  }, [dispach, idReceta]);
+  }, [dispatch, idReceta]);
 
   const receta = useSelector((state) => state.recetas.recetaPorId);
 
@@ -50,12 +51,14 @@ export default function Receta({ idReceta }) {
             <div className='pl-6'>
               {receta?.fotos?.map((foto) => {
                 return (
-                  <Image
-                    key={foto.url}
-                    src={foto.url}
-                    width={150}
-                    height={150}
-                  />
+                  foto?.url && (
+                    <Image
+                      key={foto?.url}
+                      src={foto?.url || "/"}
+                      width={150}
+                      height={150}
+                    />
+                  )
                 );
               })}
             </div>

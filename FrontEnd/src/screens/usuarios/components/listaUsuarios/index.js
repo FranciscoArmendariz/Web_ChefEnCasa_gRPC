@@ -3,6 +3,7 @@ import { interaccionApi } from "@/services/interacciones";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import { useDispatch } from "react-redux";
 import cn from "classnames";
+import { useRouter } from "next/router";
 
 export default function ListaUsuarios({
   usuarios,
@@ -10,6 +11,7 @@ export default function ListaUsuarios({
   mostrarUsuariosSeguidos,
   idUsuario,
 }) {
+  const router = useRouter();
   const dispatch = useDispatch();
   const esSeguido = (id) =>
     usuariosSeguidos?.some((usuario) => usuario.id === id);
@@ -42,7 +44,7 @@ export default function ListaUsuarios({
           return (
             <div
               key={`${usuario.id}-${usuario.nombre}`}
-              className='flex flex-ro shadow-md w-64  h-20'
+              className='flex flex-ro shadow-md w-64 max-w-5xl  h-20'
             >
               <button
                 onClick={() => handleSeguirUsuario(usuario.id)}
@@ -58,10 +60,17 @@ export default function ListaUsuarios({
                 />
                 <div className=' text-sm font-thin'>seguir</div>
               </button>
-              <button className='transition duration-300 text-left pl-2 bg-gray-100 w-full rounded-r-lg hover:bg-gray-300	'>
+              <button
+                onClick={() =>
+                  router.push(
+                    `/usuarios/recetas/${usuario.id}-${usuario.nombre}-false`
+                  )
+                }
+                className='transition duration-300 text-left pl-2 bg-gray-100 w-full max-w-lg rounded-r-lg hover:bg-gray-300	'
+              >
                 <div>{usuario.nombre}</div>
                 <div>@{usuario.usuario}</div>
-                <div>{usuario.email}</div>
+                <div className='truncate'>{usuario.email}</div>
               </button>
             </div>
           );

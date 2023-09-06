@@ -6,6 +6,11 @@ export default function user(
   action
 ) {
   switch (action.type) {
+    case "LIMPIAR_RESPUESTAS":
+      return {
+        ...state,
+        crearUsuarioRespuesta: null,
+      };
     case "LOGIN":
       return {
         ...state,
@@ -17,6 +22,17 @@ export default function user(
       return {
         ...state,
         loginError: action.error,
+      };
+    case "CREAR_USUARIO":
+      return {
+        ...state,
+        crearUsuarioRespuesta: action.payload,
+        crearUsuarioError: null,
+      };
+    case "CREAR_USUARIO_ERROR":
+      return {
+        ...state,
+        crearUsuarioError: action.error,
       };
     case "TRAER_USUARIOS":
       return {
@@ -44,6 +60,7 @@ export default function user(
       return {
         ...state,
         isLogged: false,
+        usuarioActual: null,
       };
     default:
       return state;
