@@ -95,34 +95,21 @@ public class RecetaService {
 		editReceta.setCategoria(request.getCategoria());
 		editReceta.setTiempoAprox(request.getTiempoAprox());
 
-		List<Foto> fotos = editReceta.getFotos();
-		for(int i=0; i<request.getFotos().size();i++){
-			Foto foto = fotos.get(i);
-			foto.setUrl(request.getFotos().get(i).getUrl());
-			foto.setReceta(editReceta);
-			fotos.add(foto);
+		recetaRepository.deleteFotosByRecetaId(editReceta.getId());
+		editReceta.setFotos(request.getFotos());
+		for(int i=0; i<editReceta.getFotos().size();i++){
+			editReceta.getFoto(i).setReceta(editReceta);
 		}
-		editReceta.setFotos(fotos);
-
-		List<Ingrediente> ingredientes = editReceta.getIngredientes();
-		for (int i = 0; i < request.getIngredientes().size(); i++) {
-			Ingrediente ingrediente = ingredientes.get(i);
-			ingrediente.setNombre(request.getIngredientes().get(i).getNombre());
-			ingrediente.setCantidad(request.getIngredientes().get(i).getCantidad());
-			ingrediente.setReceta(editReceta);
-			ingredientes.add(ingrediente);
+		recetaRepository.deleteIngredientesByRecetaId(editReceta.getId());
+		editReceta.setIngredientes(request.getIngredientes());
+		for (int i = 0; i < editReceta.getIngredientes().size(); i++) {
+			editReceta.getIngrediente(i).setReceta(editReceta);
 		}
-		editReceta.setIngredientes(ingredientes);
-
-		List<Paso> pasos = editReceta.getPasos();
-		for (int i = 0; i < request.getPasos().size(); i++) {
-			Paso paso = pasos.get(i);
-			paso.setNumero(request.getPasos().get(i).getNumero());
-			paso.setDescripcion(request.getPasos().get(i).getDescripcion());
-			paso.setReceta(editReceta);
-			pasos.add(paso);
+		recetaRepository.deletePasosByRecetaId(editReceta.getId());
+		editReceta.setPasos(request.getPasos());
+		for (int i = 0; i < editReceta.getPasos().size(); i++) {
+			editReceta.getPaso(i).setReceta(editReceta);
 		}
-		editReceta.setPasos(pasos);
 		try {
 			recetaRepository.save(editReceta);
 			return true;
