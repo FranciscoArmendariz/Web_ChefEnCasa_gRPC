@@ -62,30 +62,44 @@ export default function Header({ hideButtons }) {
           </button>
         </div>
       )}
-      <div className='mr-11 relative'>
-        <button
-          onClick={() => {
-            setMostrarOpciones(!mostrarOpciones);
-          }}
-          className='text-white underline underline-offset-4 decoration-2 font-semibold p-3 m-2 '
-        >
-          MI USUARIO
-        </button>
-        <div
-          className={cn(
-            "absolute bg-gray-50 border border-gray-600 rounded-xl px-6 py-4 w-48 top-12 -left-8 z-10",
-            { hidden: !mostrarOpciones }
-          )}
-        >
-          <div className='font-semibold mb-3'>usuario: {usuario?.nombre}</div>
+      {!hideButtons && (
+        <div className='mr-11 relative'>
           <button
-            className='bg-red-600 text-white p-1 rounded-lg font-bold'
-            onClick={cerrarSesion}
+            onClick={() => {
+              setMostrarOpciones(!mostrarOpciones);
+            }}
+            className='text-white underline underline-offset-4 decoration-2 font-semibold p-3 m-2 '
           >
-            CERRAR SESION
+            MI USUARIO
           </button>
+          <div
+            className={cn(
+              "absolute bg-gray-50 border border-gray-600 rounded-xl px-6 py-4 w-56 top-12 -left-16 z-10",
+              { hidden: !mostrarOpciones }
+            )}
+          >
+            <div className='font-semibold mb-3'>usuario: {usuario?.nombre}</div>
+
+            <button
+              className='bg-orange-500 text-white font-semibold p-1 w-full mb-2 rounded-lg'
+              onClick={() =>
+                goToPage(
+                  `/usuarios/recetas/${usuario?.id}-${usuario?.nombre}-true`
+                )
+              }
+            >
+              MIS RECETAS
+            </button>
+
+            <button
+              className='bg-red-600 text-white p-1 w-full rounded-lg font-bold'
+              onClick={cerrarSesion}
+            >
+              CERRAR SESION
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

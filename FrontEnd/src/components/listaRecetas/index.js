@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 import { traerRecetasFavoritas } from "@/redux/recetas/actions";
 
-export default function ListaRecetas({ recetas, favoritas }) {
+export default function ListaRecetas({ recetas, favoritas, misRecetas }) {
   const router = useRouter();
   const idUsuario = useSelector((state) => state.user.usuarioActual?.id);
   const dispach = useDispatch();
@@ -56,7 +56,7 @@ export default function ListaRecetas({ recetas, favoritas }) {
               onClick={() => {
                 toggleFavorito(receta.id);
               }}
-              className='absolute right-0 top-0  bg-white mt-1 mr-1 rounded-xl p-1 z-10'
+              className='absolute right-0 top-0  bg-white/80 mt-1 mr-1 rounded-xl p-1 z-10'
             >
               <FeatherIcon
                 icon={favoritas ? "x" : "star"}
@@ -67,6 +67,20 @@ export default function ListaRecetas({ recetas, favoritas }) {
                 })}
               />
             </button>
+            {misRecetas && (
+              <button
+                onClick={() => {
+                  router.push(`/editarReceta/${receta.id}`);
+                }}
+                className='absolute left-0 top-0 bg-white/80 rounded-lg mt-1 ml-1 p-2 z-10'
+              >
+                <FeatherIcon
+                  icon='edit'
+                  size={25}
+                  className='stroke-2 text-blue-800'
+                />
+              </button>
+            )}
           </div>
         );
       })}

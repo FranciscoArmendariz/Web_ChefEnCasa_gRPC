@@ -12,6 +12,16 @@ export const login =
     });
   };
 
+export const crearUsuario = (datos) => async (dispatch) => {
+  userApi.crearUsuario(datos).then((response) => {
+    if (response.ok) {
+      dispatch({ type: "CREAR_USUARIO", payload: response.data });
+    } else {
+      dispatch({ type: "CREAR_USUARIO_ERROR", error: response.problem });
+    }
+  });
+};
+
 export const traerUsuarios = () => async (dispatch) => {
   userApi.traerUsuarios().then((response) => {
     if (response.ok) {
@@ -34,6 +44,10 @@ export const traerUsuariosSeguidos = (id) => async (dispatch) => {
     }
   });
 };
+
+export function limpiarRespuestas() {
+  return { type: "LIMPIAR_RESPUESTAS" };
+}
 
 export function logout() {
   return { type: "LOGOUT" };

@@ -59,6 +59,7 @@ export default function Login() {
           INICIAR SESION
         </button>
         <button
+          onClick={() => router.push("/registrarse")}
           type='button'
           className='bg-background font-bold border h-10 w-2/3 border-gray-600 rounded-lg'
         >

@@ -1,19 +1,24 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { traer, traerRecetasFavoritas } from "@/redux/recetas/actions";
+import {
+  limpiarListas,
+  traer,
+  traerRecetasFavoritas,
+} from "@/redux/recetas/actions";
 import LoadingWrapper from "@/components/LoadingWrapper";
 import ListaRecetas from "@/components/listaRecetas";
 import { RECETAS } from "@/constants/recetas";
 
 export default function Favoritos() {
-  const dispach = useDispatch();
+  const dispatch = useDispatch();
   const idUsuario = useSelector((state) => state.user.usuarioActual?.id);
 
   useEffect(() => {
+    dispatch(limpiarListas());
     if (idUsuario) {
-      dispach(traerRecetasFavoritas(idUsuario));
+      dispatch(traerRecetasFavoritas(idUsuario));
     }
-  }, [dispach, idUsuario]);
+  }, [dispatch, idUsuario]);
 
   const recetasFavoritas = useSelector(
     (state) => state.recetas.listaRecetasFavoritas

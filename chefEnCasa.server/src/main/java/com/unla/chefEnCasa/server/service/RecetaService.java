@@ -95,34 +95,21 @@ public class RecetaService {
 		editReceta.setCategoria(request.getCategoria());
 		editReceta.setTiempoAprox(request.getTiempoAprox());
 
-		List<Foto> fotos = editReceta.getFotos();
-		for(int i=0; i<request.getFotos().size();i++){
-			Foto foto = fotos.get(i);
-			foto.setUrl(request.getFotos().get(i).getUrl());
-			foto.setReceta(editReceta);
-			fotos.add(foto);
+		recetaRepository.deleteFotosByRecetaId(editReceta.getId());
+		editReceta.setFotos(request.getFotos());
+		for(int i=0; i<editReceta.getFotos().size();i++){
+			editReceta.getFoto(i).setReceta(editReceta);
 		}
-		editReceta.setFotos(fotos);
-
-		List<Ingrediente> ingredientes = editReceta.getIngredientes();
-		for (int i = 0; i < request.getIngredientes().size(); i++) {
-			Ingrediente ingrediente = ingredientes.get(i);
-			ingrediente.setNombre(request.getIngredientes().get(i).getNombre());
-			ingrediente.setCantidad(request.getIngredientes().get(i).getCantidad());
-			ingrediente.setReceta(editReceta);
-			ingredientes.add(ingrediente);
+		recetaRepository.deleteIngredientesByRecetaId(editReceta.getId());
+		editReceta.setIngredientes(request.getIngredientes());
+		for (int i = 0; i < editReceta.getIngredientes().size(); i++) {
+			editReceta.getIngrediente(i).setReceta(editReceta);
 		}
-		editReceta.setIngredientes(ingredientes);
-
-		List<Paso> pasos = editReceta.getPasos();
-		for (int i = 0; i < request.getPasos().size(); i++) {
-			Paso paso = pasos.get(i);
-			paso.setNumero(request.getPasos().get(i).getNumero());
-			paso.setDescripcion(request.getPasos().get(i).getDescripcion());
-			paso.setReceta(editReceta);
-			pasos.add(paso);
+		recetaRepository.deletePasosByRecetaId(editReceta.getId());
+		editReceta.setPasos(request.getPasos());
+		for (int i = 0; i < editReceta.getPasos().size(); i++) {
+			editReceta.getPaso(i).setReceta(editReceta);
 		}
-		editReceta.setPasos(pasos);
 		try {
 			recetaRepository.save(editReceta);
 			return true;
@@ -130,9 +117,9 @@ public class RecetaService {
 			return false;
 		}
 	}
-	@Transactional
+	/*@Transactional
 	public List<RecetaResponseDto> traerRecetas(String titulo, String categoria, int page, int size, String orderBy,
-			String sortBy) {
+			String sortBy,int tiempoAproxMin,int tiempoAproxMax ,String nombreIngrediente) {
 		try {
 			if (page < 1)
 				page = 1;
@@ -153,6 +140,35 @@ public class RecetaService {
 			return response;
 		} catch (Exception e) {
 			throw new ServerException("error al listas las recetas", HttpStatus.BAD_REQUEST);
+		}
+	}*/
+		@Transactional
+	public List<RecetaResponseDto> traerRecetas(String titulo, String categoria, int page, int size, String orderBy,
+			String sortBy,int tiempoAproxMin,int tiempoAproxMax) {
+		try {
+			if (page < 1)
+				page = 1;
+			if (size < 1)
+				size = 999999;
+			Pageable pageable = PageRequest.of(page - 1, size, Sort.by(
+					orderBy.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy.toLowerCase()));
+			Page<Receta> pageTipo;
+			if (!titulo.isBlank()) {
+				pageTipo = recetaRepository.findByTituloContaining(titulo, pageable);
+			} else if(!categoria.isBlank()){
+				pageTipo = recetaRepository.findByCategoriaContaining(categoria, pageable);
+			} else if(tiempoAproxMax != 0 && tiempoAproxMin != 0){
+				pageTipo=recetaRepository.findByTiempoAproxBetween(tiempoAproxMin, tiempoAproxMax, pageable);
+			}else{
+				pageTipo=Page.empty();
+			}
+			List<RecetaResponseDto> response = new ArrayList<>();
+			for (Receta r : pageTipo.getContent()) {
+				response.add(modelMapper.map(r, RecetaResponseDto.class));
+			}
+			return response;
+		} catch (Exception e) {
+			throw new ServerException("error al lista las recetas", HttpStatus.BAD_REQUEST);
 		}
 	}
 	

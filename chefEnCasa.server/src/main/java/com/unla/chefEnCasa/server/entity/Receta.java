@@ -60,4 +60,14 @@ public class Receta {
 		return true;
 	}
 
+	public Ingrediente getIngrediente(int index) {
+		return ingredientes.get(index);
+	}
+	public Foto getFoto(int index) {
+		return fotos.get(index);
+	}
+	public Paso getPaso(int index){
+		return pasos.get(index);
+	}
+
 }
