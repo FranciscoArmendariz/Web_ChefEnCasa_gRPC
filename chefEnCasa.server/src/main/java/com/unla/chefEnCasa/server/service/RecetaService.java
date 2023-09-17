@@ -117,34 +117,10 @@ public class RecetaService {
 			return false;
 		}
 	}
-	/*@Transactional
+		
+	@Transactional
 	public List<RecetaResponseDto> traerRecetas(String titulo, String categoria, int page, int size, String orderBy,
-			String sortBy,int tiempoAproxMin,int tiempoAproxMax ,String nombreIngrediente) {
-		try {
-			if (page < 1)
-				page = 1;
-			if (size < 1)
-				size = 999999;
-			Pageable pageable = PageRequest.of(page - 1, size, Sort.by(
-					orderBy.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy.toLowerCase()));
-			Page<Receta> pageTipo;
-			if (!titulo.isBlank()) {
-				pageTipo = recetaRepository.findByTituloContaining(titulo, pageable);
-			} else {
-				pageTipo = recetaRepository.findByCategoriaContaining(categoria, pageable);
-			}
-			List<RecetaResponseDto> response = new ArrayList<>();
-			for (Receta r : pageTipo.getContent()) {
-				response.add(modelMapper.map(r, RecetaResponseDto.class));
-			}
-			return response;
-		} catch (Exception e) {
-			throw new ServerException("error al listas las recetas", HttpStatus.BAD_REQUEST);
-		}
-	}*/
-		@Transactional
-	public List<RecetaResponseDto> traerRecetas(String titulo, String categoria, int page, int size, String orderBy,
-			String sortBy,int tiempoAproxMin,int tiempoAproxMax) {
+			String sortBy,int tiempoAproxMin,int tiempoAproxMax, String nombreIngrediente) {
 		try {
 			if (page < 1)
 				page = 1;
@@ -159,8 +135,11 @@ public class RecetaService {
 				pageTipo = recetaRepository.findByCategoriaContaining(categoria, pageable);
 			} else if(tiempoAproxMax != 0 && tiempoAproxMin != 0){
 				pageTipo=recetaRepository.findByTiempoAproxBetween(tiempoAproxMin, tiempoAproxMax, pageable);
-			}else{
-				pageTipo=Page.empty();
+			} else if(!nombreIngrediente.isBlank()){
+				pageTipo=recetaRepository.findByNombresIngredientes(nombreIngrediente, pageable);
+			}
+			else{
+				pageTipo=recetaRepository.findAll(pageable);
 			}
 			List<RecetaResponseDto> response = new ArrayList<>();
 			for (Receta r : pageTipo.getContent()) {
@@ -168,7 +147,7 @@ public class RecetaService {
 			}
 			return response;
 		} catch (Exception e) {
-			throw new ServerException("error al lista las recetas", HttpStatus.BAD_REQUEST);
+			throw new ServerException("error al listar las recetas", HttpStatus.BAD_REQUEST);
 		}
 	}
 	

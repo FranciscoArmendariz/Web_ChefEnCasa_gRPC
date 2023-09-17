@@ -108,6 +108,7 @@ message RecetaRequestFilter {
     string sort_by = 6;
     int32 minTiempoAprox=7;
     int32 maxTiempoAprox=8;
+    string nombreIngrediente=9;
 }
 
 message RecetaResponse {
