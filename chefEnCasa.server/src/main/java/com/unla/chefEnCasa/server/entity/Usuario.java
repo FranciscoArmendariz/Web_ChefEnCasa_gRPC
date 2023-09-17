@@ -38,6 +38,7 @@ public class Usuario {
 	private String email;
 	private String clave;
 	private String rol;
+	private int puntaje;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "recetas_favoritas", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "receta_id"))

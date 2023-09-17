@@ -43,8 +43,10 @@ public class RecetaController {
 			@RequestParam(value = "page", defaultValue = "1") int page,
 			@RequestParam(value = "size", defaultValue = "999999") int size,
 			@RequestParam(value = "orderBy", defaultValue = "asc") String orderBy,
-			@RequestParam(value = "sortBy", defaultValue = "id") String soryBy) {
-		return new ResponseEntity<>(recetaService.traerRecetas(titulo, categoria, page, size, orderBy, soryBy),
+			@RequestParam(value = "sortBy", defaultValue = "id") String soryBy,
+			@RequestParam(value = "minTiempoAprox", defaultValue = "0")int minTiempoAprox,
+			@RequestParam(value = "maxTiempoAprox", defaultValue = "0")int maxTiempoAprox) {
+		return new ResponseEntity<>(recetaService.traerRecetas(titulo, categoria, page, size, orderBy, soryBy,minTiempoAprox,maxTiempoAprox),
 				HttpStatus.OK);
 	}
 

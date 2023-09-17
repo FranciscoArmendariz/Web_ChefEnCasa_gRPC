@@ -179,11 +179,11 @@ public class RecetaGrpcImpl extends recetaImplBase {
 
     }
 
-    @Override
+     @Override
     public void traerRecetas(RecetaRequestFilter request, StreamObserver<getRecetas> responseObserver) {
         try{
        List <RecetaResponseDto> traerRecetas=recetaService.traerRecetas(request.getTitulo(),request.getCategoria(),request.getPage(),
-       request.getSize(),request.getOrderBy(),request.getSortBy());
+       request.getSize(),request.getOrderBy(),request.getSortBy(),request.getMinTiempoAprox(),request.getMaxTiempoAprox());
         List <RecetaResponse>recetaGrpcList=new ArrayList<>();
         
        for(int i=0;i<traerRecetas.size();i++){

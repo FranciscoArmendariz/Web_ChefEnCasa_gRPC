@@ -117,9 +117,9 @@ public class RecetaService {
 			return false;
 		}
 	}
-	@Transactional
+	/*@Transactional
 	public List<RecetaResponseDto> traerRecetas(String titulo, String categoria, int page, int size, String orderBy,
-			String sortBy) {
+			String sortBy,int tiempoAproxMin,int tiempoAproxMax ,String nombreIngrediente) {
 		try {
 			if (page < 1)
 				page = 1;
@@ -140,6 +140,35 @@ public class RecetaService {
 			return response;
 		} catch (Exception e) {
 			throw new ServerException("error al listas las recetas", HttpStatus.BAD_REQUEST);
+		}
+	}*/
+		@Transactional
+	public List<RecetaResponseDto> traerRecetas(String titulo, String categoria, int page, int size, String orderBy,
+			String sortBy,int tiempoAproxMin,int tiempoAproxMax) {
+		try {
+			if (page < 1)
+				page = 1;
+			if (size < 1)
+				size = 999999;
+			Pageable pageable = PageRequest.of(page - 1, size, Sort.by(
+					orderBy.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy.toLowerCase()));
+			Page<Receta> pageTipo;
+			if (!titulo.isBlank()) {
+				pageTipo = recetaRepository.findByTituloContaining(titulo, pageable);
+			} else if(!categoria.isBlank()){
+				pageTipo = recetaRepository.findByCategoriaContaining(categoria, pageable);
+			} else if(tiempoAproxMax != 0 && tiempoAproxMin != 0){
+				pageTipo=recetaRepository.findByTiempoAproxBetween(tiempoAproxMin, tiempoAproxMax, pageable);
+			}else{
+				pageTipo=Page.empty();
+			}
+			List<RecetaResponseDto> response = new ArrayList<>();
+			for (Receta r : pageTipo.getContent()) {
+				response.add(modelMapper.map(r, RecetaResponseDto.class));
+			}
+			return response;
+		} catch (Exception e) {
+			throw new ServerException("error al lista las recetas", HttpStatus.BAD_REQUEST);
 		}
 	}
 	
