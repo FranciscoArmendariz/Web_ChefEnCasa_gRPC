@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -49,7 +50,7 @@ public class RecetaService {
 		newReceta.setTiempoAprox(request.getTiempoAprox());
 
 		List<Foto> fotos = new ArrayList<>();
-		for(Foto f : request.getFotos()) {
+		for (Foto f : request.getFotos()) {
 			Foto foto = new Foto();
 			foto.setUrl(f.getUrl());
 			foto.setReceta(newReceta);
@@ -85,7 +86,7 @@ public class RecetaService {
 			return false;
 		}
 	}
-	
+
 	@Transactional
 	public boolean editarReceta(RecetaRequestDto request, long id) {
 		Receta editReceta = recetaRepository.findById(id)
@@ -97,7 +98,7 @@ public class RecetaService {
 
 		recetaRepository.deleteFotosByRecetaId(editReceta.getId());
 		editReceta.setFotos(request.getFotos());
-		for(int i=0; i<editReceta.getFotos().size();i++){
+		for (int i = 0; i < editReceta.getFotos().size(); i++) {
 			editReceta.getFoto(i).setReceta(editReceta);
 		}
 		recetaRepository.deleteIngredientesByRecetaId(editReceta.getId());
@@ -117,10 +118,10 @@ public class RecetaService {
 			return false;
 		}
 	}
-		
+
 	@Transactional
 	public List<RecetaResponseDto> traerRecetas(String titulo, String categoria, int page, int size, String orderBy,
-			String sortBy,int tiempoAproxMin,int tiempoAproxMax, String nombreIngrediente) {
+			String sortBy, int tiempoAproxMin, int tiempoAproxMax, String nombreIngrediente) {
 		try {
 			if (page < 1)
 				page = 1;
@@ -131,28 +132,63 @@ public class RecetaService {
 			Page<Receta> pageTipo;
 			if (!titulo.isBlank()) {
 				pageTipo = recetaRepository.findByTituloContaining(titulo, pageable);
-			} else if(!categoria.isBlank()){
-				pageTipo = recetaRepository.findByCategoriaContaining(categoria, pageable);
-			} else if(tiempoAproxMax != 0 && tiempoAproxMin != 0){
-				pageTipo=recetaRepository.findByTiempoAproxBetween(tiempoAproxMin, tiempoAproxMax, pageable);
-			} else if(!nombreIngrediente.isBlank()){
-				pageTipo=recetaRepository.findByNombresIngredientes(nombreIngrediente, pageable);
+
+			} else {
+				pageTipo = recetaRepository.findAll(pageable);
 			}
-			else{
-				pageTipo=recetaRepository.findAll(pageable);
+			System.out.println(pageTipo.getContent());
+			List<Receta> listaAcompletar = new ArrayList<>(pageTipo.getContent());		
+			List<Receta> listaAremover = new ArrayList<>();
+
+			for (Receta r : listaAcompletar) {
+				if (!categoria.isBlank() && !categoria.equalsIgnoreCase(r.getCategoria())) {
+					listaAremover.add(r);
+				}
+				if (tiempoAproxMax > 0 && tiempoAproxMax < r.getTiempoAprox()) {
+					listaAremover.add(r);
+				}
+				if (tiempoAproxMin > 0 && tiempoAproxMin > r.getTiempoAprox()) {
+					listaAremover.add(r);
+				}
+				boolean ingredienteEncontrado = false;
+				int i = 0;
+				if (!nombreIngrediente.isBlank()) {
+					while (ingredienteEncontrado == false && i < r.getIngredientes().size()) {
+						System.out.println(r.getIngredientes().get(i).getNombre());
+						System.out.println(nombreIngrediente);
+
+						if (r.getIngredientes().get(i).getNombre().equalsIgnoreCase(nombreIngrediente)) {
+							ingredienteEncontrado = true;
+						}
+						i++;
+					}
+					System.out.println(ingredienteEncontrado);
+					if (ingredienteEncontrado == false) {
+						listaAremover.add(r);
+					}
+				}
 			}
+			System.out.println(listaAremover);
+
+			
+			listaAcompletar.removeAll(listaAremover);
+
+			System.out.println(listaAcompletar);
 			List<RecetaResponseDto> response = new ArrayList<>();
-			for (Receta r : pageTipo.getContent()) {
+			for (Receta r : listaAcompletar) {
 				response.add(modelMapper.map(r, RecetaResponseDto.class));
 			}
+
 			return response;
-		} catch (Exception e) {
+		 } catch (Exception e) {
+			System.out.println(e.getMessage());
 			throw new ServerException("error al listar las recetas", HttpStatus.BAD_REQUEST);
+	
 		}
 	}
-	
+
 	@Transactional
-	public List<RecetaResponseDto> traerTodasLasRecetas(){
+	public List<RecetaResponseDto> traerTodasLasRecetas() {
 		List<Receta> recetas = recetaRepository.findAll();
 		return recetas.stream().map(receta -> modelMapper.map(receta, RecetaResponseDto.class))
 				.collect(Collectors.toList());
@@ -169,6 +205,7 @@ public class RecetaService {
 		}
 		return response;
 	}
+
 	@Transactional
 	public List<RecetaResponseDto> traerFavoritos(long idUsuario) {
 		Usuario usuario = usuarioRepository.findById(idUsuario)
@@ -181,27 +218,31 @@ public class RecetaService {
 		}
 		return response;
 	}
+
 	@Transactional
-	public List<Ingrediente> traerIngredientes(long idReceta){
-		Receta receta=recetaRepository.findById(idReceta)
-		.orElseThrow(() -> new ServerException("no existe la receta con id: "+idReceta, HttpStatus.NOT_FOUND));
-		List <Ingrediente> response=new ArrayList<>();
-		for(Ingrediente r:receta.getIngredientes() ){
+	public List<Ingrediente> traerIngredientes(long idReceta) {
+		Receta receta = recetaRepository.findById(idReceta)
+				.orElseThrow(
+						() -> new ServerException("no existe la receta con id: " + idReceta, HttpStatus.NOT_FOUND));
+		List<Ingrediente> response = new ArrayList<>();
+		for (Ingrediente r : receta.getIngredientes()) {
 			response.add(modelMapper.map(r, Ingrediente.class));
 		}
 		return response;
 	}
-	 @Transactional
-	public RecetaResponseDto traerRecetasPorIdReceta(long idReceta){
-		Receta receta= recetaRepository.findById(idReceta)
-		.orElseThrow(() -> new ServerException("no existe la receta con id: "+idReceta, HttpStatus.NOT_FOUND));
+
+	@Transactional
+	public RecetaResponseDto traerRecetasPorIdReceta(long idReceta) {
+		Receta receta = recetaRepository.findById(idReceta)
+				.orElseThrow(
+						() -> new ServerException("no existe la receta con id: " + idReceta, HttpStatus.NOT_FOUND));
 		return modelMapper.map(receta, RecetaResponseDto.class);
-	
 
 	}
-		@Transactional
-	public List<Ingrediente> traerTodosLosIngredientes(){
-		List <Ingrediente> response=ingredienteRepository.findAll();
+
+	@Transactional
+	public List<Ingrediente> traerTodosLosIngredientes() {
+		List<Ingrediente> response = ingredienteRepository.findAll();
 		return response;
 	}
 

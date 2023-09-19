@@ -70,4 +70,11 @@ public class Receta {
 		return pasos.get(index);
 	}
 
+	@Override
+	public String toString() {
+		return "Receta [id=" + id + ", titulo=" + titulo + ", descripcion=" + descripcion + ", categoria=" + categoria
+				+ ", tiempoAprox=" + tiempoAprox + ", fotos=" + fotos + ", ingredientes=" + ingredientes + ", pasos="
+				+ pasos + "]";
+	}
+
 }
