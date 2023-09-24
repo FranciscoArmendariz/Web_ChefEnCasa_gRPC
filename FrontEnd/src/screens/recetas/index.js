@@ -3,14 +3,18 @@ import FormularioFiltros from "./components/formularioFiltros";
 import ListaRecetas from "@/components/listaRecetas";
 import LoadingWrapper from "@/components/LoadingWrapper";
 import { useDispatch, useSelector } from "react-redux";
-import { traer, traerRecetasConFiltros } from "@/redux/recetas/actions";
-import { RECETAS } from "@/constants/recetas";
-import recetaApi from "@/services/receta";
+import {
+  traerIngredientes,
+  traerRecetasConFiltros,
+} from "@/redux/recetas/actions";
 
 export default function Recetas() {
   const dispach = useDispatch();
   const filtros = useSelector((state) => state.recetas.filtroActual);
 
+  useEffect(() => {
+    dispach(traerIngredientes());
+  }, []);
   useEffect(() => {
     dispach(traerRecetasConFiltros(filtros));
   }, [filtros]);

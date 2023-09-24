@@ -14,6 +14,7 @@ export default function recetas(
     listaRecetasFavoritas: null,
     listaRecetasPorUsuario: null,
     recetaPorId: null,
+    ingredientes: [],
   },
   action
 ) {
@@ -100,6 +101,17 @@ export default function recetas(
       return {
         ...state,
         recetasPorUsuarioerror: action.error,
+      };
+    case "TRAER_INGREDIENTES":
+      return {
+        ...state,
+        ingredientes: action.payload,
+        ingredienteserror: null,
+      };
+    case "TRAER_INGREDIENTES_ERROR":
+      return {
+        ...state,
+        ingredienteserror: action.error,
       };
     default:
       return state;

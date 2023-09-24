@@ -89,3 +89,19 @@ export const traerRecetasConFiltros = (filtros) => async (dispatch) => {
     }
   });
 };
+
+export const traerIngredientes = () => async (dispatch) => {
+  recetaApi.traerIngredientes().then((response) => {
+    if (response.ok) {
+      dispatch({
+        type: "TRAER_INGREDIENTES",
+        payload: response.data.ingredienteSin,
+      });
+    } else {
+      dispatch({
+        type: "TRAER_INGREDIENTES_ERROR",
+        error: response.problem,
+      });
+    }
+  });
+};

@@ -1,38 +1,31 @@
-import { useFieldArray, useForm } from "react-hook-form";
-import {
-  CATEGORIAS,
-  INGREDIENTES,
-  TIEMPOS_DE_COCCION,
-} from "@/constants/camposFiltros";
-import { useDispatch } from "react-redux";
-import { setFiltro, traer } from "@/redux/recetas/actions";
-import { RECETAS } from "@/constants/recetas";
-import recetaApi from "@/services/receta";
+import { useForm } from "react-hook-form";
+import { CATEGORIAS, TIEMPOS_DE_COCCION } from "@/constants/camposFiltros";
+import { useDispatch, useSelector } from "react-redux";
+import { setFiltro } from "@/redux/recetas/actions";
 
 export default function FormularioFiltros() {
-  const { control, register, handleSubmit } = useForm({
+  const dispach = useDispatch();
+  const { register, handleSubmit } = useForm({
     defaultValues: {
       titulo: "",
       categoria: "",
       rangoDeTiempo: { min: 5, max: 30 },
-      ingredientes: [""],
+      ingrediente: "",
     },
   });
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "ingredientes",
-  });
-
-  const dispach = useDispatch();
+  const ingredientes = useSelector((state) => state.recetas.ingredientes);
   const onSubmit = (data) => {
     dispach(
       setFiltro({
         titulo: data.titulo,
         categoria: data.categoria,
+        minTiempoAprox: data.rangoDeTiempo.min,
+        maxTiempoAprox: data.rangoDeTiempo.max,
         page: 1,
         size: 12,
         orderBy: "asc",
         sortBy: "id",
+        nombreIngrediente: data.ingrediente,
       })
     );
   };
@@ -57,7 +50,7 @@ export default function FormularioFiltros() {
         })}
       </select>
 
-      {/*<label>Tiempo de preparación</label>
+      <label>Tiempo de preparación</label>
       <div className='flex flex-row gap-2'>
         <div className='flex flex-col flex-1'>
           <label htmlFor='rangoDeTiempoMin'>MIN</label>
@@ -65,7 +58,6 @@ export default function FormularioFiltros() {
             id='rangoDeTiempoMin'
             {...register("rangoDeTiempo.min", { valueAsNumber: true })}
           >
-            <option value={null}>-</option>
             {TIEMPOS_DE_COCCION.map((tiempo, index) => {
               return (
                 <option key={`min-${index}-${tiempo}`} value={tiempo}>
@@ -81,7 +73,6 @@ export default function FormularioFiltros() {
             id='rangoDeTiempoMax'
             {...register("rangoDeTiempo.max", { valueAsNumber: true })}
           >
-            <option value={null}>-</option>
             {TIEMPOS_DE_COCCION.map((tiempo, index) => {
               return (
                 <option key={`max-${index}-${tiempo}`} value={tiempo}>
@@ -92,37 +83,17 @@ export default function FormularioFiltros() {
           </select>
         </div>
       </div>
-      <label htmlFor='ingredientes'>Buscar con ingredientes</label>
-      {fields.map((field, index) => {
-        return (
-          <div key={field.id} className='flex flex-row pb-2 w-full'>
-            <select className='w-full' {...register(`ingredientes.${index}`)}>
-              {INGREDIENTES.map((ingrediente) => {
-                return (
-                  <option key={`${index}-${ingrediente}`} value={ingrediente}>
-                    {ingrediente}
-                  </option>
-                );
-              })}
-            </select>
-            <button
-              className='bg-red-600 text-white mx-1 w-6 h-full rounded-lg font-black text-center'
-              type='button'
-              onClick={() => remove(index)}
-            >
-              -
-            </button>
-          </div>
-        );
-      })}
-      <button
-        className='flex self-center justify-center bg-green-700 w-8 h-8 text-white  rounded-lg font-bold '
-        type='button'
-        onClick={append}
-      >
-        +
-      </button>*/}
-
+      <label htmlFor='ingredientes'>Buscar con ingrediente</label>
+      <select {...register("ingrediente")}>
+        <option value=''>-</option>
+        {ingredientes?.map((ingrediente) => {
+          return (
+            <option key={ingrediente.nombre} value={ingrediente.nombre}>
+              {ingrediente.nombre}
+            </option>
+          );
+        })}
+      </select>
       <button
         className='py-2 px-7 bg-blue-600 text-white font-bold w-min m-auto my-2 rounded-lg'
         type='submit'

@@ -13,7 +13,7 @@ const recetaApi = {
     api.post(`${RUTA}/TraerRecetasPorId`, { id: idUsuario }),
   traerRecetasFavoritas: (idUsuario) =>
     api.post(`${RUTA}/TraerRecetasFavoritas`, { id: idUsuario }),
-  traerIngredientes: () => api.post(`${RUTA}/TraerIngredientes`),
+  traerIngredientes: () => api.post(`${RUTA}/TraerTodosLosIngredientes`, {}),
   traerRecetaPorId: (id) =>
     api.post(`/TraerRecetasPorIdReceta`, { idReceta: id }),
 };
