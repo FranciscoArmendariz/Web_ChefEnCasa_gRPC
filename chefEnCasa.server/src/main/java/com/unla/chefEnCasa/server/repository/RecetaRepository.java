@@ -19,7 +19,10 @@ public interface RecetaRepository extends JpaRepository<Receta, Long>{
 	public Page<Receta> findByCategoriaContaining(String titulo, Pageable pageable);
 	public Page<Receta> findByTiempoAproxBetween(int minTiempoAprox, int maxTiempoAprox, Pageable pageable);
 	@Query("SELECT DISTINCT r FROM Receta r JOIN r.ingredientes i WHERE i.nombre IN :nombresIngredientes")
-    Page<Receta> findByNombresIngredientes(@Param("nombresIngredientes") String nombresIngredientes, Pageable pageable);
+    public Page<Receta> findByNombresIngredientes(@Param("nombresIngredientes") String nombresIngredientes, Pageable pageable);
+	@Query("SELECT DISTINCT r FROM Receta r JOIN r.ingredientes i WHERE i.nombre IN :nombresIngredientes AND r.tiempoAprox BETWEEN :minTiempoAprox AND :maxTiempoAprox")
+	public Page<Receta> findByNombresIngredientesAndTiempoAprox(@Param("nombresIngredientes") String nombresIngredientes,@Param("minTiempoAprox")int minTiempoAprox,
+	@Param("maxTiempoAprox")int maxTiempoAprox,Pageable pageable);
 	@Transactional
 	@Modifying
     @Query("DELETE FROM Ingrediente i WHERE i.receta.id = :recetaId")
