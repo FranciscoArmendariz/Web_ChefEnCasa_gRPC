@@ -14,5 +14,6 @@ public class UsuarioResponseDto {
 	private String usuario;
 	private String email;
 	private String rol;
+	private int puntaje;
 
 }

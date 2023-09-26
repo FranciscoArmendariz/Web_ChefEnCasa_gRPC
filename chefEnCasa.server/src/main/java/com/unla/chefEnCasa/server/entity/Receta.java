@@ -30,6 +30,9 @@ public class Receta {
 	private String descripcion;
 	private String categoria;
 	private int tiempoAprox;
+	private int puntaje;
+	private int cantidadCalificaciones;
+	private float promedio;
 
 	@OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Foto> fotos;
@@ -37,6 +40,9 @@ public class Receta {
 	private List<Ingrediente> ingredientes;
 	@OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Paso> pasos;
+
+	@OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Comentario> comentarios;
 
 	@Override
 	public int hashCode() {

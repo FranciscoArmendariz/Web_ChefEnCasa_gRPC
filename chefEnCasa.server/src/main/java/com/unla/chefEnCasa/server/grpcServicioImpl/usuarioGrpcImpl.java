@@ -58,6 +58,7 @@ public class usuarioGrpcImpl extends usuarioImplBase {
                     .setUsuario(usuario.getUsuario())
                     .setEmail(usuario.getEmail())
                     .setRol(usuario.getRol())
+                    .setPuntaje(usuario.getPuntaje())
                     .build();
 
             responseObserver.onNext(response);
@@ -78,6 +79,7 @@ public class usuarioGrpcImpl extends usuarioImplBase {
                     .setUsuario(traerUsuarios.get(i).getUsuario())
                     .setEmail(traerUsuarios.get(i).getEmail())
                     .setRol(traerUsuarios.get(i).getRol())
+                    .setPuntaje(traerUsuarios.get(i).getPuntaje())
                     .build();
             usuarios.add(usuarioResponse);
         }
@@ -100,6 +102,7 @@ public class usuarioGrpcImpl extends usuarioImplBase {
                     .setUsuario(traerUsuarios.get(i).getUsuario())
                     .setEmail(traerUsuarios.get(i).getEmail())
                     .setRol(traerUsuarios.get(i).getRol())
+                    .setPuntaje(traerUsuarios.get(i).getPuntaje())
                     .build();
             usuarios.add(usuarioResponse);
         }
