@@ -8,6 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
@@ -30,6 +33,9 @@ public class Receta {
 	private String descripcion;
 	private String categoria;
 	private int tiempoAprox;
+	private long puntajeReceta;
+	private long cantCalificaciones;
+	private float promedio;
 
 	@OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Foto> fotos;
@@ -37,7 +43,10 @@ public class Receta {
 	private List<Ingrediente> ingredientes;
 	@OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Paso> pasos;
-
+	@ManyToMany
+	@JoinTable(name = "comentarios", joinColumns = @JoinColumn(name = "idReceta"), inverseJoinColumns = @JoinColumn(name = "idUsuario"))
+	private List<Comentario> comentarios;
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
