@@ -33,8 +33,8 @@ public class Receta {
 	private String descripcion;
 	private String categoria;
 	private int tiempoAprox;
-	private long puntajeReceta;
-	private long cantCalificaciones;
+	private int puntaje;
+	private int cantidadCalificaciones;
 	private float promedio;
 
 	@OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -43,10 +43,10 @@ public class Receta {
 	private List<Ingrediente> ingredientes;
 	@OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Paso> pasos;
-	@ManyToMany
-	@JoinTable(name = "comentarios", joinColumns = @JoinColumn(name = "idReceta"), inverseJoinColumns = @JoinColumn(name = "idUsuario"))
+
+	@OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Comentario> comentarios;
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

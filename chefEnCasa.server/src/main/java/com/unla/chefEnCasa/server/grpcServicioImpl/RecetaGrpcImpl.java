@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.unla.chefEnCasa.grpc.Comentario;
 import com.unla.chefEnCasa.grpc.Empty2;
 import com.unla.chefEnCasa.grpc.Foto;
 import com.unla.chefEnCasa.grpc.Ingrediente;
@@ -132,6 +133,7 @@ public class RecetaGrpcImpl extends recetaImplBase {
         List<Ingrediente>ingredienteData=new ArrayList<>();
         List<Paso>pasoData=new ArrayList<>();
         List<Foto>fotoData=new ArrayList<>();
+        List<Comentario> comentarioData=new ArrayList<>();
         for(int j=0; j<traerRecetas.get(i).getIngredientes().size();j++){
             Ingrediente ingredienteGrpcAdd=Ingrediente.newBuilder()
             .setCantidad(traerRecetas.get(i).getIngredientes().get(j).getCantidad())
@@ -153,15 +155,23 @@ public class RecetaGrpcImpl extends recetaImplBase {
             fotoData.add(fotoGrpcAdd);
 
         }
+        for(int h=0;h<traerRecetas.get(i).getComentarios().size();h++){
+            Comentario ComentarioGrpcAdd=Comentario.newBuilder()
+            .setComentario(traerRecetas.get(i).getComentarios().get(h).getComentario())
+            .build();
+            comentarioData.add(ComentarioGrpcAdd);
+        }
         RecetaResponse  response=RecetaResponse.newBuilder()
         .setId(traerRecetas.get(i).getId())
         .setCategoria(traerRecetas.get(i).getCategoria())
         .setDescripcion(traerRecetas.get(i).getDescripcion())
         .setTiempoAprox(traerRecetas.get(i).getTiempoAprox())
         .setTitulo(traerRecetas.get(i).getTitulo())
+        .setPromedio(traerRecetas.get(i).getPromedio())
         .addAllIngredientes(ingredienteData)
         .addAllPasos(pasoData)
         .addAllFotos(fotoData)
+        .addAllComentarios(comentarioData)
         .build();
         
         recetaGrpcList.add(response);
@@ -190,6 +200,7 @@ public class RecetaGrpcImpl extends recetaImplBase {
         List<Ingrediente>ingredienteData=new ArrayList<>();
         List<Paso>pasoData=new ArrayList<>();
         List<Foto>fotoData=new ArrayList<>();
+        List<Comentario> comentarioData=new ArrayList<>();
         for(int j=0; j<traerRecetas.get(i).getIngredientes().size();j++){
             Ingrediente ingredienteGrpcAdd=Ingrediente.newBuilder()
             .setCantidad(traerRecetas.get(i).getIngredientes().get(j).getCantidad())
@@ -211,15 +222,23 @@ public class RecetaGrpcImpl extends recetaImplBase {
             fotoData.add(fotoGrpcAdd);
 
         }
+         for(int h=0;h<traerRecetas.get(i).getComentarios().size();h++){
+            Comentario ComentarioGrpcAdd=Comentario.newBuilder()
+            .setComentario(traerRecetas.get(i).getComentarios().get(h).getComentario())
+            .build();
+            comentarioData.add(ComentarioGrpcAdd);
+        }
         RecetaResponse  response=RecetaResponse.newBuilder()
         .setId(traerRecetas.get(i).getId())
         .setCategoria(traerRecetas.get(i).getCategoria())
         .setDescripcion(traerRecetas.get(i).getDescripcion())
         .setTiempoAprox(traerRecetas.get(i).getTiempoAprox())
         .setTitulo(traerRecetas.get(i).getTitulo())
+        .setPromedio(traerRecetas.get(i).getPromedio())
         .addAllIngredientes(ingredienteData)
         .addAllPasos(pasoData)
         .addAllFotos(fotoData)
+        .addAllComentarios(comentarioData)
         .build();
         
         recetaGrpcList.add(response);
@@ -294,6 +313,7 @@ public class RecetaGrpcImpl extends recetaImplBase {
         List<Ingrediente>ingredienteData=new ArrayList<>();
         List<Paso>pasoData=new ArrayList<>();
         List<Foto>fotoData=new ArrayList<>();
+        List<Comentario>comentarioData=new ArrayList<>();
         for(int j=0; j<traerRecetas.get(i).getIngredientes().size();j++){
             Ingrediente ingredienteGrpcAdd=Ingrediente.newBuilder()
             .setCantidad(traerRecetas.get(i).getIngredientes().get(j).getCantidad())
@@ -315,15 +335,23 @@ public class RecetaGrpcImpl extends recetaImplBase {
             fotoData.add(fotoGrpcAdd);
 
         }
+         for(int h=0;h<traerRecetas.get(i).getComentarios().size();h++){
+            Comentario ComentarioGrpcAdd=Comentario.newBuilder()
+            .setComentario(traerRecetas.get(i).getComentarios().get(h).getComentario())
+            .build();
+            comentarioData.add(ComentarioGrpcAdd);
+        }
         RecetaResponse  response=RecetaResponse.newBuilder()
         .setId(traerRecetas.get(i).getId())
         .setCategoria(traerRecetas.get(i).getCategoria())
         .setDescripcion(traerRecetas.get(i).getDescripcion())
         .setTiempoAprox(traerRecetas.get(i).getTiempoAprox())
         .setTitulo(traerRecetas.get(i).getTitulo())
+        .setPromedio(traerRecetas.get(i).getPromedio())
         .addAllIngredientes(ingredienteData)
         .addAllPasos(pasoData)
         .addAllFotos(fotoData)
+        .addAllComentarios(comentarioData)
         .build();
         
         recetaGrpcList.add(response);
@@ -349,6 +377,7 @@ public class RecetaGrpcImpl extends recetaImplBase {
         List<Ingrediente>ingredienteData=new ArrayList<>();
         List<Paso>pasoData=new ArrayList<>();
         List<Foto>fotoData=new ArrayList<>();
+        List<Comentario>comentarioData=new ArrayList<>();
         for(int j=0; j<traerRecetas.get(i).getIngredientes().size();j++){
             Ingrediente ingredienteGrpcAdd=Ingrediente.newBuilder()
             .setCantidad(traerRecetas.get(i).getIngredientes().get(j).getCantidad())
@@ -370,15 +399,23 @@ public class RecetaGrpcImpl extends recetaImplBase {
             fotoData.add(fotoGrpcAdd);
 
         }
+         for(int h=0;h<traerRecetas.get(i).getComentarios().size();h++){
+            Comentario ComentarioGrpcAdd=Comentario.newBuilder()
+            .setComentario(traerRecetas.get(i).getComentarios().get(h).getComentario())
+            .build();
+            comentarioData.add(ComentarioGrpcAdd);
+        }
         RecetaResponse  response=RecetaResponse.newBuilder()
         .setId(traerRecetas.get(i).getId())
         .setCategoria(traerRecetas.get(i).getCategoria())
         .setDescripcion(traerRecetas.get(i).getDescripcion())
         .setTiempoAprox(traerRecetas.get(i).getTiempoAprox())
         .setTitulo(traerRecetas.get(i).getTitulo())
+        .setPromedio(traerRecetas.get(i).getPromedio())
         .addAllIngredientes(ingredienteData)
         .addAllPasos(pasoData)
         .addAllFotos(fotoData)
+        .addAllComentarios(comentarioData)
         .build();
         
         recetaGrpcList.add(response);
@@ -399,6 +436,7 @@ public class RecetaGrpcImpl extends recetaImplBase {
         List<Ingrediente>ingredienteData=new ArrayList<>();
         List<Paso>pasoData=new ArrayList<>();
         List<Foto>fotoData=new ArrayList<>();
+        List<Comentario>comentarioData=new ArrayList<>();
         for(int j=0; j<traerRecetas.getIngredientes().size();j++){
             Ingrediente ingredienteGrpcAdd=Ingrediente.newBuilder()
             .setCantidad(traerRecetas.getIngredientes().get(j).getCantidad())
@@ -420,15 +458,23 @@ public class RecetaGrpcImpl extends recetaImplBase {
             fotoData.add(fotoGrpcAdd);
 
         }
+         for(int h=0;h<traerRecetas.getComentarios().size();h++){
+            Comentario ComentarioGrpcAdd=Comentario.newBuilder()
+            .setComentario(traerRecetas.getComentarios().get(h).getComentario())
+            .build();
+            comentarioData.add(ComentarioGrpcAdd);
+        }
         RecetaResponse response= RecetaResponse.newBuilder()
         .setId(traerRecetas.getId())
         .setCategoria(traerRecetas.getCategoria())
         .setDescripcion(traerRecetas.getDescripcion())
         .setTiempoAprox(traerRecetas.getTiempoAprox())
         .setTitulo(traerRecetas.getTitulo())
+        .setPromedio(traerRecetas.getPromedio())
         .addAllIngredientes(ingredienteData)
         .addAllPasos(pasoData)
         .addAllFotos(fotoData)
+        .addAllComentarios(comentarioData)
         .build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();

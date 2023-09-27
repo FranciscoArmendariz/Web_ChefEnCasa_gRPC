@@ -35,7 +35,7 @@ message UsuarioResponse {
     string usuario = 3;
     string email = 4;
     string rol = 5;
-
+    int32 puntaje = 6;
 }
 
 message LoginUsuario {
