@@ -1,35 +1,18 @@
 package com.unla.chefEnCasa.server;
 
-import java.io.IOException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-/*import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.KafkaException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Component;
-
-import lombok.extern.slf4j.Slf4j;
-
-import java.io.FileReader;
-import java.io.IOException;
-import java.time.Duration;
-import java.util.List;
-import java.util.Objects;
-import java.util.Properties;
-@Component
-@Slf4j*/
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.unla.chefEnCasa.server.entity.Comentario;
+import com.unla.chefEnCasa.server.entity.Receta;
+import com.unla.chefEnCasa.server.entity.Usuario;
 import com.unla.chefEnCasa.server.repository.ComentarioRepository;
 import com.unla.chefEnCasa.server.repository.RecetaRepository;
 import com.unla.chefEnCasa.server.repository.UsuarioRepository;
@@ -60,81 +43,62 @@ public class Consumer {
             comentario.setReceta(recetaRepository.getReferenceById(jsonNode.get("idReceta").asLong()));
             comentario.setComentario(jsonNode.get("comentario").asText());
             comentarioRepository.save(comentario);
-        } catch (IOException e) {
+        } catch (JsonProcessingException e) {
             System.out.println(e);
         }
     }
 
-   /*  @KafkaListener(topics = "Popularidadusuario")
+    @KafkaListener(topics = "Popularidadusuario")
     public void consumePopularidadUsuario(String message) {
         System.out.println("Mensaje recibido: " + message);
+        this.guardarPopularidadUsuario(message);
 
+    }
+
+    public void guardarPopularidadUsuario(String json) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(json);
+            Optional<Usuario> user = usuarioRepository.findById(jsonNode.get("idUsuarioSeguido").asLong());
+            int puntaje = user.get().getPuntajeUsuario() + jsonNode.get("puntaje").asInt();
+            user.get().setPuntajeUsuario(puntaje);
+            usuarioRepository.save(user.get());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     @KafkaListener(topics = "PopularidadReceta")
     public void consumePopularidadReceta(String message) {
         System.out.println("Mensaje recibido: " + message);
-
-        // Procesa el mensaje según tus necesidades
+        this.guardarPopularidadReceta(message);
     }
 
-    public void guardarPopularidadUsuario(String json){
+    public void guardarPopularidadReceta(String json) {
         try {
-        ObjectMapper objectMapper=new ObjectMapper();
-       
-            JsonNode jsonNode=objectMapper.readTree(json);
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(json);
+            Optional<Receta> recipe = recetaRepository.findById(jsonNode.get("idReceta").asLong());
+            boolean esCalificacion = jsonNode.get("calificacion").asBoolean();
+            int puntaje = 0;
+            int calificacion = 0;
 
-        } catch (JsonMappingException e) {
+            puntaje = recipe.get().getPuntaje() + jsonNode.get("puntaje").asInt();
+            if (esCalificacion) {
+                calificacion = recipe.get().getCantidadCalificaciones() + 1;
+            }
 
+            recipe.get().setPuntaje(puntaje);
+            recipe.get().setCantidadCalificaciones(calificacion);
+            if (calificacion != 0) {
+                recipe.get().setPromedio(puntaje / calificacion);
+            } else {
+                recipe.get().setPromedio(puntaje / 1);
+            }
+            recetaRepository.save(recipe.get());
+        } catch (JsonProcessingException e) {
             e.printStackTrace();
-       
-        
-    }*/
+        }
+    }
 
 }
-/*
- * private KafkaConsumer<String, String> kafkaConsumer;
- * 
- * private Consumer() {
- * try {
- * Properties conf = ConsumerProperties.createConsumerProperties();
- * this.kafkaConsumer = new KafkaConsumer(conf);
- * } catch (Exception ioe) {
- * log.error(ioe.getMessage());
- * }
- * }
- * 
- * public void start() {
- * int count = 0;
- * do {
- * try {
- * kafkaConsumer.subscribe(List.of(TOPIC));
- * ConsumerRecords<String, String> records =
- * kafkaConsumer.poll(Duration.ofSeconds(20));
- * records.forEach(r -> {
- * String msg = String.format("key %s, value %s", r.key(), r.value());
- * log.info(msg);
- * });
- * 
- * } catch (KafkaException e) {
- * log.error(e.getMessage());
- * this.close();
- * }
- * count ++;
- * } while (count <= 100);
- * }
- * 
- * public void close() {
- * this.kafkaConsumer.close();;
- * }
- * 
- * public static Consumer getInstance() {
- * return (Objects.nonNull(consumer)) ? consumer : new Consumer();
- * }
- * 
- * private static Consumer consumer;
- * private static final String TOPIC ="test";
- * private static final String TOPIC2="Comentarios";
- * private static final String TOPIC3="PopularidadReceta";
- * private static final Logger log = LogManager.getLogger(Consumer.class);
- */
