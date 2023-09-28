@@ -131,7 +131,7 @@ namespace GrpcClientAPI.Controllers
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<bool> NuevoComentario(Comentario request)
+        public async Task<bool> NuevoComentario(ComentarioRequest request)
         {
             var config = new ProducerConfig { BootstrapServers = "localhost:9092" };
 
@@ -141,7 +141,7 @@ namespace GrpcClientAPI.Controllers
 
             if (!request.esAutor)
             {
-                producer.Produce("PopularidadReceta", new Message<Null, string> { Value = JsonConvert.SerializeObject(new PopularidadReceta() { idReceta=request.idReceta, calificacion = false, puntaje = 1}) });
+                producer.Produce("PopularidadReceta", new Message<Null, string> { Value = JsonConvert.SerializeObject(new PopularidadReceta() { idReceta = request.idReceta, calificacion = false, puntaje = 1 }) });
             }
 
             return true;
@@ -162,28 +162,53 @@ namespace GrpcClientAPI.Controllers
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<bool> AgregarFavorito(PopularidadReceta request)
+        public async Task<List<string>> VerUltimasRecetas()
         {
-            var config = new ProducerConfig { BootstrapServers = "localhost:9092" };
+            var cConfig = new ConsumerConfig
+            {
+                BootstrapServers = "localhost:9092",
+                GroupId = "foo",
+                AutoOffsetReset = AutoOffsetReset.Earliest
+            };
 
-            using var producer = new ProducerBuilder<Null, string>(config).Build();
+            List<string> recetas = new List<string>();
 
-            producer.Produce("PopularidadReceta", new Message<Null, string> { Value = JsonConvert.SerializeObject(request) });
+            using (var c = new ConsumerBuilder<Ignore, string>(cConfig).Build())
+            {
+                c.Subscribe("novedades");
 
-            return true;
-        }
+                CancellationTokenSource cts = new CancellationTokenSource();
 
-        [HttpPost()]
-        [Route("[action]")]
-        public async Task<bool> RemoverFavorito(PopularidadReceta request)
-        {
-            var config = new ProducerConfig { BootstrapServers = "localhost:9092" };
+                Console.CancelKeyPress += (_, e) => {
+                    e.Cancel = true; // prevent the process from terminating.
+                    cts.Cancel();
+                };
 
-            using var producer = new ProducerBuilder<Null, string>(config).Build();
 
-            producer.Produce("PopularidadReceta", new Message<Null, string> { Value = JsonConvert.SerializeObject(request) });
+                try
+                {
+                    try
+                    {
+                        var cr = c.Consume(TimeSpan.FromSeconds(2));
 
-            return true;
+                        while (cr is not null)
+                        {
+                            recetas.Add(cr.Value);
+                            cr = c.Consume(TimeSpan.FromSeconds(2));
+                        }
+                    }
+                    catch (ConsumeException e)
+                    {
+                        Console.WriteLine($"Error occured: {e.Error.Reason}");
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    c.Close();
+                }
+            }
+
+            return recetas;
         }
     }
 
@@ -192,14 +217,7 @@ namespace GrpcClientAPI.Controllers
         public string Url { get; set; }
     }
     
-    public class PopularidadReceta
-    {
-        public int idReceta { get; set; }
-        public int puntaje { get; set; }
-        public bool calificacion { get; set; }
-    }
-
-    public class Comentario
+    public class ComentarioRequest
     {
         public int idRedactor { get; set; }
         public int idReceta { get; set; }

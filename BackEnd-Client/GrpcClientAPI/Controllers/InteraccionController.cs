@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Grpc.Net.Client;
 using Confluent.Kafka;
+using Newtonsoft.Json;
 
 namespace GrpcClientAPI.Controllers
 {
@@ -22,6 +23,14 @@ namespace GrpcClientAPI.Controllers
         {
             var reply = await Client.seguirUsuarioAsync(request);
 
+            var config = new ProducerConfig { BootstrapServers = "localhost:9092" };
+
+            using var producer = new ProducerBuilder<Null, string>(config).Build();
+
+            PopularidadMsg msg = new PopularidadMsg() { idUsuarioSeguido = request.IdSeguir, puntaje = 1 };
+
+            producer.Produce("Popularidadusuario", new Message<Null, string> { Value = JsonConvert.SerializeObject(msg) });
+
             return reply;
         }
 
@@ -30,6 +39,14 @@ namespace GrpcClientAPI.Controllers
         public async Task<StringSeguido> dejarDeSeguirUsuario(IdSeguirUsuario request)
         {
             var reply = await Client.dejarDeSeguirUsuarioAsync(request);
+
+            var config = new ProducerConfig { BootstrapServers = "localhost:9092" };
+
+            using var producer = new ProducerBuilder<Null, string>(config).Build();
+
+            PopularidadMsg msg = new PopularidadMsg() { idUsuarioSeguido = request.IdSeguir, puntaje = -1 };
+
+            producer.Produce("Popularidadusuario", new Message<Null, string> { Value = JsonConvert.SerializeObject(msg) });
 
             return reply;
         }
@@ -40,6 +57,12 @@ namespace GrpcClientAPI.Controllers
         {
             var reply = await Client.agregarFavoritoAsync(request);
 
+            var config = new ProducerConfig { BootstrapServers = "localhost:9092" };
+
+            using var producer = new ProducerBuilder<Null, string>(config).Build();
+
+            producer.Produce("PopularidadReceta", new Message<Null, string> { Value = JsonConvert.SerializeObject(new PopularidadReceta() { idReceta = request.IdReceta, puntaje = 1, calificacion = false}) });
+
             return reply;
         }
 
@@ -48,6 +71,13 @@ namespace GrpcClientAPI.Controllers
         public async Task<StringSeguido> removerFavorito(favorito request)
         {
             var reply = await Client.removerFavoritoAsync(request);
+
+            var config = new ProducerConfig { BootstrapServers = "localhost:9092" };
+
+            using var producer = new ProducerBuilder<Null, string>(config).Build();
+
+            producer.Produce("PopularidadReceta", new Message<Null, string> { Value = JsonConvert.SerializeObject(new PopularidadReceta() { idReceta = request.IdReceta, puntaje = -1, calificacion = false }) });
+
 
             return reply;
         }
@@ -106,5 +136,18 @@ namespace GrpcClientAPI.Controllers
 
             return "";
         }
+    }
+
+    public class PopularidadMsg
+    {
+        public long idUsuarioSeguido { get; set; }
+        public int puntaje { get; set; }
+    }
+
+    public class PopularidadReceta
+    {
+        public long idReceta { get; set; }
+        public int puntaje { get; set; }
+        public bool calificacion { get; set; }
     }
 }
