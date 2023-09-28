@@ -1,5 +1,7 @@
-﻿using Grpc.Net.Client;
+﻿using Confluent.Kafka;
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace GrpcClientAPI.Controllers
 {
@@ -49,5 +51,46 @@ namespace GrpcClientAPI.Controllers
 
             return reply;
         }
+
+        [HttpPost()]
+        [Route("[action]")]
+        public async Task<PopularidadMsg> SeguirUsuario(SeguirUsuarioRequest request)
+        {
+            var config = new ProducerConfig { BootstrapServers = "localhost:9092" };
+
+            using var producer = new ProducerBuilder<Null, string>(config).Build();
+
+            PopularidadMsg msg = new PopularidadMsg() { idUsuarioSeguido = request.idUsuarioSeguido, puntaje = 1};
+
+            producer.Produce("Popularidadusuario", new Message<Null, string> { Value = JsonConvert.SerializeObject(msg)});
+
+            return msg;
+        }
+
+        [HttpPost()]
+        [Route("[action]")]
+        public async Task<PopularidadMsg> DejarDeSeguirUsuario(SeguirUsuarioRequest request)
+        {
+            var config = new ProducerConfig { BootstrapServers = "localhost:9092" };
+
+            using var producer = new ProducerBuilder<Null, string>(config).Build();
+
+            PopularidadMsg msg = new PopularidadMsg() { idUsuarioSeguido = request.idUsuarioSeguido, puntaje = -1 };
+
+            producer.Produce("Popularidadusuario", new Message<Null, string> { Value = JsonConvert.SerializeObject(msg) });
+
+            return msg;
+        }
+    }
+
+    public class SeguirUsuarioRequest
+    {
+        public int idUsuarioSeguido { get; set; }
+    }
+
+    public class PopularidadMsg
+    {
+        public int idUsuarioSeguido { get; set; }
+        public int puntaje { get; set; }
     }
 }
