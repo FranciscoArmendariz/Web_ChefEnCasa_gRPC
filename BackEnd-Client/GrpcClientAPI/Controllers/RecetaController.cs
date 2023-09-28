@@ -1,6 +1,8 @@
-﻿using Google.Protobuf.Collections;
+﻿using Confluent.Kafka;
+using Google.Protobuf.Collections;
 using Grpc.Net.Client;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Threading.Channels;
 
 namespace GrpcClientAPI.Controllers
@@ -43,6 +45,17 @@ namespace GrpcClientAPI.Controllers
                 receta.Pasos.Add(new Paso() { Descripcion = item.Descripcion, Numero = item.Numero });
             }
             var reply = await Client.CrearRecetaAsync(receta);
+
+            var config = new ProducerConfig { BootstrapServers = "localhost:9092" };
+
+            using var producer = new ProducerBuilder<Null, string>(config).Build();
+
+            string uri = "";
+            if (request.Fotos.Count() > 0) uri = request.Fotos.FirstOrDefault().Url;
+
+            NuevaRecetaMsg msg = new NuevaRecetaMsg() { nombreDeAutor=request.nombreAutor, tituloReceta=request.Receta.Titulo, foto = uri };
+
+            producer.Produce("novedades", new Message<Null, string> { Value = JsonConvert.SerializeObject(msg) });
 
             return reply;
         }
@@ -115,11 +128,83 @@ namespace GrpcClientAPI.Controllers
 
             return reply;
         }
+
+        [HttpPost()]
+        [Route("[action]")]
+        public async Task<bool> NuevoComentario(Comentario request)
+        {
+            var config = new ProducerConfig { BootstrapServers = "localhost:9092" };
+
+            using var producer = new ProducerBuilder<Null, string>(config).Build();
+
+            producer.Produce("Comentarios", new Message<Null, string> { Value = JsonConvert.SerializeObject(request) });
+
+            if (!request.esAutor)
+            {
+                producer.Produce("PopularidadReceta", new Message<Null, string> { Value = JsonConvert.SerializeObject(new PopularidadReceta() { idReceta=request.idReceta, calificacion = false, puntaje = 1}) });
+            }
+
+            return true;
+        }
+
+        [HttpPost()]
+        [Route("[action]")]
+        public async Task<bool> CalificarReceta(PopularidadReceta request)
+        {
+            var config = new ProducerConfig { BootstrapServers = "localhost:9092" };
+
+            using var producer = new ProducerBuilder<Null, string>(config).Build();
+
+            producer.Produce("PopularidadReceta", new Message<Null, string> { Value = JsonConvert.SerializeObject(request) });
+
+            return true;
+        }
+
+        [HttpPost()]
+        [Route("[action]")]
+        public async Task<bool> AgregarFavorito(PopularidadReceta request)
+        {
+            var config = new ProducerConfig { BootstrapServers = "localhost:9092" };
+
+            using var producer = new ProducerBuilder<Null, string>(config).Build();
+
+            producer.Produce("PopularidadReceta", new Message<Null, string> { Value = JsonConvert.SerializeObject(request) });
+
+            return true;
+        }
+
+        [HttpPost()]
+        [Route("[action]")]
+        public async Task<bool> RemoverFavorito(PopularidadReceta request)
+        {
+            var config = new ProducerConfig { BootstrapServers = "localhost:9092" };
+
+            using var producer = new ProducerBuilder<Null, string>(config).Build();
+
+            producer.Produce("PopularidadReceta", new Message<Null, string> { Value = JsonConvert.SerializeObject(request) });
+
+            return true;
+        }
     }
 
     public class FotoObj
     {
         public string Url { get; set; }
+    }
+    
+    public class PopularidadReceta
+    {
+        public int idReceta { get; set; }
+        public int puntaje { get; set; }
+        public bool calificacion { get; set; }
+    }
+
+    public class Comentario
+    {
+        public int idRedactor { get; set; }
+        public int idReceta { get; set; }
+        public string comentario { get; set; }
+        public bool esAutor { get; set; }
     }
 
     public class IngredienteObj
@@ -137,6 +222,7 @@ namespace GrpcClientAPI.Controllers
     public class RecetaObj
     {
         public RecetaRequest Receta { get; set; }
+        public string nombreAutor { get; set; }
         public List<FotoObj> Fotos { get; set; }
         public List<IngredienteObj> Ingredientes { get; set; }
         public List<PasoObj> Pasos { get; set; }
@@ -148,5 +234,12 @@ namespace GrpcClientAPI.Controllers
         public List<FotoObj> Fotos { get; set; }
         public List<IngredienteObj> Ingredientes { get; set; }
         public List<PasoObj> Pasos { get; set; }
+    }
+
+    public class NuevaRecetaMsg
+    {
+        public string tituloReceta { get; set; }
+        public string nombreDeAutor { get; set; }
+        public string foto { get; set; }
     }
 }
