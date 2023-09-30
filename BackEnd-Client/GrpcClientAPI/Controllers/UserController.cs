@@ -1,5 +1,7 @@
-﻿using Grpc.Net.Client;
+﻿using Confluent.Kafka;
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace GrpcClientAPI.Controllers
 {
@@ -49,5 +51,6 @@ namespace GrpcClientAPI.Controllers
 
             return reply;
         }
+
     }
 }

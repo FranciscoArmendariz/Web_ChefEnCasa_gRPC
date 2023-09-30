@@ -60,6 +60,10 @@ message Paso {
     string descripcion = 2;
 }
 
+message Comentario {
+    string comentario = 1;
+}
+
 message RecetaRequest {
     int64 idUsuario=1;
     string titulo = 2;
@@ -117,7 +121,9 @@ message RecetaResponse {
     string descripcion = 3;
     string categoria = 4;
     int32 tiempo_aprox = 5;
-    repeated Ingrediente ingredientes = 6;
-    repeated Paso pasos = 7;
-    repeated Foto fotos = 8;
+    float promedio = 6;
+    repeated Ingrediente ingredientes = 7;
+    repeated Paso pasos = 8;
+    repeated Foto fotos = 9;
+    repeated Comentario comentarios = 10;
 }
