@@ -26,7 +26,7 @@ export default function Favoritos() {
   return (
     <div className='py-10'>
       <LoadingWrapper loading={!!!recetasFavoritas}>
-        <ListaRecetas recetas={recetasFavoritas} favoritas />
+        <ListaRecetas recetas={recetasFavoritas} />
       </LoadingWrapper>
     </div>
   );

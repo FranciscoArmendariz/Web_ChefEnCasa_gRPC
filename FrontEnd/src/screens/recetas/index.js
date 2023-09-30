@@ -9,14 +9,14 @@ import {
 } from "@/redux/recetas/actions";
 
 export default function Recetas() {
-  const dispach = useDispatch();
+  const dispatch = useDispatch();
   const filtros = useSelector((state) => state.recetas.filtroActual);
 
   useEffect(() => {
-    dispach(traerIngredientes());
+    dispatch(traerIngredientes());
   }, []);
   useEffect(() => {
-    dispach(traerRecetasConFiltros(filtros));
+    dispatch(traerRecetasConFiltros(filtros));
   }, [filtros]);
 
   const recetas = useSelector((state) => state.recetas.listaRecetas);

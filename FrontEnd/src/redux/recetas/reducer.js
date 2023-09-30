@@ -13,6 +13,7 @@ export default function recetas(
     listaRecetas: null,
     listaRecetasFavoritas: null,
     listaRecetasPorUsuario: null,
+    listaRecetasNuevas: null,
     recetaPorId: null,
     ingredientes: [],
   },
@@ -112,6 +113,17 @@ export default function recetas(
       return {
         ...state,
         ingredienteserror: action.error,
+      };
+    case "TRAER_RECETAS_NUEVAS":
+      return {
+        ...state,
+        listaRecetasNuevas: action.payload,
+        recetasNuevasError: null,
+      };
+    case "TRAER_RECETAS_NUEVAS_ERROR":
+      return {
+        ...state,
+        recetasNuevasError: action.error,
       };
     default:
       return state;

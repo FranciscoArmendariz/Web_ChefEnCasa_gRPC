@@ -1,9 +1,37 @@
+export const TOP_RECETAS = [
+  {
+    titulo: "Ensalada",
+    autor: "Francisco",
+    foto: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
+  },
+  {
+    titulo: "Ensalada",
+    autor: "Francisco",
+    foto: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
+  },
+  {
+    titulo: "Ensalada",
+    autor: "Francisco",
+    foto: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
+  },
+  {
+    titulo: "Ensalada",
+    autor: "Francisco",
+    foto: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
+  },
+  {
+    titulo: "Ensalada",
+    autor: "Francisco",
+    foto: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
+  },
+];
+
 export const RECETAS = [
   {
     id: 1,
     titulo: "Ensalada",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
-    imagenes: [
+    fotos: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
@@ -40,7 +68,7 @@ export const RECETAS = [
     id: 2,
     titulo: "Ensalada 2",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
-    imagenes: [
+    fotos: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
@@ -77,7 +105,7 @@ export const RECETAS = [
     id: 3,
     titulo: "Ensalada 3",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
-    imagenes: [
+    fotos: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
@@ -114,7 +142,7 @@ export const RECETAS = [
     id: 4,
     titulo: "Ensalada 3",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
-    imagenes: [
+    fotos: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
@@ -151,7 +179,7 @@ export const RECETAS = [
     id: 5,
     titulo: "Ensalada 3",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
-    imagenes: [
+    fotos: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
@@ -188,7 +216,7 @@ export const RECETAS = [
     id: 6,
     titulo: "Ensalada 3",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
-    imagenes: [
+    fotos: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
@@ -225,7 +253,7 @@ export const RECETAS = [
     id: 7,
     titulo: "Ensalada 3",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
-    imagenes: [
+    fotos: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
@@ -262,7 +290,7 @@ export const RECETAS = [
     id: 8,
     titulo: "Ensalada 3",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
-    imagenes: [
+    fotos: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
@@ -299,7 +327,7 @@ export const RECETAS = [
     id: 10,
     titulo: "Ensalada 3",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
-    imagenes: [
+    fotos: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
@@ -336,7 +364,7 @@ export const RECETAS = [
     id: 11,
     titulo: "Ensalada 3",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
-    imagenes: [
+    fotos: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
@@ -373,7 +401,7 @@ export const RECETAS = [
     id: 12,
     titulo: "Ensalada 3",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
-    imagenes: [
+    fotos: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
@@ -410,7 +438,7 @@ export const RECETAS = [
     id: 13,
     titulo: "Ensalada 3",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
-    imagenes: [
+    fotos: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
@@ -447,7 +475,7 @@ export const RECETAS = [
     id: 14,
     titulo: "Ensalada 3",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
-    imagenes: [
+    fotos: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
@@ -484,7 +512,7 @@ export const RECETAS = [
     id: 15,
     titulo: "Ensalada 3",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
-    imagenes: [
+    fotos: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
@@ -521,7 +549,7 @@ export const RECETAS = [
     id: 16,
     titulo: "Ensalada 3",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
-    imagenes: [
+    fotos: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
@@ -558,7 +586,7 @@ export const RECETAS = [
     id: 17,
     titulo: "Ensalada 3",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
-    imagenes: [
+    fotos: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
@@ -595,7 +623,7 @@ export const RECETAS = [
     id: 18,
     titulo: "Ensalada 3",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
-    imagenes: [
+    fotos: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
@@ -632,7 +660,7 @@ export const RECETAS = [
     id: 19,
     titulo: "Ensalada 3",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
-    imagenes: [
+    fotos: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
@@ -669,7 +697,7 @@ export const RECETAS = [
     id: 20,
     titulo: "Ensalada 3",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
-    imagenes: [
+    fotos: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",

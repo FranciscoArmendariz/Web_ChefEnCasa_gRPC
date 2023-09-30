@@ -1,11 +1,11 @@
 import Header from "@/components/header";
-import Home from "@/screens/home";
+import Recetas from "@/screens/recetas";
 
 export default function RecetasPage() {
   return (
     <div className='h-screen bg-background overflow-y-auto'>
       <Header />
-      <Home />
+      <Recetas />
     </div>
   );
 }

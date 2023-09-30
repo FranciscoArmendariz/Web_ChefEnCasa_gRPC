@@ -34,6 +34,14 @@ export default function Header({ hideButtons }) {
               goToPage("/");
             }}
           >
+            HOME
+          </button>
+          <button
+            className='text-white underline underline-offset-4 decoration-2 font-semibold p-3 m-2'
+            onClick={() => {
+              goToPage("/recetas");
+            }}
+          >
             RECETAS
           </button>
           <button

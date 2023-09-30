@@ -105,3 +105,19 @@ export const traerIngredientes = () => async (dispatch) => {
     }
   });
 };
+
+export const traerRecetasNuevas = () => async (dispatch) => {
+  recetaApi.traerRecetasNuevas().then((response) => {
+    if (response.ok) {
+      dispatch({
+        type: "TRAER_RECETAS_NUEVAS",
+        payload: response.data,
+      });
+    } else {
+      dispatch({
+        type: "TRAER_RECETAS_NUEVAS_ERROR",
+        error: response.problem,
+      });
+    }
+  });
+};

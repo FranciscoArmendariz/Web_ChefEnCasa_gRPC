@@ -5,29 +5,54 @@ import { interaccionApi } from "@/services/interacciones";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 import { traerRecetasFavoritas } from "@/redux/recetas/actions";
+import { useEffect } from "react";
 
-export default function ListaRecetas({ recetas, favoritas, misRecetas }) {
+export default function ListaRecetas({ recetas, misRecetas }) {
   const router = useRouter();
   const idUsuario = useSelector((state) => state.user.usuarioActual?.id);
-  const dispach = useDispatch();
+  const dispatch = useDispatch();
 
-  const toggleFavorito = (idReceta) => {
-    if (favoritas) {
+  useEffect(() => {
+    if (idUsuario) {
+      dispatch(traerRecetasFavoritas(idUsuario));
+    }
+  }, [dispatch, idUsuario]);
+
+  const recetasFavoritas = useSelector(
+    (state) => state.recetas.listaRecetasFavoritas
+  );
+
+  const esFavorita = (recetaId) => {
+    console.log(recetaId);
+    console.log("favoritas", recetasFavoritas);
+    return recetasFavoritas?.some((receta) => receta.id === recetaId);
+  };
+
+  const toggleFavorito = (idReceta, favorita) => {
+    if (favorita) {
       interaccionApi
         .removerRecetaFavorita({ idUsuario, idReceta })
         .then((response) => {
           if (response.ok) {
-            dispach(traerRecetasFavoritas(idUsuario));
+            dispatch(traerRecetasFavoritas(idUsuario));
           }
         });
     } else {
-      interaccionApi.agregarRecetaFavorita({ idUsuario, idReceta });
+      interaccionApi
+        .agregarRecetaFavorita({ idUsuario, idReceta })
+        .then((response) => {
+          if (response.ok) {
+            dispatch(traerRecetasFavoritas(idUsuario));
+          }
+        });
     }
   };
 
   return (
     <div className='flex flex-row flex-wrap justify-center gap-8'>
       {recetas?.map((receta) => {
+        const favorita = esFavorita(receta.id);
+        console.log("es favorita", favorita);
         return (
           <div key={receta.id} className='relative'>
             <button
@@ -54,16 +79,16 @@ export default function ListaRecetas({ recetas, favoritas, misRecetas }) {
             </button>
             <button
               onClick={() => {
-                toggleFavorito(receta.id);
+                toggleFavorito(receta.id, favorita);
               }}
               className='absolute right-0 top-0  bg-white/80 mt-1 mr-1 rounded-xl p-1 z-10'
             >
               <FeatherIcon
-                icon={favoritas ? "x" : "star"}
+                icon={favorita ? "x" : "star"}
                 size={25}
                 className={cn({
-                  "stroke-1 fill-yellow-500": !favoritas,
-                  "stroke-2 text-red-500": favoritas,
+                  "stroke-1 fill-yellow-500": !favorita,
+                  "stroke-2 text-red-500": favorita,
                 })}
               />
             </button>
