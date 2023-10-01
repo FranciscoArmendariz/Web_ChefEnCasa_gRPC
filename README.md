@@ -8,7 +8,7 @@ Francisco Armendariz - Desarrollo Front End.
 
 Valentin Topssian Oliva - Desarrollo servidor.
 
-Giuliano Bacon – Desarrollo servidor.
+Giuliano Bacon – se salió del grupo.
 
 **Prerrequisitos Frontend**
 
