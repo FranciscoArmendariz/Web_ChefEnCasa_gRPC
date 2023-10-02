@@ -4,7 +4,10 @@ import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import { interaccionApi } from "@/services/interacciones";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
-import { traerRecetasFavoritas } from "@/redux/recetas/actions";
+import {
+  traerRecetasFavoritas,
+  traerRecetasPorUsuario,
+} from "@/redux/recetas/actions";
 import { useEffect } from "react";
 
 export default function ListaRecetas({ recetas, misRecetas }) {
@@ -15,16 +18,18 @@ export default function ListaRecetas({ recetas, misRecetas }) {
   useEffect(() => {
     if (idUsuario) {
       dispatch(traerRecetasFavoritas(idUsuario));
+      dispatch(traerRecetasPorUsuario(idUsuario));
     }
   }, [dispatch, idUsuario]);
 
   const recetasFavoritas = useSelector(
     (state) => state.recetas.listaRecetasFavoritas
   );
+  const recetasUsuario = useSelector(
+    (state) => state.recetas.listaRecetasPorUsuario
+  );
 
   const esFavorita = (recetaId) => {
-    console.log(recetaId);
-    console.log("favoritas", recetasFavoritas);
     return recetasFavoritas?.some((receta) => receta.id === recetaId);
   };
 
@@ -52,7 +57,6 @@ export default function ListaRecetas({ recetas, misRecetas }) {
     <div className='flex flex-row flex-wrap justify-center gap-8'>
       {recetas?.map((receta) => {
         const favorita = esFavorita(receta.id);
-        console.log("es favorita", favorita);
         return (
           <div key={receta.id} className='relative'>
             <button
@@ -77,21 +81,23 @@ export default function ListaRecetas({ recetas, misRecetas }) {
                 </div>
               </div>
             </button>
-            <button
-              onClick={() => {
-                toggleFavorito(receta.id, favorita);
-              }}
-              className='absolute right-0 top-0  bg-white/80 mt-1 mr-1 rounded-xl p-1 z-10'
-            >
-              <FeatherIcon
-                icon={favorita ? "x" : "star"}
-                size={25}
-                className={cn({
-                  "stroke-1 fill-yellow-500": !favorita,
-                  "stroke-2 text-red-500": favorita,
-                })}
-              />
-            </button>
+            {!recetasUsuario?.some((r) => r.id === receta.id) && (
+              <button
+                onClick={() => {
+                  toggleFavorito(receta.id, favorita);
+                }}
+                className='absolute right-0 top-0  bg-white/80 mt-1 mr-1 rounded-xl p-1 z-10'
+              >
+                <FeatherIcon
+                  icon={favorita ? "x" : "star"}
+                  size={25}
+                  className={cn({
+                    "stroke-1 fill-yellow-500": !favorita,
+                    "stroke-2 text-red-500": favorita,
+                  })}
+                />
+              </button>
+            )}
             {misRecetas && (
               <button
                 onClick={() => {

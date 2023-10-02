@@ -201,46 +201,48 @@ export default function Receta({ idReceta }) {
                 </button>
               </form>
             </div>
-            <div className='mb-5 flex flex-col items-center'>
-              <button
-                onClick={() => setToggle(true)}
-                className='font-semibold shadow-2xl border border-slate-500 rounded-lg p-3 bg-gradient-to-br from-orange-500 to-orange-700 hover:from-orange-400 hover:to-orange-600 text-white'
-              >
-                VALORÁ LA RECETA
-              </button>
-              <div
-                className={cn(
-                  "relative w-48 h-16 bg-white top-1 border-gray-500 border rounded-lg flex justify-center items-center shadow-2xl",
-                  { hidden: !toggle }
-                )}
-              >
+            {!recetasUsuario?.some((receta) => receta.id === idReceta) && (
+              <div className='mb-5 flex flex-col items-center'>
                 <button
-                  className='absolute top-1 right-1 p-1'
-                  onClick={() => setToggle(false)}
+                  onClick={() => setToggle(true)}
+                  className='font-semibold shadow-2xl border border-slate-500 rounded-lg p-3 bg-gradient-to-br from-orange-500 to-orange-700 hover:from-orange-400 hover:to-orange-600 text-white'
                 >
-                  <FeatherIcon icon='x' size={15} />
+                  VALORÁ LA RECETA
                 </button>
-                <div className='group flex'>
-                  {estrellas.map((estrlla) => {
-                    return (
-                      <button
-                        onClick={() => handlePuntuacion(estrlla.puntos)}
-                        key={estrlla.puntos}
-                        className={cn(
-                          "fill-transparent group-hover:fill-yellow-500",
-                          estrlla.className
-                        )}
-                      >
-                        <FeatherIcon
-                          icon={"star"}
-                          className='stroke-1 fill-inherit'
-                        />
-                      </button>
-                    );
-                  })}
+                <div
+                  className={cn(
+                    "relative w-48 h-16 bg-white top-1 border-gray-500 border rounded-lg flex justify-center items-center shadow-2xl",
+                    { hidden: !toggle }
+                  )}
+                >
+                  <button
+                    className='absolute top-1 right-1 p-1'
+                    onClick={() => setToggle(false)}
+                  >
+                    <FeatherIcon icon='x' size={15} />
+                  </button>
+                  <div className='group flex'>
+                    {estrellas.map((estrlla) => {
+                      return (
+                        <button
+                          onClick={() => handlePuntuacion(estrlla.puntos)}
+                          key={estrlla.puntos}
+                          className={cn(
+                            "fill-transparent group-hover:fill-yellow-500",
+                            estrlla.className
+                          )}
+                        >
+                          <FeatherIcon
+                            icon={"star"}
+                            className='stroke-1 fill-inherit'
+                          />
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
