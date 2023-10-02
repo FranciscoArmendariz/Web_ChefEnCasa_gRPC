@@ -6,6 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function NuevaReceta() {
   const idUsuario = useSelector((state) => state.user.usuarioActual?.id);
+  const nombreUsuario = useSelector(
+    (state) => state.user.usuarioActual?.nombre
+  );
   const crearRecetaRespuesta = useSelector(
     (state) => state.recetas.crearRecetaRespuesta
   );
@@ -22,6 +25,7 @@ export default function NuevaReceta() {
           pasos: undefined,
           ingredientes: undefined,
         },
+        nombreAutor: nombreUsuario,
         fotos: data.fotos,
         ingredientes: data.ingredientes,
         pasos: data.pasos,

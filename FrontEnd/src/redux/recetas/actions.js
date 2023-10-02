@@ -107,7 +107,7 @@ export const traerIngredientes = () => async (dispatch) => {
 };
 
 export const traerRecetasNuevas = () => async (dispatch) => {
-  recetaApi.traerRecetasNuevas().then((response) => {
+  recetaApi.verUltimasRecetas().then((response) => {
     if (response.ok) {
       dispatch({
         type: "TRAER_RECETAS_NUEVAS",
@@ -121,3 +121,22 @@ export const traerRecetasNuevas = () => async (dispatch) => {
     }
   });
 };
+export const nuevoComentario =
+  ({ idRedactor, idReceta, comentario, esAutor }) =>
+  async (dispatch) => {
+    recetaApi
+      .nuevoComentario({ idRedactor, idReceta, comentario, esAutor })
+      .then((response) => {
+        if (response.ok) {
+          dispatch({
+            type: "NUEVO_COMENTARIO",
+            payload: response.data,
+          });
+        } else {
+          dispatch({
+            type: "NUEVO_COMENTARIO_ERROR",
+            error: response.problem,
+          });
+        }
+      });
+  };

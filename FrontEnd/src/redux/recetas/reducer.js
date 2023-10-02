@@ -6,7 +6,7 @@ export default function recetas(
       titulo: "",
       categoria: "",
       page: 1,
-      size: 12,
+      size: 50,
       orderBy: "asc",
       sortBy: "id",
     },
@@ -124,6 +124,17 @@ export default function recetas(
       return {
         ...state,
         recetasNuevasError: action.error,
+      };
+    case "NUEVO_COMENTARIO":
+      return {
+        ...state,
+        nuevoComentarioRespuesta: action.payload,
+        nuevoComentarioError: null,
+      };
+    case "NUEVO_COMENTARIO_ERROR":
+      return {
+        ...state,
+        nuevoComentarioError: action.error,
       };
     default:
       return state;

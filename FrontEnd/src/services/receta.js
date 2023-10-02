@@ -17,10 +17,10 @@ const recetaApi = {
   traerIngredientes: () => api.post(`${RUTA}/TraerTodosLosIngredientes`, {}),
   traerRecetaPorId: (id) =>
     api.post(`${RUTA}/TraerRecetasPorIdReceta`, { idReceta: id }),
-  traerUltimasRecetas: () => api.post(`${RUTA}/TraerUltimasRecetas`, {}),
-  comentarReceta: (idEscitor, idReceta, esAutor, comentario) =>
-    api.post(`${RUTA}/comentarReceta`, {
-      idEscitor,
+  verUltimasRecetas: () => api.post(`${RUTA}/VerUltimasRecetas`),
+  nuevoComentario: ({ idRedactor, idReceta, comentario, esAutor }) =>
+    api.post(`${RUTA}/NuevoComentario`, {
+      idRedactor,
       idReceta,
       comentario,
       esAutor,
@@ -29,6 +29,7 @@ const recetaApi = {
     api.post(`${RUTA}/calificarReceta`, {
       idReceta,
       puntaje,
+      calificacion: true,
     }),
 };
 

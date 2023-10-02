@@ -31,6 +31,7 @@ namespace GrpcClientAPI.Controllers
 
             producer.Produce("Popularidadusuario", new Message<Null, string> { Value = JsonConvert.SerializeObject(msg) });
 
+            producer.Flush();
             return reply;
         }
 
@@ -48,6 +49,7 @@ namespace GrpcClientAPI.Controllers
 
             producer.Produce("Popularidadusuario", new Message<Null, string> { Value = JsonConvert.SerializeObject(msg) });
 
+            producer.Flush();
             return reply;
         }
 
@@ -63,6 +65,7 @@ namespace GrpcClientAPI.Controllers
 
             producer.Produce("PopularidadReceta", new Message<Null, string> { Value = JsonConvert.SerializeObject(new PopularidadReceta() { idReceta = request.IdReceta, puntaje = 1, calificacion = false}) });
 
+            producer.Flush();
             return reply;
         }
 
@@ -78,7 +81,7 @@ namespace GrpcClientAPI.Controllers
 
             producer.Produce("PopularidadReceta", new Message<Null, string> { Value = JsonConvert.SerializeObject(new PopularidadReceta() { idReceta = request.IdReceta, puntaje = -1, calificacion = false }) });
 
-
+            producer.Flush();
             return reply;
         }
 

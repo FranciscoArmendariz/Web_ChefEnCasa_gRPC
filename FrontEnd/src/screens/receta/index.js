@@ -1,33 +1,79 @@
 import LoadingWrapper from "@/components/LoadingWrapper";
-import { limpiarListas, traerRecetaPorId } from "@/redux/recetas/actions";
+import {
+  limpiarListas,
+  nuevoComentario,
+  traerRecetaPorId,
+  traerRecetasPorUsuario,
+} from "@/redux/recetas/actions";
+import recetaApi from "@/services/receta";
 import cn from "classnames";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import Image from "next/image";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Receta({ idReceta }) {
   const [toggle, setToggle] = useState(false);
   const dispatch = useDispatch();
+  const idUsuario = useSelector((state) => state.user?.usuarioActual?.id);
+
   useEffect(() => {
     dispatch(limpiarListas());
     if (!!idReceta) {
       dispatch(traerRecetaPorId(idReceta));
     }
-  }, [dispatch, idReceta]);
+    if (idUsuario) {
+      dispatch(traerRecetasPorUsuario(idUsuario));
+    }
+  }, [dispatch, idReceta, idUsuario]);
 
-  const handlePuntuacion = (puntaje) => {};
+  const {
+    register: registroUsuario,
+    handleSubmit: submitComentario,
+    reset: resetComentario,
+  } = useForm();
 
   const receta = useSelector((state) => state.recetas.recetaPorId);
-  /*const valoracion = [
+  const recetasUsuario = useSelector(
+    (state) => state.recetas.listaRecetasPorUsuario
+  );
+
+  const handleSubmitComentario = (data) => {
+    const mensaje = {
+      idRedactor: idUsuario,
+      idReceta: idReceta,
+      comentario: data.comentario,
+      esAutor: recetasUsuario.some((receta) => receta.id === idReceta),
+    };
+
+    dispatch(
+      nuevoComentario({
+        idRedactor: mensaje.idRedactor,
+        idReceta: mensaje.idReceta,
+        comentario: mensaje.comentario,
+        esAutor: mensaje.esAutor,
+      })
+    );
+    resetComentario();
+    dispatch(traerRecetaPorId(idReceta));
+  };
+
+  const handlePuntuacion = (puntaje) => {
+    recetaApi
+      .calificarReceta(idReceta, puntaje)
+      .then(dispatch(traerRecetaPorId(idReceta)));
+    setToggle(false);
+  };
+
+  const valoracion = [
     receta?.promedio > 0,
     receta?.promedio > 1,
     receta?.promedio > 2,
     receta?.promedio > 3,
     receta?.promedio > 4,
-  ];*/
-  const valoracion = [true, true, true, false, false];
+  ];
   const estrellas = [
     { className: "peer/1", puntos: 1 },
     { className: "peer/2 peer-hover/1:fill-transparent", puntos: 2 },
@@ -111,9 +157,10 @@ export default function Receta({ idReceta }) {
             <div className='mb-5 flex flex-col items-center'>
               <span className='font-semibold'>VALORACIÓN</span>
               <div className='flex flex-row'>
-                {valoracion.map((filled) => {
+                {valoracion.map((filled, index) => {
                   return (
                     <FeatherIcon
+                      key={`${index}-${filled}`}
                       icon={"star"}
                       className={`stroke-1 ${filled && "fill-yellow-400"}`}
                     />
@@ -121,11 +168,35 @@ export default function Receta({ idReceta }) {
                 })}
               </div>
             </div>
-            <div className='mb-5 flex flex-col items-center '>
+            <div className='mb-5 flex flex-col items-center gap-1'>
               <span className='font-semibold'>COMENTARIOS</span>
-              <form className='flex flex-col items-center bg-blue-200 w-1/2 p-3 rounded-xl shadow-xl z-10'>
-                <textarea className='w-full rounded-lg' />
-                <button className='relative bottom-1 -z-10 bg-blue-500 hover:bg-blue-400 transition-colors duration-300 font-semibold py-1 text-white w-full rounded-b-lg'>
+              <div className='max-h-52 gap-1 flex flex-col overflow-auto w-1/2'>
+                {receta?.comentarios.map((comentario) => {
+                  return (
+                    <div
+                      key={comentario.comentario_}
+                      className='flex flex-col items-center bg-blue-200  p-3 rounded-xl shadow-xl'
+                    >
+                      <span className='w-full rounded-lg bg-white p-1'>
+                        {comentario.comentario_}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+              <form
+                onSubmit={submitComentario(handleSubmitComentario)}
+                className='flex flex-col items-center bg-blue-200 w-1/2 p-3 rounded-xl shadow-xl z-10'
+              >
+                <textarea
+                  placeholder='comentario...'
+                  {...registroUsuario("comentario", { required: true })}
+                  className='w-full rounded-lg'
+                />
+                <button
+                  type='submit'
+                  className='relative bottom-1 -z-10 bg-blue-500 hover:bg-blue-400 transition-colors duration-300 font-semibold py-1 text-white w-full rounded-b-lg'
+                >
                   Agregar comentario
                 </button>
               </form>
@@ -153,6 +224,7 @@ export default function Receta({ idReceta }) {
                   {estrellas.map((estrlla) => {
                     return (
                       <button
+                        onClick={() => handlePuntuacion(estrlla.puntos)}
                         key={estrlla.puntos}
                         className={cn(
                           "fill-transparent group-hover:fill-yellow-500",

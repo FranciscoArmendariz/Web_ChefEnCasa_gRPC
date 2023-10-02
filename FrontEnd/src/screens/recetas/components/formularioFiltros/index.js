@@ -22,7 +22,7 @@ export default function FormularioFiltros() {
         minTiempoAprox: data.rangoDeTiempo.min,
         maxTiempoAprox: data.rangoDeTiempo.max,
         page: 1,
-        size: 12,
+        size: 50,
         orderBy: "asc",
         sortBy: "id",
         nombreIngrediente: data.ingrediente,

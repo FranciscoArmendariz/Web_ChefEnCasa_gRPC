@@ -1,9 +1,10 @@
-import { traerUsuariosSeguidos } from "@/redux/user/actions";
+import { traerUsuarios, traerUsuariosSeguidos } from "@/redux/user/actions";
 import { interaccionApi } from "@/services/interacciones";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import { useDispatch } from "react-redux";
 import cn from "classnames";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 export default function ListaUsuarios({
   usuarios,
@@ -15,14 +16,18 @@ export default function ListaUsuarios({
   const dispatch = useDispatch();
   const esSeguido = (id) =>
     usuariosSeguidos?.some((usuario) => usuario.id === id);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSeguirUsuario = (id) => {
+    setIsLoading(true);
     if (esSeguido(id)) {
       interaccionApi
         .dejarDeSeguirUsuario({ idSeguir: id, idSeguidor: idUsuario })
         .then((response) => {
           if (response.ok) {
+            setIsLoading(false);
             dispatch(traerUsuariosSeguidos(idUsuario));
+            dispatch(traerUsuarios());
           }
         });
     } else {
@@ -30,7 +35,9 @@ export default function ListaUsuarios({
         .seguirUsuario({ idSeguir: id, idSeguidor: idUsuario })
         .then((response) => {
           if (response.ok) {
+            setIsLoading(false);
             dispatch(traerUsuariosSeguidos(idUsuario));
+            dispatch(traerUsuarios());
           }
         });
     }
@@ -44,11 +51,12 @@ export default function ListaUsuarios({
           return (
             <div
               key={`${usuario.id}-${usuario.nombre}`}
-              className='flex flex-ro shadow-md w-64 max-w-5xl  h-20'
+              className='flex flex-ro shadow-md w-96 max-w-5xl  h-24'
             >
               <button
+                disabled={isLoading}
                 onClick={() => handleSeguirUsuario(usuario.id)}
-                className='transition duration-300 hover:bg-blue-400 flex flex-col p-1 w-16 h-full pr-1 rounded-l-lg justify-center bg-white items-center'
+                className='transition duration-300 hover:bg-blue-400 flex flex-col p-1 w-16 h-full pr-1 rounded-l-lg justify-center bg-white items-center disabled:bg-slate-200'
               >
                 <FeatherIcon
                   size={35}
@@ -71,6 +79,7 @@ export default function ListaUsuarios({
                 <div>{usuario.nombre}</div>
                 <div>@{usuario.usuario}</div>
                 <div className='truncate'>{usuario.email}</div>
+                <div>Puntaje: {usuario.puntaje}</div>
               </button>
             </div>
           );

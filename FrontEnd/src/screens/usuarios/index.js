@@ -14,6 +14,8 @@ export default function Usuarios() {
   const idUsuario = useSelector((state) => state.user.usuarioActual?.id);
   const [mostrarSeguidos, setMostrarUsuariosSeguidos] = useState();
 
+  const usuarios = useSelector((state) => state.user.listaUsuarios);
+
   useEffect(() => {
     dispatch(traerUsuarios());
     if (idUsuario) {
@@ -21,7 +23,6 @@ export default function Usuarios() {
     }
   }, [dispatch, idUsuario]);
 
-  const usuarios = useSelector((state) => state.user.listaUsuarios);
   const usuariosSeguidos = useSelector(
     (state) => state.user.listaUsuariosSeguidos
   );
