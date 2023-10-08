@@ -10,7 +10,7 @@ export default function LoginCheck({ children }) {
   useEffect(() => {
     const loginData = localStorage.getItem("loginData")?.split("_");
     if (!loginData) {
-      if (router.pathname !== "/login") router.push("/login");
+      //if (router.pathname !== "/login") router.push("/login");
     } else {
       dispach(login({ usuario: loginData[0], contrasenia: loginData[1] }));
     }

@@ -68,6 +68,14 @@ export default function Header({ hideButtons }) {
           >
             USUARIOS
           </button>
+          <button
+            className='text-white underline underline-offset-4 decoration-2 font-semibold p-3 m-2 '
+            onClick={() => {
+              goToPage("/borradores");
+            }}
+          >
+            BORRADORES
+          </button>
         </div>
       )}
       {!hideButtons && (
