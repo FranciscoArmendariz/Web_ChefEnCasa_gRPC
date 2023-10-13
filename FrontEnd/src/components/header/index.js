@@ -76,6 +76,14 @@ export default function Header({ hideButtons }) {
           >
             BORRADORES
           </button>
+          <button
+            className='text-white underline underline-offset-4 decoration-2 font-semibold p-3 m-2 '
+            onClick={() => {
+              goToPage("/recetarios");
+            }}
+          >
+            RECETARIOS
+          </button>
         </div>
       )}
       {!hideButtons && (

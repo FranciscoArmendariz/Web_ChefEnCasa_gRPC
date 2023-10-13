@@ -15,6 +15,7 @@ export default function Borradores() {
       });
     }
   };
+
   return (
     <div>
       <div className='p-11 w-1/2 m-5 bg-blue-400 text-white rounded-lg'>

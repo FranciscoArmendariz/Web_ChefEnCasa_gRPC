@@ -31,6 +31,18 @@ const recetaApi = {
       puntaje,
       calificacion: true,
     }),
+  traerRecetarios: (idUsuario) =>
+    api.post(`${RUTA}/recetarios/traer`, { idUsuario }),
+  traerRecetario: (idRecetario) =>
+    api.post(`${RUTA}/recetarios/traer`, { idRecetario }),
+  crearRecetario: ({ idAutor, nombre }) =>
+    api.post(`${RUTA}/recetarios/crear`, { idAutor, nombre }),
+  borrarRecetario: (idRecetario) =>
+    api.post(`${RUTA}/recetarios/borrar`, { idRecetario }),
+  agregarRecetaRecetario: ({ idRecetario, idReceta }) =>
+    api.post(`${RUTA}/recetarios/agrgar`, { idRecetario, idReceta }),
+  removerRecetaRecetario: ({ idRecetario, idReceta }) =>
+    api.post(`${RUTA}/recetarios/agrgar`, { idRecetario, idReceta }),
 };
 
 export default recetaApi;

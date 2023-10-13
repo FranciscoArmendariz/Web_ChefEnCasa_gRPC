@@ -1,4 +1,5 @@
 import LoadingWrapper from "@/components/LoadingWrapper";
+import { RECETARIOS } from "@/constants/recetas";
 import {
   limpiarListas,
   nuevoComentario,
@@ -16,8 +17,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Receta({ idReceta }) {
   const [toggle, setToggle] = useState(false);
+  const [toggleRecetario, setToggleRecetario] = useState(false);
   const dispatch = useDispatch();
   const idUsuario = useSelector((state) => state.user?.usuarioActual?.id);
+
+  const recetarios = RECETARIOS;
+
+  const handleAgregarRecetario = (idRecetario) => {
+    recetaApi.agregarRecetaRecetario(idRecetario, idReceta);
+    setToggleRecetario(false);
+  };
 
   useEffect(() => {
     dispatch(limpiarListas());
@@ -202,7 +211,7 @@ export default function Receta({ idReceta }) {
               </form>
             </div>
             {!recetasUsuario?.some((receta) => receta.id === idReceta) && (
-              <div className='mb-5 flex flex-col items-center'>
+              <div className='mb-5 flex flex-col items-center relative'>
                 <button
                   onClick={() => setToggle(true)}
                   className='font-semibold shadow-2xl border border-slate-500 rounded-lg p-3 bg-gradient-to-br from-orange-500 to-orange-700 hover:from-orange-400 hover:to-orange-600 text-white'
@@ -211,7 +220,7 @@ export default function Receta({ idReceta }) {
                 </button>
                 <div
                   className={cn(
-                    "relative w-48 h-16 bg-white top-1 border-gray-500 border rounded-lg flex justify-center items-center shadow-2xl",
+                    "absolute top-14 w-48 h-16 bg-white z-10 border-gray-500 border rounded-lg flex justify-center items-center shadow-2xl",
                     { hidden: !toggle }
                   )}
                 >
@@ -243,6 +252,40 @@ export default function Receta({ idReceta }) {
                 </div>
               </div>
             )}
+            <div className='mb-5 flex flex-col items-center relative pt-3'>
+              <button
+                onClick={() => setToggleRecetario(true)}
+                className='font-semibold shadow-2xl border border-slate-500 rounded-lg p-3 bg-gradient-to-br from-orange-500 to-orange-700 hover:from-orange-400 hover:to-orange-600 text-white'
+              >
+                AGREGAR A RECETARIO
+              </button>
+              <div
+                className={cn(
+                  "absolute top-16 w-[300px] h-32 bg-white border-gray-500 border rounded-lg flex justify-center items-center shadow-2xl",
+                  { hidden: !toggleRecetario }
+                )}
+              >
+                <button
+                  className='absolute top-1 right-0.5 p-1'
+                  onClick={() => setToggleRecetario(false)}
+                >
+                  <FeatherIcon icon='x' size={15} />
+                </button>
+                <div className='flex flex-col h-full w-full mr-6 gap-2 overflow-auto p-3'>
+                  {recetarios.map((recetario) => {
+                    return (
+                      <button
+                        onClick={() => handleAgregarRecetario(recetario.id)}
+                        className='bg-blue-500 p-1 rounded-lg text-white'
+                        key={recetario.nombre}
+                      >
+                        {recetario.nombre}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

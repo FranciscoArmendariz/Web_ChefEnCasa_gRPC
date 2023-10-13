@@ -32,9 +32,15 @@ export const RECETAS = [
     titulo: "Ensalada",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
     fotos: [
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
+      {
+        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
+      },
+      {
+        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
+      },
+      {
+        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
+      },
     ],
     ingredientes: [
       { id: 1, nombre: "tomate", cantidad: "2" },
@@ -69,9 +75,15 @@ export const RECETAS = [
     titulo: "Ensalada 2",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
     fotos: [
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
+      {
+        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
+      },
+      {
+        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
+      },
+      {
+        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
+      },
     ],
     ingredientes: [
       { id: 1, nombre: "tomate", cantidad: "2" },
@@ -106,9 +118,15 @@ export const RECETAS = [
     titulo: "Ensalada 3",
     descripcion: "Ensalada se tomate, lechuga y cebolla",
     fotos: [
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_E9aLQsZQOdcd3oxF2aTcoviX_R9hn8-FKJUEkEvkAhBSkI4JUxB_tBzYAs04B05esVE&usqp=CAU",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul1c2ONOF9ZmtZ9e7xTF6cxcsQW6n5WQ6a8VwFKqx8nOuIwt94_MY938xHQW4NOiXJFU&usqp=CAU",
+      {
+        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
+      },
+      {
+        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
+      },
+      {
+        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1jS0csAnOZ7P6srzfhfyPBXePsMXsElAMXPtPMjDhALjRaH48k6CP91kfK2rb8Pi790&usqp=CAU",
+      },
     ],
     ingredientes: [
       { id: 4, nombre: "tomate", cantidad: "2" },
@@ -730,4 +748,12 @@ export const RECETAS = [
     ],
     tiempoAprox: 25,
   },
+];
+
+export const RECETARIOS = [
+  { nombre: "recetario 1", id: 1, recetas: [RECETAS[0], RECETAS[2]] },
+  { nombre: "recetario 2", id: 2, recetas: [RECETAS[0], RECETAS[2]] },
+  { nombre: "recetario 3", id: 3, recetas: [RECETAS[0], RECETAS[2]] },
+  { nombre: "recetario 4", id: 4, recetas: [RECETAS[0], RECETAS[2]] },
+  { nombre: "recetario 5", id: 5, recetas: [RECETAS[0], RECETAS[2]] },
 ];

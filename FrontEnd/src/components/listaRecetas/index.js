@@ -9,8 +9,14 @@ import {
   traerRecetasPorUsuario,
 } from "@/redux/recetas/actions";
 import { useEffect } from "react";
+import recetaApi from "@/services/receta";
 
-export default function ListaRecetas({ recetas, misRecetas }) {
+export default function ListaRecetas({
+  recetas,
+  misRecetas,
+  recetario,
+  idRecetario,
+}) {
   const router = useRouter();
   const idUsuario = useSelector((state) => state.user.usuarioActual?.id);
   const dispatch = useDispatch();
@@ -31,6 +37,15 @@ export default function ListaRecetas({ recetas, misRecetas }) {
 
   const esFavorita = (recetaId) => {
     return recetasFavoritas?.some((receta) => receta.id === recetaId);
+  };
+
+  const removerRecetario = (idReceta) => {
+    recetaApi
+      .removerRecetaRecetario({
+        idReceta: idReceta,
+        idRecetario: idRecetario,
+      })
+      .then(dispatch(/*TODO Todo todo todo TODO*/));
   };
 
   const toggleFavorito = (idReceta, favorita) => {
@@ -98,17 +113,22 @@ export default function ListaRecetas({ recetas, misRecetas }) {
                 />
               </button>
             )}
-            {misRecetas && (
+            {(misRecetas || recetario) && (
               <button
                 onClick={() => {
-                  router.push(`/editarReceta/${receta.id}`);
+                  misRecetas
+                    ? router.push(`/editarReceta/${receta.id}`)
+                    : removerRecetario(receta.id);
                 }}
                 className='absolute left-0 top-0 bg-white/80 rounded-lg mt-1 ml-1 p-2 z-10'
               >
                 <FeatherIcon
-                  icon='edit'
+                  icon={misRecetas ? "edit" : "trash"}
                   size={25}
-                  className='stroke-2 text-blue-800'
+                  className={cn(
+                    "stroke-2",
+                    misRecetas ? "text-blue-800" : "text-red-600"
+                  )}
                 />
               </button>
             )}
