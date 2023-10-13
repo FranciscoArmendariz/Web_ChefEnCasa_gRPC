@@ -1,4 +1,4 @@
-package com.unla.chefEnCasa.server;
+/*package com.unla.chefEnCasa.server;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -43,15 +43,15 @@ public class ConsumerProperties {
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         props.put("group.id", "mi-grupo-consumidor");*/
 
-        return new DefaultKafkaConsumerFactory<>(properties);
-    }
-    @Bean
+       // return new DefaultKafkaConsumerFactory<>(properties);
+   // }
+    /*@Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
-}
+}*/
 
 
 
