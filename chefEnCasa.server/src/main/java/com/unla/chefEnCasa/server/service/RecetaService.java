@@ -47,6 +47,7 @@ public class RecetaService {
 		newReceta.setDescripcion(request.getDescripcion());
 		newReceta.setCategoria(request.getCategoria());
 		newReceta.setTiempoAprox(request.getTiempoAprox());
+		newReceta.setActiva(true);
 
 		List<Foto> fotos = new ArrayList<>();
 		for (Foto f : request.getFotos()) {

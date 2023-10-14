@@ -33,15 +33,16 @@ public class Receta {
 	private int puntaje;
 	private int cantidadCalificaciones;
 	private float promedio;
+	private boolean activa;
 
-	@OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "receta", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
 	private List<Foto> fotos;
-	@OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "receta", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
 	private List<Ingrediente> ingredientes;
-	@OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "receta", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
 	private List<Paso> pasos;
 
-	@OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "receta", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
 	private List<Comentario> comentarios;
 
 	@Override

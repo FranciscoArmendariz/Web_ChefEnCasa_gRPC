@@ -49,8 +49,8 @@ public class DenunciaService {
         if(eliminar){
             denuncia.setEstado("resuelta");
             Receta receta = recetaRepository.findById(denuncia.getRecetaDenunciaId()).orElseThrow(() -> new ServerException("No existe una receta con ese id", HttpStatus.BAD_REQUEST));
-            recetaRepository.delete(receta);
-            
+            receta.setActiva(false); //de momento manejamos borrado logico
+            recetaRepository.save(receta);
         }else{
             denuncia.setEstado("resuelta");
         }
