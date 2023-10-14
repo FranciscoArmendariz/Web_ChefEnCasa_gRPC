@@ -28,7 +28,7 @@ public class DenunciaService {
         Denuncia denuncia = new Denuncia();
         denuncia.setEstado("nuevo");
         denuncia.setMotivo(motivo);
-        denuncia.setReceta(receta);
+        denuncia.setRecetaDenunciaId(receta.getId());
 
 
         try {
@@ -44,7 +44,22 @@ public class DenunciaService {
     }
 
     public boolean resolverDenuncia(long idDenuncia, boolean eliminar) {
-        return true;
+        Denuncia denuncia = denunciaRepository.findById(idDenuncia).orElseThrow(() -> new ServerException("No existe una denuncia con ese id", HttpStatus.BAD_REQUEST));
+        
+        if(eliminar){
+            denuncia.setEstado("resuelta");
+            Receta receta = recetaRepository.findById(denuncia.getRecetaDenunciaId()).orElseThrow(() -> new ServerException("No existe una receta con ese id", HttpStatus.BAD_REQUEST));
+            recetaRepository.delete(receta);
+            
+        }else{
+            denuncia.setEstado("resuelta");
+        }
+        try{
+            denunciaRepository.save(denuncia);
+            return true;
+        }catch(Exception e){
+            return false;
+        }
     }
 
 }
