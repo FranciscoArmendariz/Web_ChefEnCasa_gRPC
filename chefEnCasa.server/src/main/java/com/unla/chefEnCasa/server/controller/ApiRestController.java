@@ -6,12 +6,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.unla.chefEnCasa.server.dto.CrearBorradorDto;
+import com.unla.chefEnCasa.server.dto.CrearRecetasDto;
 import com.unla.chefEnCasa.server.dto.DenunciaRequestDto;
+import com.unla.chefEnCasa.server.dto.EditarBorradorDto;
 import com.unla.chefEnCasa.server.dto.ResolverDenunciaDto;
 import com.unla.chefEnCasa.server.service.BorradorService;
 import com.unla.chefEnCasa.server.service.DenunciaService;
@@ -70,6 +73,22 @@ public class ApiRestController {
     @GetMapping("/borrador/{idBorrador}")
       public ResponseEntity<?> traerBorrador(@PathVariable("idBorrador") long idBorrador){
         return ResponseEntity.ok(borradorService.traerBorrador(idBorrador));
+    }
+
+    @PutMapping("/borrador/editar/{idBorrador}")
+    public ResponseEntity<?> editarBorrador(@PathVariable("idBorrador") long idBorrador, @RequestBody EditarBorradorDto request){
+        return ResponseEntity.ok(borradorService.editarBorrador(idBorrador, request.getBorradores()));
+    }
+
+    @PostMapping("/borrador/crear-receta")
+    public ResponseEntity<?> crearRecetas(@RequestBody CrearRecetasDto request){
+        boolean creado = borradorService.crearRecetas(request.getIdBorrador(), request.getBorradores());
+        if (creado) {
+            return new ResponseEntity<>("recetas creadas", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("recetas no creadas", HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 }

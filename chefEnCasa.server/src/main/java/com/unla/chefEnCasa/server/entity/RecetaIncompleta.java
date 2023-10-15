@@ -1,11 +1,17 @@
 package com.unla.chefEnCasa.server.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,11 +39,22 @@ public class RecetaIncompleta {
     private Borrador borrador;
     
 
-    //@OneToMany(mappedBy = "receta", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-	//private List<Foto> fotos;
-	//@OneToMany(mappedBy = "receta", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-	//private List<Ingrediente> ingredientes;
-	//@OneToMany(mappedBy = "receta", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-	//private List<Paso> pasos;
+    @OneToMany(mappedBy = "recetaIncompleta", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+	private List<FotoIncompleta> fotos = new ArrayList<>();
+	@OneToMany(mappedBy = "recetaIncompleta", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+	private List<IngredienteIncompleto> ingredientes = new ArrayList<>();;
+	@OneToMany(mappedBy = "recetaIncompleta", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+	private List<PasoIncompleto> pasos = new ArrayList<>();;
+
+
+    public IngredienteIncompleto getIngrediente(int index) {
+		return ingredientes.get(index);
+	}
+	public FotoIncompleta getFoto(int index) {
+		return fotos.get(index);
+	}
+	public PasoIncompleto getPaso(int index){
+		return pasos.get(index);
+	}
     
 }
