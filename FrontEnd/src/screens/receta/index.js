@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 export default function Receta({ idReceta }) {
   const [toggle, setToggle] = useState(false);
   const [toggleRecetario, setToggleRecetario] = useState(false);
+  const [toogleDenuncia, setToogleDenuncia] = useState(false);
   const dispatch = useDispatch();
   const idUsuario = useSelector((state) => state.user?.usuarioActual?.id);
 
@@ -102,6 +103,18 @@ export default function Receta({ idReceta }) {
       puntos: 5,
     },
   ];
+
+  const MOTIVOS = [
+    "Contenido inapropiado",
+    "Ingredientes prohibidos",
+    "Peligroso para la salud",
+  ];
+
+  const handleDenunciar = (motivo) => {
+    recetaApi.crearDenuncia({ idReceta, motivo });
+    setToogleDenuncia(false);
+  };
+
   return (
     <LoadingWrapper loading={!receta}>
       <div className='mx-6 relative'>
@@ -213,7 +226,7 @@ export default function Receta({ idReceta }) {
             {!recetasUsuario?.some((receta) => receta.id === idReceta) && (
               <div className='mb-5 flex flex-col items-center relative'>
                 <button
-                  onClick={() => setToggle(true)}
+                  onClick={() => setToggle(!toggle)}
                   className='font-semibold shadow-2xl border border-slate-500 rounded-lg p-3 bg-gradient-to-br from-orange-500 to-orange-700 hover:from-orange-400 hover:to-orange-600 text-white'
                 >
                   VALORÁ LA RECETA
@@ -254,14 +267,14 @@ export default function Receta({ idReceta }) {
             )}
             <div className='mb-5 flex flex-col items-center relative pt-3'>
               <button
-                onClick={() => setToggleRecetario(true)}
+                onClick={() => setToggleRecetario(!toggleRecetario)}
                 className='font-semibold shadow-2xl border border-slate-500 rounded-lg p-3 bg-gradient-to-br from-orange-500 to-orange-700 hover:from-orange-400 hover:to-orange-600 text-white'
               >
                 AGREGAR A RECETARIO
               </button>
               <div
                 className={cn(
-                  "absolute top-16 w-[300px] h-32 bg-white border-gray-500 border rounded-lg flex justify-center items-center shadow-2xl",
+                  "absolute z-10 top-16 w-[300px] h-32 bg-white border-gray-500 border rounded-lg flex justify-center items-center shadow-2xl",
                   { hidden: !toggleRecetario }
                 )}
               >
@@ -276,10 +289,44 @@ export default function Receta({ idReceta }) {
                     return (
                       <button
                         onClick={() => handleAgregarRecetario(recetario.id)}
-                        className='bg-blue-500 p-1 rounded-lg text-white'
+                        className='bg-blue-500 hover:bg-blue-400 p-1 rounded-lg text-white'
                         key={recetario.nombre}
                       >
                         {recetario.nombre}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+            <div className='mb-5 flex flex-col items-center relative pt-3'>
+              <button
+                onClick={() => setToogleDenuncia(!toogleDenuncia)}
+                className='font-semibold shadow-2xl border border-slate-500 rounded-lg p-3 bg-gradient-to-br from-yellow-500 to-yellow-700 hover:from-yellow-400 hover:to-yellow-600 text-white'
+              >
+                ! DENUNCIAR
+              </button>
+              <div
+                className={cn(
+                  "absolute top-16 w-[300px] bg-white border-gray-500 border rounded-lg flex justify-center items-center shadow-2xl",
+                  { hidden: !toogleDenuncia }
+                )}
+              >
+                <button
+                  className='absolute top-1 right-0.5 p-1'
+                  onClick={() => setToogleDenuncia(false)}
+                >
+                  <FeatherIcon icon='x' size={15} />
+                </button>
+                <div className='flex flex-col h-full w-full mr-6 gap-2 p-3'>
+                  {MOTIVOS.map((motivo) => {
+                    return (
+                      <button
+                        onClick={() => handleDenunciar(motivo)}
+                        className='bg-yellow-500 font-semibold hover:bg-yellow-400 p-1 rounded-lg'
+                        key={motivo}
+                      >
+                        {motivo}
                       </button>
                     );
                   })}
