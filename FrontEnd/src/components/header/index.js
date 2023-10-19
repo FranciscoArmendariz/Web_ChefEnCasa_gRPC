@@ -84,6 +84,24 @@ export default function Header({ hideButtons }) {
           >
             RECETARIOS
           </button>
+          <button
+            className='text-white underline underline-offset-4 decoration-2 font-semibold p-3 m-2 '
+            onClick={() => {
+              goToPage("/correo");
+            }}
+          >
+            CORREO
+          </button>
+          {usuario?.rol === "Admin" && (
+            <button
+              className='text-white underline underline-offset-4 decoration-2 font-semibold p-3 m-2 '
+              onClick={() => {
+                goToPage("/denuncias");
+              }}
+            >
+              DENUNCIAS
+            </button>
+          )}
         </div>
       )}
       {!hideButtons && (

@@ -1,4 +1,5 @@
-/*package com.unla.chefEnCasa.server;
+package com.unla.chefEnCasa.server;
+
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +19,8 @@ import java.util.Map;
 public class ConsumerProperties {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
-  @Bean
+
+    @Bean
     public ConsumerFactory<String, String> consumerFactory() {
         Map<String, Object> properties = new HashMap<>();
         // Establece la ubicación del servidor Kafka
@@ -31,56 +33,71 @@ public class ConsumerProperties {
         properties.put("key.deserializer", StringDeserializer.class.getName()); // Deserializador de claves
         properties.put("value.deserializer", StringDeserializer.class.getName()); // Deserializador de valores
 
-        // Controla desde dónde comenzar a consumir mensajes (configura según tus necesidades)
+        // Controla desde dónde comenzar a consumir mensajes (configura según tus
+        // necesidades)
         properties.put("auto.offset.reset", "earliest"); // Puede ser 'earliest' o 'latest'
 
-        // Habilita el manejo automático de la confirmación de offset (configura según tus necesidades)
+        // Habilita el manejo automático de la confirmación de offset (configura según
+        // tus necesidades)
         properties.put("enable.auto.commit", "true"); // Puede ser 'true' o 'false'
         properties.put("auto.commit.interval.ms", "1000"); // Frecuencia de confirmación
         properties.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class.getName());
-        /*props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        props.put("group.id", "mi-grupo-consumidor");*/
+        /*
+         * props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+         * props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
+         * StringDeserializer.class.getName());
+         * props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
+         * StringDeserializer.class.getName());
+         * props.put("group.id", "mi-grupo-consumidor");
+         */
 
-       // return new DefaultKafkaConsumerFactory<>(properties);
-   // }
-    /*@Bean
+        return new DefaultKafkaConsumerFactory<>(properties);
+    }
+
+    @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
-}*/
+}
 
-
-
-/*package com.unla.chefEnCasa.server;
-import java.util.Properties;
-import org.apache.kafka.common.serialization.StringDeserializer;
-
-public class ConsumerProperties {
-
-   /*  public static Properties createConsumerProperties() {
-        Properties properties = new Properties();
-
-        // Establece la ubicación del servidor Kafka
-        properties.put("bootstrap.servers", "localhost:9092"); // Cambia esto según la dirección de tu servidor Kafka
-
-        // Establece el grupo de consumidores al que se unirá este consumidor
-        properties.put("group.id", "mi-grupo-consumidor"); // Cambia esto al nombre de tu grupo
-
-        // Configura el deserializador de claves y valores
-        properties.put("key.deserializer", StringDeserializer.class.getName()); // Deserializador de claves
-        properties.put("value.deserializer", StringDeserializer.class.getName()); // Deserializador de valores
-
-        // Controla desde dónde comenzar a consumir mensajes (configura según tus necesidades)
-        properties.put("auto.offset.reset", "earliest"); // Puede ser 'earliest' o 'latest'
-
-        // Habilita el manejo automático de la confirmación de offset (configura según tus necesidades)
-        properties.put("enable.auto.commit", "true"); // Puede ser 'true' o 'false'
-        properties.put("auto.commit.interval.ms", "1000"); // Frecuencia de confirmación
-
-        return properties;
-    }
-} */
+/*
+ * package com.unla.chefEnCasa.server;
+ * import java.util.Properties;
+ * import org.apache.kafka.common.serialization.StringDeserializer;
+ * 
+ * public class ConsumerProperties {
+ * 
+ * /* public static Properties createConsumerProperties() {
+ * Properties properties = new Properties();
+ * 
+ * // Establece la ubicación del servidor Kafka
+ * properties.put("bootstrap.servers", "localhost:9092"); // Cambia esto según
+ * la dirección de tu servidor Kafka
+ * 
+ * // Establece el grupo de consumidores al que se unirá este consumidor
+ * properties.put("group.id", "mi-grupo-consumidor"); // Cambia esto al nombre
+ * de tu grupo
+ * 
+ * // Configura el deserializador de claves y valores
+ * properties.put("key.deserializer", StringDeserializer.class.getName()); //
+ * Deserializador de claves
+ * properties.put("value.deserializer", StringDeserializer.class.getName()); //
+ * Deserializador de valores
+ * 
+ * // Controla desde dónde comenzar a consumir mensajes (configura según tus
+ * necesidades)
+ * properties.put("auto.offset.reset", "earliest"); // Puede ser 'earliest' o
+ * 'latest'
+ * 
+ * // Habilita el manejo automático de la confirmación de offset (configura
+ * según tus necesidades)
+ * properties.put("enable.auto.commit", "true"); // Puede ser 'true' o 'false'
+ * properties.put("auto.commit.interval.ms", "1000"); // Frecuencia de
+ * confirmación
+ * 
+ * return properties;
+ * }
+ * }
+ */
