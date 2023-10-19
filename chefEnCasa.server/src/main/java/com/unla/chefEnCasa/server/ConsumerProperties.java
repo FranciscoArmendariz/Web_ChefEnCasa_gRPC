@@ -1,4 +1,4 @@
-package com.unla.chefEnCasa.server;
+/*package com.unla.chefEnCasa.server;
 
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,14 +42,6 @@ public class ConsumerProperties {
         properties.put("enable.auto.commit", "true"); // Puede ser 'true' o 'false'
         properties.put("auto.commit.interval.ms", "1000"); // Frecuencia de confirmación
         properties.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class.getName());
-        /*
-         * props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-         * props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
-         * StringDeserializer.class.getName());
-         * props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
-         * StringDeserializer.class.getName());
-         * props.put("group.id", "mi-grupo-consumidor");
-         */
 
         return new DefaultKafkaConsumerFactory<>(properties);
     }
@@ -60,7 +52,7 @@ public class ConsumerProperties {
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
-}
+}*/
 
 /*
  * package com.unla.chefEnCasa.server;
