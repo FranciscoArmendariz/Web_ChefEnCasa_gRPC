@@ -28,8 +28,7 @@ public class DenunciaService {
         Denuncia denuncia = new Denuncia();
         denuncia.setEstado("nuevo");
         denuncia.setMotivo(motivo);
-        denuncia.setRecetaDenunciaId(receta.getId());
-
+        denuncia.setReceta(receta);
 
         try {
             denunciaRepository.save(denuncia);
@@ -48,7 +47,7 @@ public class DenunciaService {
         
         if(eliminar){
             denuncia.setEstado("resuelta");
-            Receta receta = recetaRepository.findById(denuncia.getRecetaDenunciaId()).orElseThrow(() -> new ServerException("No existe una receta con ese id", HttpStatus.BAD_REQUEST));
+            Receta receta = recetaRepository.findById(denuncia.getReceta().getId()).orElseThrow(() -> new ServerException("No existe una receta con ese id", HttpStatus.BAD_REQUEST));
             receta.setActiva(false); //de momento manejamos borrado logico
             recetaRepository.save(receta);
         }else{
