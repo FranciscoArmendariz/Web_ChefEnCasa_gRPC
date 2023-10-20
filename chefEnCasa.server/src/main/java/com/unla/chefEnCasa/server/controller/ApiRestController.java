@@ -3,6 +3,7 @@ package com.unla.chefEnCasa.server.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import com.unla.chefEnCasa.server.service.BorradorService;
 import com.unla.chefEnCasa.server.service.DenunciaService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
 public class ApiRestController {
 
@@ -55,33 +57,34 @@ public class ApiRestController {
     }
 
     @PostMapping("/borrador/crear")
-    public ResponseEntity<?> crearBorrador(@RequestBody CrearBorradorDto request){
+    public ResponseEntity<?> crearBorrador(@RequestBody CrearBorradorDto request) {
         boolean creado = borradorService.crearBorrador(request.getBorradores(), request.getIdUsuario());
         if (creado) {
             return new ResponseEntity<>("Borrador creado", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Borrador no creado", HttpStatus.BAD_REQUEST);
         }
-        
+
     }
 
     @GetMapping("/borrador/usuario/{idUsuario}")
-    public ResponseEntity<?> traerBorradoresPorUsuario(@PathVariable("idUsuario") long idUsuario){
+    public ResponseEntity<?> traerBorradoresPorUsuario(@PathVariable("idUsuario") long idUsuario) {
         return ResponseEntity.ok(borradorService.traerBorradoresPorUsuario(idUsuario));
     }
 
     @GetMapping("/borrador/{idBorrador}")
-      public ResponseEntity<?> traerBorrador(@PathVariable("idBorrador") long idBorrador){
+    public ResponseEntity<?> traerBorrador(@PathVariable("idBorrador") long idBorrador) {
         return ResponseEntity.ok(borradorService.traerBorrador(idBorrador));
     }
 
     @PutMapping("/borrador/editar/{idBorrador}")
-    public ResponseEntity<?> editarBorrador(@PathVariable("idBorrador") long idBorrador, @RequestBody EditarBorradorDto request){
+    public ResponseEntity<?> editarBorrador(@PathVariable("idBorrador") long idBorrador,
+            @RequestBody EditarBorradorDto request) {
         return ResponseEntity.ok(borradorService.editarBorrador(idBorrador, request.getBorradores()));
     }
 
     @PostMapping("/borrador/crear-receta")
-    public ResponseEntity<?> crearRecetas(@RequestBody CrearRecetasDto request){
+    public ResponseEntity<?> crearRecetas(@RequestBody CrearRecetasDto request) {
         boolean creado = borradorService.crearRecetas(request.getIdBorrador(), request.getBorradores());
         if (creado) {
             return new ResponseEntity<>("recetas creadas", HttpStatus.OK);
