@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.unla.chefEnCasa.server.entity.Denuncia;
 import com.unla.chefEnCasa.server.entity.Receta;
+import com.unla.chefEnCasa.server.entity.Usuario;
 import com.unla.chefEnCasa.server.exceptions.ServerException;
 import com.unla.chefEnCasa.server.repository.DenunciaRepository;
 import com.unla.chefEnCasa.server.repository.RecetaRepository;
+import com.unla.chefEnCasa.server.repository.UsuarioRepository;
 
 @Service
 public class DenunciaService {
@@ -20,6 +22,9 @@ public class DenunciaService {
 
     @Autowired
     private RecetaRepository recetaRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     public boolean crearDenuncia(long idReceta, String motivo) {
 
@@ -44,12 +49,13 @@ public class DenunciaService {
 
     public boolean resolverDenuncia(long idDenuncia, boolean eliminar) {
         Denuncia denuncia = denunciaRepository.findById(idDenuncia).orElseThrow(() -> new ServerException("No existe una denuncia con ese id", HttpStatus.BAD_REQUEST));
-        
+
         if(eliminar){
             denuncia.setEstado("resuelta");
             Receta receta = recetaRepository.findById(denuncia.getReceta().getId()).orElseThrow(() -> new ServerException("No existe una receta con ese id", HttpStatus.BAD_REQUEST));
             receta.setActiva(false); //de momento manejamos borrado logico
             recetaRepository.save(receta);
+            borrarRelacionesDeReceta(receta.getId());
         }else{
             denuncia.setEstado("resuelta");
         }
@@ -59,6 +65,17 @@ public class DenunciaService {
         }catch(Exception e){
             return false;
         }
+    }
+
+    public void borrarRelacionesDeReceta(long idReceta){
+        Usuario usuario = usuarioRepository.findCreadorByRecetaId(idReceta);
+
+       Receta receta = recetaRepository.findById(idReceta).orElseThrow(null);
+       usuario.getRecetasCreadas().remove(receta);
+
+        usuarioRepository.save(usuario);
+ 
+        
     }
 
 }
