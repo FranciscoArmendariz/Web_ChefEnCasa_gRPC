@@ -12,8 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import com.unla.chefEnCasa.server.Soap.model.MensajeModel;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -49,5 +52,15 @@ public class Usuario {
 	@ManyToMany
 	@JoinTable(name = "usuarios_seguidos", joinColumns = @JoinColumn(name = "seguidor_id"), inverseJoinColumns = @JoinColumn(name = "seguido_id"))
 	private List<Usuario> usuariosSeguidos;
+	@OneToMany(mappedBy = "autor", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	private List<MensajeModel> mensajesEnviados;
+	@OneToMany(mappedBy = "receptor", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	private List<MensajeModel> mensajesRecibidos;
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nombre=" + nombre + ", usuario=" + usuario + "]";
+	}
 
+		
+	
 }
