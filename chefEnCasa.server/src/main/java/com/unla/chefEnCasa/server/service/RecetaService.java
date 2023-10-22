@@ -216,7 +216,9 @@ public class RecetaService {
 
 		List<RecetaResponseDto> response = new ArrayList<>();
 		for (Receta r : usuario.getRecetasFavoritas()) {
+			if(r.isActiva()){
 			response.add(modelMapper.map(r, RecetaResponseDto.class));
+			}
 		}
 		return response;
 	}
