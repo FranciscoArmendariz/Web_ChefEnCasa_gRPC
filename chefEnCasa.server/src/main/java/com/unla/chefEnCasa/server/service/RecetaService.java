@@ -201,7 +201,9 @@ public class RecetaService {
 
 		List<RecetaResponseDto> response = new ArrayList<>();
 		for (Receta r : usuario.getRecetasCreadas()) {
+			if(r.isActiva()){
 			response.add(modelMapper.map(r, RecetaResponseDto.class));
+			}
 		}
 		return response;
 	}
@@ -226,7 +228,9 @@ public class RecetaService {
 						() -> new ServerException("no existe la receta con id: " + idReceta, HttpStatus.NOT_FOUND));
 		List<Ingrediente> response = new ArrayList<>();
 		for (Ingrediente r : receta.getIngredientes()) {
-			response.add(modelMapper.map(r, Ingrediente.class));
+			if (receta.isActiva()) {
+				response.add(modelMapper.map(r, Ingrediente.class));
+			}
 		}
 		return response;
 	}
