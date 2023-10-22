@@ -30,17 +30,17 @@ public class MensajeService {
     private UsuarioRepository usuarioRepository;
 
     public void CrearMensaje(PostMensajeRequest request) {
-        boolean creado=false;
+        boolean creado = false;
         MensajeModel mensaje = new MensajeModel();
         mensaje.setAsunto(request.getAsunto());
         mensaje.setAutor(usuarioRepository.findById(request.getIdAutor()).orElse(null));
         mensaje.setReceptor(usuarioRepository.findById(request.getIdReceptor()).orElse(null));
         mensaje.setMensaje(request.getMensaje());
         mensaje.setRespuesta(request.getRespuesta());
-        System.out.println("String Mensaje"+mensaje);
+        System.out.println("String Mensaje" + mensaje);
         try {
             mensajeRepository.save(mensaje);
-            creado=true;
+            creado = true;
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -64,7 +64,7 @@ public class MensajeService {
 
     }
 
-    public List<MensajeModel>traerMensajeModelsPorAutor(long idAutor){
+    public List<MensajeModel> traerMensajeModelsPorAutor(long idAutor) {
         Usuario usuario = usuarioRepository.findById(idAutor).orElse(null);
         return mensajeRepository.findByAutor(usuario);
     }
@@ -74,7 +74,8 @@ public class MensajeService {
         return mapMensajesToMensajeResponses(mensajeRepository.findByReceptor(usuario));
 
     }
-      public List<MensajeModel>traerMensajeModelsPorReceptor(long idAutor){
+
+    public List<MensajeModel> traerMensajeModelsPorReceptor(long idAutor) {
         Usuario usuario = usuarioRepository.findById(idAutor).orElse(null);
         return mensajeRepository.findByReceptor(usuario);
     }
@@ -97,9 +98,8 @@ public class MensajeService {
         return mensajeResponses;
     }
 
-
-    public Mensaje  mapMensajeToMensajeResponses(MensajeModel mensaje){
-        Mensaje mensajeResponse=new Mensaje();
+    public Mensaje mapMensajeToMensajeResponses(MensajeModel mensaje) {
+        Mensaje mensajeResponse = new Mensaje();
         mensajeResponse.setIdMensaje(mensaje.getId());
         mensajeResponse.setNombreAutor(mensaje.getAutor().getNombre());
         mensajeResponse.setNombreReceptor(mensaje.getReceptor().getNombre());
