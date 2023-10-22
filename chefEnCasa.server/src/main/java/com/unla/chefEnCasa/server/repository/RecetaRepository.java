@@ -1,5 +1,7 @@
 package com.unla.chefEnCasa.server.repository;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
@@ -14,8 +16,8 @@ import com.unla.chefEnCasa.server.entity.Receta;
 
 public interface RecetaRepository extends JpaRepository<Receta, Long>{
 	
-	public Page<Receta> findByTituloContaining(String titulo, Pageable pageable);
-	public Page<Receta> findByCategoriaContaining(String titulo, Pageable pageable);
+	public Page<Receta> findByTituloContainingAndActivaIsTrue(String titulo, Pageable pageable);
+	public Page<Receta> findByCategoriaContainingAndActivaIsTrue(String titulo, Pageable pageable);
 	public Page<Receta> findByTiempoAproxBetween(int minTiempoAprox, int maxTiempoAprox, Pageable pageable);
 	@Query("SELECT DISTINCT r FROM Receta r JOIN r.ingredientes i WHERE i.nombre IN :nombresIngredientes")
     public Page<Receta> findByNombresIngredientes(@Param("nombresIngredientes") String nombresIngredientes, Pageable pageable);
@@ -34,5 +36,7 @@ public interface RecetaRepository extends JpaRepository<Receta, Long>{
 	@Modifying
     @Query("DELETE FROM Paso i WHERE i.receta.id = :recetaId")
 	public void deletePasosByRecetaId(@Param("recetaId") long id);
+	public List<Receta> findByActiva(boolean activa);
+	public Page<Receta> findByActiva(boolean activa, Pageable pageable);
 
 }

@@ -131,10 +131,10 @@ public class RecetaService {
 					orderBy.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy.toLowerCase()));
 			Page<Receta> pageTipo;
 			if (!titulo.isBlank()) {
-				pageTipo = recetaRepository.findByTituloContaining(titulo, pageable);
+				pageTipo = recetaRepository.findByTituloContainingAndActivaIsTrue(titulo, pageable);
 
 			} else {
-				pageTipo = recetaRepository.findAll(pageable);
+				pageTipo = recetaRepository.findByActiva(true, pageable);
 			}
 			System.out.println(pageTipo.getContent());
 			List<Receta> listaAcompletar = new ArrayList<>(pageTipo.getContent());		
@@ -189,7 +189,7 @@ public class RecetaService {
 
 	@Transactional
 	public List<RecetaResponseDto> traerTodasLasRecetas() {
-		List<Receta> recetas = recetaRepository.findAll();
+		List<Receta> recetas = recetaRepository.findByActiva(true);
 		return recetas.stream().map(receta -> modelMapper.map(receta, RecetaResponseDto.class))
 				.collect(Collectors.toList());
 	}

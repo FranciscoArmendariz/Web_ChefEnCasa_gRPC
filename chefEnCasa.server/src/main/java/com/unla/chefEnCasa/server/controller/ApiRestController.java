@@ -1,5 +1,7 @@
 package com.unla.chefEnCasa.server.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,15 +12,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.unla.chefEnCasa.server.dto.CrearBorradorDto;
 import com.unla.chefEnCasa.server.dto.CrearRecetasDto;
 import com.unla.chefEnCasa.server.dto.DenunciaRequestDto;
 import com.unla.chefEnCasa.server.dto.EditarBorradorDto;
+import com.unla.chefEnCasa.server.dto.RecetaResponseDto;
 import com.unla.chefEnCasa.server.dto.ResolverDenunciaDto;
 import com.unla.chefEnCasa.server.service.BorradorService;
 import com.unla.chefEnCasa.server.service.DenunciaService;
+import com.unla.chefEnCasa.server.service.RecetaService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -30,6 +35,9 @@ public class ApiRestController {
 
     @Autowired
     private BorradorService borradorService;
+
+    @Autowired
+    private RecetaService recetaService;
 
     @PostMapping("/denuncia/crear")
     public ResponseEntity<?> crearDenuncia(@RequestBody DenunciaRequestDto request) {
@@ -93,5 +101,32 @@ public class ApiRestController {
         }
 
     }
+
+    @GetMapping("/receta")
+    public ResponseEntity<?> traerRecetas(){
+        return ResponseEntity.ok(recetaService.traerTodasLasRecetas());
+    }
+    @GetMapping("/recetas")
+    public ResponseEntity<List<RecetaResponseDto>> traerRecetas(
+            @RequestParam(name = "titulo", required = false, defaultValue = "") String titulo,
+            @RequestParam(name = "categoria", required = false, defaultValue = "") String categoria,
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size,
+            @RequestParam(name = "orderBy", defaultValue = "asc") String orderBy,
+            @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
+            @RequestParam(name = "tiempoAproxMin", defaultValue = "0") int tiempoAproxMin,
+            @RequestParam(name = "tiempoAproxMax", defaultValue = "0") int tiempoAproxMax,
+            @RequestParam(name = "nombreIngrediente", required = false, defaultValue = "") String nombreIngrediente) {
+
+        List<RecetaResponseDto> response = recetaService.traerRecetas(
+                titulo, categoria, page, size, orderBy, sortBy, tiempoAproxMin, tiempoAproxMax, nombreIngrediente);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+
+
+
 
 }
