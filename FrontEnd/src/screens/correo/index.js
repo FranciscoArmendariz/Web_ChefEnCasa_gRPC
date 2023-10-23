@@ -6,16 +6,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { traerUsuarios } from "@/redux/user/actions";
 import { userApi } from "@/services/user";
 import CorreoRespuesta from "./components/respuesta";
+import LoadingWrapper from "@/components/LoadingWrapper";
+import { interaccionApi } from "@/services/interacciones";
+import { useForm } from "react-hook-form";
 
 export default function Correo() {
   const dispatch = useDispatch();
-  const correosEnviados = CORREOS_ENVIADOS;
-  const correosRecibidos = CORREOS_RECIBIDOS;
+  const [correosEnviados, setCorreosEnviados] = useState();
+  const [correosRecibidos, setCorreosRecibidos] = useState();
   const [toggleNuevo, setToggleNuevo] = useState(false);
 
-  const [correoReceptor, setCorreoReceptor] = useState("");
-  const [correoAsunto, setCorreoAsunto] = useState("");
-  const [correoMensaje, setCorreoMensaje] = useState("");
+  const { register, handleSubmit } = useForm();
 
   const idUsuario = useSelector((state) => state.user.usuarioActual?.id);
 
@@ -23,15 +24,33 @@ export default function Correo() {
     dispatch(traerUsuarios());
   }, []);
 
+  useEffect(() => {
+    if (idUsuario) {
+      interaccionApi
+        .traerMensajesPorAutor(idUsuario)
+        .then((response) => setCorreosEnviados(response.data));
+      interaccionApi.traerMensajesPorReceptor(idUsuario).then((response) => {
+        setCorreosRecibidos(response.data);
+      });
+    }
+  }, [idUsuario]);
+
   const usuarios = useSelector((state) => state.user.listaUsuarios);
 
-  const handleEnviarCorreo = () => {
-    userApi.crearMensaje({
-      asunto: correoAsunto,
-      idAutor: idUsuario,
-      idReceptor: correoReceptor,
-      mensaje: correoMensaje,
-    });
+  const handleEnviarCorreo = (data) => {
+    interaccionApi
+      .crearMensaje({
+        idAutor: idUsuario,
+        idReceptor: data.receptor,
+        asunto: data.asunto,
+        mensaje: data.mensaje,
+      })
+      .then(() =>
+        interaccionApi
+          .traerMensajesPorAutor(idUsuario)
+          .then((response) => setCorreosEnviados(response.data))
+      );
+    setToggleNuevo(false);
   };
 
   return (
@@ -57,19 +76,17 @@ export default function Correo() {
             <FeatherIcon icon='x' size={15} />
           </button>
           <form
-            onSubmit={() => {
-              handleEnviarCorreo();
-            }}
+            onSubmit={handleSubmit(handleEnviarCorreo)}
             className='flex flex-col gap-2 w-full'
           >
             <div className='flex flex-col'>
               <label className='font-semibold'>PARA:</label>
               <select
-                required
-                name='receptor'
+                {...register("receptor", {
+                  required: true,
+                  valueAsNumber: true,
+                })}
                 className='shadow-sm rounded-lg bg-blue-100 p-1 outline-blue-700'
-                value={correoReceptor}
-                onChange={(e) => setCorreoReceptor(e.target.value)}
               >
                 {usuarios?.map((usuario) => {
                   return <option value={usuario.id}>{usuario.nombre}</option>;
@@ -79,24 +96,16 @@ export default function Correo() {
             <div className='flex flex-col'>
               <label className='font-semibold'>ASUNTO:</label>
               <input
-                required
-                name='asunto'
                 className='shadow-sm rounded-md p-1 bg-blue-100 outline-blue-700'
-                value={correoAsunto}
-                onChange={(e) => setCorreoAsunto(e.target.value)}
+                {...register("asunto", { required: true })}
               />
             </div>
             <div className='flex flex-col'>
               <label className='font-semibold'>MENSAJE:</label>
               <textarea
-                required
-                name='mensaje'
                 className='shadow-sm rounded-lg bg-blue-100 p-1 outline-blue-700'
                 rows={4}
-                value={correoMensaje}
-                onChange={(e) => {
-                  setCorreoMensaje(e.target.value);
-                }}
+                {...register("mensaje", { required: true })}
               />
             </div>
             <button
@@ -112,32 +121,36 @@ export default function Correo() {
         <div className='flex w-1/2 flex-col items-center px-5'>
           <h2 className='font-semibold text-xl'>MENSAJES ENVIADOS</h2>
           <div className='bg-blue-100 mb-5 border rounded-lg w-full p-4 mt-3 flex gap-5 flex-col shadow-lg'>
-            {correosEnviados.map((correo) => {
-              return (
-                <div className='flex flex-col border rounded-lg border-gray-500 bg-white p-2'>
-                  <div>
-                    <div>
-                      <span className='font-semibold'>PARA: </span>
-                      {correo.receptor.nombre}
-                    </div>
-                    <div>
-                      <span className='font-semibold'>ASUNTO: </span>
-                      {correo.asunto}
-                    </div>
-                  </div>
-                  <div className='flex flex-col gap-2 pt-2'>
-                    <div className='bg-blue-600 text-white ml-8 shadow-lg border py-1 px-2 rounded-lg'>
-                      {correo.mensaje}
-                    </div>
-                    {correo?.respuesta && (
-                      <div className='bg-blue-200 mr-8 shadow-lg border py-1 px-2 rounded-lg'>
-                        {correo.respuesta}
+            <LoadingWrapper loading={!correosEnviados}>
+              {correosEnviados &&
+                correosEnviados.length > 0 &&
+                correosEnviados?.map((correo) => {
+                  return (
+                    <div className='flex flex-col border rounded-lg border-gray-500 bg-white p-2'>
+                      <div>
+                        <div>
+                          <span className='font-semibold'>PARA: </span>
+                          {correo.nombreReceptor}
+                        </div>
+                        <div>
+                          <span className='font-semibold'>ASUNTO: </span>
+                          {correo.asunto}
+                        </div>
                       </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+                      <div className='flex flex-col gap-2 pt-2'>
+                        <div className='bg-blue-600 text-white ml-8 shadow-lg border py-1 px-2 rounded-lg'>
+                          {correo.mensaje}
+                        </div>
+                        {correo?.respuesta && (
+                          <div className='bg-blue-200 mr-8 shadow-lg border py-1 px-2 rounded-lg'>
+                            {correo.respuesta}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+            </LoadingWrapper>
           </div>
         </div>
         <div className='flex w-1/2 flex-col items-center'>
@@ -145,34 +158,55 @@ export default function Correo() {
             MENSAJES RECIBIDOS
           </h2>
           <div className='bg-blue-100 mb-5 border rounded-lg w-full p-4 mt-3 flex gap-5 flex-col shadow-lg'>
-            {correosRecibidos.map((correo) => {
-              return (
-                <div className='flex flex-col border rounded-lg border-gray-500 bg-white p-2'>
-                  <div>
-                    <div>
-                      <span className='font-semibold'>DE: </span>
-                      {correo.autor.nombre}
-                    </div>
-                    <div>
-                      <span className='font-semibold'>ASUNTO: </span>
-                      {correo.asunto}
-                    </div>
-                  </div>
-                  <div className='flex flex-col gap-2 pt-2'>
-                    <div className='bg-blue-200 mr-8 shadow-lg border py-1 px-2 rounded-lg'>
-                      {correo.mensaje}
-                    </div>
-                    {correo?.respuesta ? (
-                      <div className='bg-blue-600 text-white ml-8 shadow-lg border py-1 px-2 rounded-lg'>
-                        {correo.respuesta}
+            <LoadingWrapper loading={!correosRecibidos}>
+              {correosRecibidos &&
+                correosRecibidos.length > 0 &&
+                correosRecibidos?.map((correo) => {
+                  const onSubmit = (data) => {
+                    interaccionApi
+                      .responderMensaje({
+                        idMensaje: correo.idMensaje,
+                        respuesta: data.mensaje,
+                      })
+                      .then(() =>
+                        interaccionApi
+                          .traerMensajesPorReceptor(idUsuario)
+                          .then((response) =>
+                            setCorreosRecibidos(response.data)
+                          )
+                      );
+                  };
+                  return (
+                    <div className='flex flex-col border rounded-lg border-gray-500 bg-white p-2'>
+                      <div>
+                        <div>
+                          <span className='font-semibold'>DE: </span>
+                          {correo.nombreAutor}
+                        </div>
+                        <div>
+                          <span className='font-semibold'>ASUNTO: </span>
+                          {correo.asunto}
+                        </div>
                       </div>
-                    ) : (
-                      <CorreoRespuesta idCorreo={correo.id} />
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+                      <div className='flex flex-col gap-2 pt-2'>
+                        <div className='bg-blue-200 mr-8 shadow-lg border py-1 px-2 rounded-lg'>
+                          {correo.mensaje}
+                        </div>
+                        {correo?.respuesta ? (
+                          <div className='bg-blue-600 text-white ml-8 shadow-lg border py-1 px-2 rounded-lg'>
+                            {correo.respuesta}
+                          </div>
+                        ) : (
+                          <CorreoRespuesta
+                            idCorreo={correo.idMensaje}
+                            onSubmit={onSubmit}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+            </LoadingWrapper>
           </div>
         </div>
       </div>

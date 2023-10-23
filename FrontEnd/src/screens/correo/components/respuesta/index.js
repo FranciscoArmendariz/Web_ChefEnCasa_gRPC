@@ -1,12 +1,10 @@
+import { interaccionApi } from "@/services/interacciones";
 import { userApi } from "@/services/user";
 import { useForm } from "react-hook-form";
 
-export default function CorreoRespuesta({ idCorreo }) {
+export default function CorreoRespuesta({ idCorreo, onSubmit }) {
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = (data) => {
-    userApi.responderMensaje({ idMensaje: idCorreo, respuesta: data.mensaje });
-  };
   return (
     <div className='ml-8'>
       <form className='flex flex-col gap-2' onSubmit={handleSubmit(onSubmit)}>
