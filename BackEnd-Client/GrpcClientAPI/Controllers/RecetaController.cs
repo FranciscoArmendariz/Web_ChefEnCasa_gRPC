@@ -189,13 +189,13 @@ namespace GrpcClientAPI.Controllers
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<string> TraerRecetariosPorUsuario(TraerRecetariosPorUsuarioRequest request)
+        public async Task<List<Recetario>> TraerRecetariosPorUsuario(TraerRecetariosPorUsuarioRequest request)
         {
             SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
 
             var rta = await client.TraerRecetariosPorUsuarioAsync(request.idUsuario);
 
-            return rta.ToString();
+            return JsonConvert.DeserializeObject<List<Recetario>>(rta);
         }
 
         [HttpPost()]
@@ -206,7 +206,7 @@ namespace GrpcClientAPI.Controllers
 
             var rta = await client.TraerRecetarioConRecetasAsync(request.idRecetario);
 
-            return new Recetario();
+            return JsonConvert.DeserializeObject<Recetario>(rta);
         }
 
         [HttpPost()]
@@ -334,14 +334,15 @@ namespace GrpcClientAPI.Controllers
     }
     public class Recetario
     {
-        public int idRecetario { get; set; }
+        public int id { get; set; }
+        public int idUsuario { get; set; }
         public string nombre { get; set; }
         public List<Receta> recetas { get; set; }
     }
 
     public class Receta
     {
-        public int IdReceta { get; set; }
+        public int id { get; set; }
         public string titulo { get; set; }
         public string descripcion { get; set; }
         public string categoria { get; set; }
