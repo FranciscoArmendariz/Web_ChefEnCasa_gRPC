@@ -2,35 +2,57 @@ import LoadingWrapper from "@/components/LoadingWrapper";
 import ListaRecetas from "@/components/listaRecetas";
 import { RECETARIOS } from "@/constants/recetas";
 import { limpiarListas, traerRecetasPorUsuario } from "@/redux/recetas/actions";
-import { useEffect } from "react";
+import recetaApi from "@/services/receta";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Recetario({ idRecetario }) {
-  const dispatch = useDispatch();
+  const [recetario, setRecetario] = useState();
 
-  /*
   useEffect(() => {
-    dispatch(limpiarListas());
-    if (idUsuario) {
-      dispatch(traerRecetasPorUsuario(idUsuario));
-    }
-  }, [idUsuario, dispatch]);
+    idRecetario &&
+      recetaApi
+        .traerRecetario(idRecetario)
+        .then((response) =>
+          setRecetario(
+            RECETARIOS.find((recetario) => recetario.id === idRecetario)
+          )
+        );
+  }, [idRecetario]);
 
-  const recetasUsuario = useSelector(
-    (state) => state.recetas.listaRecetasPorUsuario
-  );
-  */
+  const recetas = recetario?.recetas;
 
-  const recetario = RECETARIOS.find(
-    (recetario) => recetario.id === idRecetario
-  );
-  const recetas = recetario.recetas;
+  const removerRecetario = (idReceta) => {
+    recetaApi
+      .removerRecetaRecetario({
+        idReceta: idReceta,
+        idRecetario: idRecetario,
+      })
+      .then(() =>
+        recetaApi
+          .traerRecetario(idRecetario)
+          .then((response) =>
+            setRecetario(
+              RECETARIOS.find((recetario) => recetario.id === idRecetario)
+            )
+          )
+      );
+  };
 
   return (
     <div className='flex flex-col items-center'>
-      <h2 className='uppercase font-bold text-xl p-2'>{recetario.nombre}</h2>
-      <LoadingWrapper loading={!recetas}>
-        <ListaRecetas recetas={recetas} recetario idRecetario={idRecetario} />
+      <LoadingWrapper loading={!recetario}>
+        <>
+          <h2 className='uppercase font-bold text-xl p-2'>
+            {recetario?.nombre}
+          </h2>
+          <ListaRecetas
+            recetas={recetas}
+            recetario
+            removerRecetario={removerRecetario}
+            idRecetario={idRecetario}
+          />
+        </>
       </LoadingWrapper>
     </div>
   );

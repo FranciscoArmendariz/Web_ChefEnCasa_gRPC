@@ -15,7 +15,7 @@ export default function ListaRecetas({
   recetas,
   misRecetas,
   recetario,
-  idRecetario,
+  removerRecetario,
 }) {
   const router = useRouter();
   const idUsuario = useSelector((state) => state.user.usuarioActual?.id);
@@ -37,15 +37,6 @@ export default function ListaRecetas({
 
   const esFavorita = (recetaId) => {
     return recetasFavoritas?.some((receta) => receta.id === recetaId);
-  };
-
-  const removerRecetario = (idReceta) => {
-    recetaApi
-      .removerRecetaRecetario({
-        idReceta: idReceta,
-        idRecetario: idRecetario,
-      })
-      .then(dispatch(/*TODO Todo todo todo TODO*/));
   };
 
   const toggleFavorito = (idReceta, favorita) => {

@@ -32,19 +32,17 @@ const recetaApi = {
       calificacion: true,
     }),
   traerRecetarios: (idUsuario) =>
-    api.post(`${RUTA}/recetarios/traer`, { idUsuario }),
+    api.post(`${RUTA}/TraerRecetariosPorUsuario`, { idUsuario }),
   traerRecetario: (idRecetario) =>
-    api.post(`${RUTA}/recetarios/traer`, { idRecetario }),
+    api.post(`${RUTA}/TraerRecetarioConRecetas`, { idRecetario }),
   crearRecetario: ({ idAutor, nombre }) =>
-    api.post(`${RUTA}/recetarios/crear`, { idAutor, nombre }),
+    api.post(`${RUTA}/CrearRecetario`, { idAutor, nombre }),
   borrarRecetario: (idRecetario) =>
-    api.post(`${RUTA}/recetarios/borrar`, { idRecetario }),
+    api.post(`${RUTA}/BorrarRecetario`, { idRecetario }),
   agregarRecetaRecetario: ({ idRecetario, idReceta }) =>
-    api.post(`${RUTA}/recetarios/agrgar`, { idRecetario, idReceta }),
+    api.post(`${RUTA}/AgregarRecetaRecetario`, { idRecetario, idReceta }),
   removerRecetaRecetario: ({ idRecetario, idReceta }) =>
-    api.post(`${RUTA}/recetarios/agrgar`, { idRecetario, idReceta }),
-  removerRecetaRecetario: ({ idRecetario, idReceta }) =>
-    api.post(`${RUTA}/recetarios/agrgar`, { idRecetario, idReceta }),
+    api.post(`${RUTA}/RemoverRecetaRecetario`, { idRecetario, idReceta }),
 };
 
 export default recetaApi;
