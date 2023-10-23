@@ -116,7 +116,7 @@ public class ApiRestMensajeRecetarioController {
         return ResponseEntity.ok(dev);
     }
 
-    @DeleteMapping("/recetario/borrarReceta")
+    @PostMapping("/recetario/borrarReceta")
     public ResponseEntity<?> removerRecetaRecetaRecetario(@RequestBody RemoverRecetaRecetario request) {
         boolean dev = true;
         RecetarioModel recetario = recetarioRespository.findById(request.getIdRecetario()).orElseThrow(null);

@@ -13,11 +13,7 @@ export default function Recetario({ idRecetario }) {
     idRecetario &&
       recetaApi
         .traerRecetario(idRecetario)
-        .then((response) =>
-          setRecetario(
-            RECETARIOS.find((recetario) => recetario.id === idRecetario)
-          )
-        );
+        .then((response) => setRecetario(response.data));
   }, [idRecetario]);
 
   const recetas = recetario?.recetas;
@@ -31,11 +27,7 @@ export default function Recetario({ idRecetario }) {
       .then(() =>
         recetaApi
           .traerRecetario(idRecetario)
-          .then((response) =>
-            setRecetario(
-              RECETARIOS.find((recetario) => recetario.id === idRecetario)
-            )
-          )
+          .then((response) => setRecetario(response.data))
       );
   };
 

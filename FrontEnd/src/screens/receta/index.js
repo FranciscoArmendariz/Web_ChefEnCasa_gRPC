@@ -11,6 +11,7 @@ import recetaApi from "@/services/receta";
 import cn from "classnames";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -21,13 +22,15 @@ export default function Receta({ idReceta }) {
   const [toggleRecetario, setToggleRecetario] = useState(false);
   const [toogleDenuncia, setToogleDenuncia] = useState(false);
   const dispatch = useDispatch();
+  const router = useRouter();
   const idUsuario = useSelector((state) => state.user?.usuarioActual?.id);
 
-  const recetarios = RECETARIOS;
+  const [recetarios, setRecetarios] = useState();
 
   const handleAgregarRecetario = (idRecetario) => {
-    recetaApi.agregarRecetaRecetario(idRecetario, idReceta);
-    setToggleRecetario(false);
+    recetaApi
+      .agregarRecetaRecetario({ idReceta, idRecetario })
+      .then((response) => response.ok && router.push("/recetarios"));
   };
 
   useEffect(() => {
@@ -37,6 +40,9 @@ export default function Receta({ idReceta }) {
     }
     if (idUsuario) {
       dispatch(traerRecetasPorUsuario(idUsuario));
+      recetaApi
+        .traerRecetarios(idUsuario)
+        .then((Response) => setRecetarios(Response.data));
     }
   }, [dispatch, idReceta, idUsuario]);
 
@@ -286,17 +292,18 @@ export default function Receta({ idReceta }) {
                   <FeatherIcon icon='x' size={15} />
                 </button>
                 <div className='flex flex-col h-full w-full mr-6 gap-2 overflow-auto p-3'>
-                  {recetarios.map((recetario) => {
-                    return (
-                      <button
-                        onClick={() => handleAgregarRecetario(recetario.id)}
-                        className='bg-blue-500 hover:bg-blue-400 p-1 rounded-lg text-white'
-                        key={recetario.nombre}
-                      >
-                        {recetario.nombre}
-                      </button>
-                    );
-                  })}
+                  {recetarios &&
+                    recetarios?.map((recetario) => {
+                      return (
+                        <button
+                          onClick={() => handleAgregarRecetario(recetario.id)}
+                          className='bg-blue-500 hover:bg-blue-400 p-1 rounded-lg text-white'
+                          key={recetario.nombre}
+                        >
+                          {recetario.nombre}
+                        </button>
+                      );
+                    })}
                 </div>
               </div>
             </div>

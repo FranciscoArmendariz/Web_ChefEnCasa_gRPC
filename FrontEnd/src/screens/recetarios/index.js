@@ -16,7 +16,7 @@ export default function Recetarios() {
     idUsuario &&
       recetaApi
         .traerRecetarios(idUsuario)
-        .then((response) => setRecetarios(RECETARIOS));
+        .then((response) => setRecetarios(response.data));
   }, [idUsuario]);
 
   const onSubmit = (data) => {
@@ -25,7 +25,7 @@ export default function Recetarios() {
       .then(() =>
         recetaApi
           .traerRecetarios(idUsuario)
-          .then((response) => setRecetarios(RECETARIOS))
+          .then((response) => setRecetarios(response.data))
       );
   };
   const handleDelete = (id) => {
@@ -34,7 +34,7 @@ export default function Recetarios() {
       .then(() =>
         recetaApi
           .traerRecetarios(idUsuario)
-          .then((response) => setRecetarios(RECETARIOS))
+          .then((response) => setRecetarios(response.data))
       );
   };
   return (
