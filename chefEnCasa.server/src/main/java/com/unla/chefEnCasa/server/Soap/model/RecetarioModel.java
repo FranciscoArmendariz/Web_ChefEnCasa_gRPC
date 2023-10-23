@@ -9,8 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.mapping.List;
 
@@ -26,7 +28,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Recetario {
+public class RecetarioModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;   
@@ -35,5 +37,6 @@ public class Recetario {
     private long idUsuario;
     
     @ManyToMany(cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    @JoinTable(name = "recetas_seguidas", joinColumns = @JoinColumn(name = "recetario_id"), inverseJoinColumns = @JoinColumn(name = "receta_id"))
     private Set<Receta> recetas;
 }

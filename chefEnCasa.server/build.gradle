@@ -38,7 +38,7 @@ sourceSets {
 task genJaxb {
 	ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
 	ext.schema = "src/main/resources/xsd/Mensaje.xsd"
-
+	ext.schema2 = "src/main/resources/xsd/Recetario"
 	outputs.dir sourcesDir
 
 	doLast() {
@@ -53,6 +53,7 @@ task genJaxb {
 			}
 		}
 	}
+
 }
 
 compileJava.dependsOn genJaxb

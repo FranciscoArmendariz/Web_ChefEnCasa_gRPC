@@ -28,7 +28,6 @@ public class   WebServiceConfig extends WsConfigurerAdapter{
         return new SimpleXsdSchema(new ClassPathResource("xsd/Mensaje.xsd"));
     }
 
-
     @Bean(name="mensajes")
     public DefaultWsdl11Definition mensajeResponseDefinition() {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
@@ -36,6 +35,9 @@ public class   WebServiceConfig extends WsConfigurerAdapter{
         wsdl11Definition.setLocationUri("/ws");
         wsdl11Definition.setTargetNamespace("http://www.chefEncasa.com/demosoap/gen");
         wsdl11Definition.setSchema(mensajeSchema());
+        wsdl11Definition.setCreateSoap11Binding(true);
         return wsdl11Definition;
     }
+
+
 }
