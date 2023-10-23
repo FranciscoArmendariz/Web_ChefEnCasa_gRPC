@@ -38,12 +38,12 @@ public class ApiRestMensajeRecetarioController {
         return ResponseEntity.ok(creado);
     }
 
-    @GetMapping("/mensaje/{idautor}")
+    @GetMapping("/mensaje/autor/{idautor}")
     public ResponseEntity<?> traerMensajeIdAutor(@PathVariable("idautor") long idAutor) {
         return ResponseEntity.ok(mensajeService.traerMensajesPorAutor(idAutor));
     }
 
-    @GetMapping("/mensaje/{idreceptor}")
+    @GetMapping("/mensaje/receptor/{idreceptor}")
     public ResponseEntity<?> traerMensajeIdReceptor(@PathVariable("idreceptor") long idReceptor) {
         return ResponseEntity.ok(mensajeService.traerMensajesPorReceptor(idReceptor));
     }

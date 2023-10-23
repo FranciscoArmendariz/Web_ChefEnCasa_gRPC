@@ -2,26 +2,16 @@ package com.unla.chefEnCasa.server.Soap.SoapService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.chefencasa.demosoap.gen.GetTraerMensajePorAutorRequest;
-import com.chefencasa.demosoap.gen.GetTraerMensajeResponse;
 import com.chefencasa.demosoap.gen.Mensaje;
-import com.chefencasa.demosoap.gen.PostMensajeRequest;
-import com.chefencasa.demosoap.gen.PostMensajeRespuestaRequest;
 import com.unla.chefEnCasa.server.Soap.model.MensajeModel;
 import com.unla.chefEnCasa.server.Soap.repository.MensajeRepository;
 import com.unla.chefEnCasa.server.dto.CrearMensajeRequestDto;
 import com.unla.chefEnCasa.server.dto.ResponderMensajeRequest;
-import com.unla.chefEnCasa.server.entity.Receta;
 import com.unla.chefEnCasa.server.entity.Usuario;
 import com.unla.chefEnCasa.server.exceptions.ServerException;
-import com.unla.chefEnCasa.server.repository.RecetaRepository;
 import com.unla.chefEnCasa.server.repository.UsuarioRepository;
 
 @Service
@@ -52,14 +42,15 @@ public class MensajeService {
 
     public boolean ResponderMensaje(ResponderMensajeRequest request) {
         MensajeModel mensaje = mensajeRepository.findById(request.getIdMensaje()).orElse(null);
-        boolean respondido=false;
-        if (mensaje.getRespuesta() != null) {
+        boolean respondido = false;
+        System.out.println("respuesta: " + mensaje.getRespuesta());
+        if (!mensaje.getRespuesta().isEmpty()) {
             throw new ServerException("El mensaje ya tenia una respuesta", HttpStatus.BAD_REQUEST);
         } else {
             mensaje.setRespuesta(request.getRespuesta());
         }
         mensajeRepository.save(mensaje);
-        return respondido=true;
+        return respondido = true;
 
     }
 
