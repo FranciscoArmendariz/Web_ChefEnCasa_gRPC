@@ -5,7 +5,9 @@ VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrpcService", "GrpcService\GrpcService.csproj", "{F66588EC-076A-4F2E-9AEB-7AF13B7B38BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcClientAPI", "GrpcClientAPI\GrpcClientAPI.csproj", "{7EEAE194-DBD6-425E-9E8A-928BE04CA018}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrpcClientAPI", "GrpcClientAPI\GrpcClientAPI.csproj", "{7EEAE194-DBD6-425E-9E8A-928BE04CA018}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOAPService", "SOAPService\SOAPService.csproj", "{82C2C976-9C4D-4D0A-AE0C-AB75CBC0FC25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{7EEAE194-DBD6-425E-9E8A-928BE04CA018}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EEAE194-DBD6-425E-9E8A-928BE04CA018}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EEAE194-DBD6-425E-9E8A-928BE04CA018}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82C2C976-9C4D-4D0A-AE0C-AB75CBC0FC25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82C2C976-9C4D-4D0A-AE0C-AB75CBC0FC25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82C2C976-9C4D-4D0A-AE0C-AB75CBC0FC25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82C2C976-9C4D-4D0A-AE0C-AB75CBC0FC25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

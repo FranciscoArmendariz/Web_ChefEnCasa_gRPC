@@ -54,9 +54,11 @@ public class MensajeEndPoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "postMensajeRequest")
     @ResponsePayload
+    @Async
     public PostMensajeResponse crearMensaje(@RequestPayload PostMensajeRequest request) {
         PostMensajeResponse response=new PostMensajeResponse();
-        System.out.println(request);  
+        System.out.println("postMensajeRequest");
+        System.out.println(request);
         mensajeService.CrearMensaje(request);
 
         return response;
@@ -64,8 +66,10 @@ public class MensajeEndPoint {
     
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "postMensajeRespuestaRequest")
     @ResponsePayload
+    @Async
     public PostMensajeRespuestaResponse responderMensaje(@RequestPayload PostMensajeRespuestaRequest request) {
         PostMensajeRespuestaResponse response= new PostMensajeRespuestaResponse();
+        System.out.println("responderMensaje");  
         MensajeModel mensaje=mensajeRepository.findById(request.getMensajeId()).orElse(null);
         mensaje.setRespuesta(request.getRespuesta());
         mensajeRepository.save(mensaje);
@@ -90,6 +94,7 @@ public class MensajeEndPoint {
        
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getTraerMensajePorReceptorRequest")
     @ResponsePayload
+    @Async
     public GetTraerMensajeResponse traerMensajesPorRecetor(@RequestPayload GetTraerMensajePorReceptorRequest request) {
          GetTraerMensajeResponse response= new GetTraerMensajeResponse();
         List<MensajeModel> mensaje= mensajeService.traerMensajeModelsPorReceptor(request.getIdReceptor());

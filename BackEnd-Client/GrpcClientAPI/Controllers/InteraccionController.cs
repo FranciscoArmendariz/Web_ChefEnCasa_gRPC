@@ -139,6 +139,61 @@ namespace GrpcClientAPI.Controllers
 
             return "";
         }
+
+        [HttpPost()]
+        [Route("[action]")]
+        public async Task<string> testSOAP()
+        {
+            SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
+
+            string rta = await client.GetDataAsync(5);
+
+            return rta;
+        }
+
+        [HttpPost()]
+        [Route("[action]")]
+        public async Task<bool> CrearMensaje(int idAutor, int idReceptor, string asunto, string mensaje)
+        {
+            SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
+
+            string rta = await client.CrearMensajeAsync(idAutor, idReceptor, asunto, mensaje);
+
+            return true;
+        }
+
+        [HttpPost()]
+        [Route("[action]")]
+        public async Task<bool> ResponderMensaje(int idMensaje, string respuesta)
+        {
+            SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
+
+            string rta = await client.ResponderMensajeAsync(idMensaje, respuesta);
+            
+            return true;
+        }
+
+        [HttpPost()]
+        [Route("[action]")]
+        public async Task<string> TraerMensajesPorAutor(int idAutor) //DEFINIR RESPUESTA
+        {
+            SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
+
+            string rta = await client.TraerMensajesPorAutorAsync(idAutor);
+
+            return rta;
+        }
+
+        [HttpPost()]
+        [Route("[action]")]
+        public async Task<string> TraerMensajesPorReceptor(int idReceptor) //DEFINIR RESPUESTA
+        {
+            SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
+
+            string rta = await client.TraerMensajesPorReceptorAsync(idReceptor);
+
+            return rta;
+        }
     }
 
     public class PopularidadMsg

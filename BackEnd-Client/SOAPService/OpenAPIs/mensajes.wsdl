@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://www.chefEncasa.com/demosoap/gen" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.chefEncasa.com/demosoap/gen" targetNamespace="http://www.chefEncasa.com/demosoap/gen">
+  <wsdl:types>
+    <xs:schema xmlns="http://www.chefEncasa.com/demosoap/gen" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.chefEncasa.com/demosoap/gen">
+
+
+
+
+<xs:element name="postMensajeRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="idAutor" type="xs:long"/>
+        <xs:element name="idReceptor" type="xs:long"/>
+        <xs:element name="asunto" type="xs:string"/>
+        <xs:element name="mensaje" type="xs:string"/>
+        <xs:element minOccurs="0" name="respuesta" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+<xs:element name="postMensajeResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="mensaje" type="mensaje"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+ 
+ 
+ <xs:element name="postMensajeRespuestaRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="mensajeId" type="xs:long"/>
+        <xs:element name="respuesta" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+<xs:element name="postMensajeRespuestaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="mensaje" type="mensaje"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+   <xs:element name="getTraerMensajePorAutorRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="idAutor" type="xs:long"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+   
+   <xs:element name="getTraerMensajePorReceptorRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="idReceptor" type="xs:long"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+   <xs:element name="getTraerMensajeResponse">
+    <xs:complexType>
+      <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="mensajes" type="mensaje"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="mensaje">
+        <xs:sequence>
+          <xs:element name="idMensaje" type="xs:long"/>
+          <xs:element name="nombreAutor" type="xs:string"/>
+          <xs:element name="nombreReceptor" type="xs:string"/>
+          <xs:element name="asunto" type="xs:string"/>
+          <xs:element name="mensaje" type="xs:string"/>
+          <xs:element name="respuesta" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+  
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="postMensajeRequest">
+    <wsdl:part element="tns:postMensajeRequest" name="postMensajeRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTraerMensajeResponse">
+    <wsdl:part element="tns:getTraerMensajeResponse" name="getTraerMensajeResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="postMensajeRespuestaRequest">
+    <wsdl:part element="tns:postMensajeRespuestaRequest" name="postMensajeRespuestaRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="postMensajeResponse">
+    <wsdl:part element="tns:postMensajeResponse" name="postMensajeResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="postMensajeRespuestaResponse">
+    <wsdl:part element="tns:postMensajeRespuestaResponse" name="postMensajeRespuestaResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTraerMensajePorAutorRequest">
+    <wsdl:part element="tns:getTraerMensajePorAutorRequest" name="getTraerMensajePorAutorRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTraerMensajePorReceptorRequest">
+    <wsdl:part element="tns:getTraerMensajePorReceptorRequest" name="getTraerMensajePorReceptorRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="MensajeServiceSoap">
+    <wsdl:operation name="postMensaje">
+      <wsdl:input message="tns:postMensajeRequest" name="postMensajeRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:postMensajeResponse" name="postMensajeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTraerMensaje">
+      <wsdl:output message="tns:getTraerMensajeResponse" name="getTraerMensajeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="postMensajeRespuesta">
+      <wsdl:input message="tns:postMensajeRespuestaRequest" name="postMensajeRespuestaRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:postMensajeRespuestaResponse" name="postMensajeRespuestaResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTraerMensajePorAutor">
+      <wsdl:input message="tns:getTraerMensajePorAutorRequest" name="getTraerMensajePorAutorRequest">
+    </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="getTraerMensajePorReceptor">
+      <wsdl:input message="tns:getTraerMensajePorReceptorRequest" name="getTraerMensajePorReceptorRequest">
+    </wsdl:input>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MensajeServiceSoapSoap11" type="tns:MensajeServiceSoap">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="postMensaje">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="postMensajeRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="postMensajeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTraerMensaje">
+      <soap:operation soapAction=""/>
+      <wsdl:output name="getTraerMensajeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="postMensajeRespuesta">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="postMensajeRespuestaRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="postMensajeRespuestaResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTraerMensajePorAutor">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="getTraerMensajePorAutorRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="getTraerMensajePorReceptor">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="getTraerMensajePorReceptorRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MensajeServiceSoapService">
+    <wsdl:port binding="tns:MensajeServiceSoapSoap11" name="MensajeServiceSoapSoap11">
+      <soap:address location="http://localhost:8000/ws"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

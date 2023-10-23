@@ -17,7 +17,7 @@ builder.Services.AddCors(options =>
                                 .AllowAnyMethod();
         });
 });
-
+builder.Services.AddSignalR();
 builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
 
