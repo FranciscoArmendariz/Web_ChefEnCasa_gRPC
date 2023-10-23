@@ -45,10 +45,6 @@ const recetaApi = {
     api.post(`${RUTA}/recetarios/agrgar`, { idRecetario, idReceta }),
   removerRecetaRecetario: ({ idRecetario, idReceta }) =>
     api.post(`${RUTA}/recetarios/agrgar`, { idRecetario, idReceta }),
-  crearDenuncia: ({ idReceta, motivo }) =>
-    api.post(`${RUTA}/crearDenuncia`, { idReceta, motivo }),
-  resolverDenuncia: ({ idDenuncia, eliminar }) =>
-    api.post(`${RUTA}/resolverDenuncia`, { idDenuncia, eliminar }),
 };
 
 export default recetaApi;

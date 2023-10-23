@@ -1,179 +1,137 @@
+import LoadingWrapper from "@/components/LoadingWrapper";
 import { CATEGORIAS } from "@/constants/camposFiltros";
+import { borradorApi } from "@/services/borradores";
+import { useEffect } from "react";
+import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import cn from "classnames";
+import FormularioBorrador from "./componentes/formularioBorrador";
+import { useRouter } from "next/router";
 
-export default function FormularioReceta({ recetas }) {
-  const { control, register, handleSubmit } = useForm({
-    defaultValues: editar
-      ? {
-          ...recetaEditar,
-          fotos: [
-            { url: recetaEditar.fotos[0]?.url },
-            { url: recetaEditar.fotos[1]?.url },
-            { url: recetaEditar.fotos[2]?.url },
-            { url: recetaEditar.fotos[3]?.url },
-            { url: recetaEditar.fotos[4]?.url },
-          ],
-        }
-      : {
-          titulo: "",
-          descripcion: "",
-          categoria: "",
-          tiempoAprox: null,
-          fotos: [
-            { url: "" },
-            { url: "" },
-            { url: "" },
-            { url: "" },
-            { url: "" },
-          ],
-          ingredientes: [{ nombre: "", cantidad: 0 }],
-          pasos: [{ numero: 0, descripcion: "" }],
-        },
-  });
+export default function Borrador({ idBorrador }) {
+  const [borrador, setBorrador] = useState();
+  const [recetaSeleccionada, setRecetaSeleccionada] = useState();
 
-  const { fields: fotosFields } = useFieldArray({ control, name: "fotos" });
-  const {
-    fields: ingredientesFields,
-    remove: ingredientesRemove,
-    append: ingredientesAppend,
-  } = useFieldArray({ control, name: "ingredientes" });
-  const {
-    fields: pasosFields,
-    remove: pasosRemove,
-    append: pasosAppend,
-  } = useFieldArray({ control, name: "pasos" });
+  const router = useRouter();
+
+  const agrgarEstado = (recetas) =>
+    recetas.reduce(
+      (array, receta) =>
+        receta.fotos[0]?.url &&
+        receta.ingredientes.length > 0 &&
+        receta.pasos.length > 0
+          ? [...array, { ...receta, completo: true }]
+          : [...array, { ...receta, completo: false }],
+      []
+    );
+
+  useEffect(() => {
+    idBorrador &&
+      borradorApi
+        .traerBorrador(idBorrador)
+        .then((response) => setBorrador(agrgarEstado(response.data)));
+  }, [idBorrador]);
+
+  const onFormSubmit = (data) => {
+    const nuevoBorrador = borrador.reduce(
+      (array, receta) =>
+        receta.id !== data.id
+          ? [...array, receta]
+          : data.fotos[0]?.url &&
+            data.ingredientes.length > 0 &&
+            data.pasos.length > 0
+          ? [...array, { ...data, completo: true }]
+          : [...array, { ...data, completo: false }],
+      []
+    );
+    borradorApi
+      .editarBorrador(idBorrador, nuevoBorrador)
+      .then(() =>
+        borradorApi
+          .traerBorrador(idBorrador)
+          .then((response) => setBorrador(agrgarEstado(response.data)))
+      );
+  };
+
+  const todoCompleto =
+    borrador && !borrador.some((receta) => receta.completo === false);
+
+  const crearRecetas = () => {
+    borradorApi
+      .crearRecetas(idBorrador, borrador)
+      .then((response) => response.ok && router.push("/recetas"));
+  };
 
   return (
     <div>
-      <form className='flex flex-col p-3' onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor='titulo'>Titulo</label>
-        <input
-          id='titulo'
-          {...register("titulo", { required: true })}
-          placeholder='Nombre de la receta...'
-        />
-        <label htmlFor='descripcion'>descripción</label>
-        <input
-          id='descripcion'
-          {...register("descripcion", { required: true })}
-          placeholder='Descripcion de la receta...'
-        />
-        <label htmlFor='categoria'>Categoria de las recetas</label>
-        <select id='categoria' {...register("categoria", { required: true })}>
-          <option value={""}>todas</option>
-          {CATEGORIAS.map((categoria) => {
-            return (
-              <option key={categoria} value={categoria}>
-                {categoria}
-              </option>
-            );
-          })}
-        </select>
-        <label htmlFor='tiempoAprox'>Tiempo de preparación</label>
-        <input
-          id='tiempoAprox'
-          {...register("tiempoAprox", { required: true, valueAsNumber: true })}
-          placeholder='Tiempo de cocción...'
-        />
-        <label htmlFor='ingredientes'>ingredientes</label>
-        {ingredientesFields.map((ingrediente, index) => {
-          return (
-            <div key={ingrediente.id} className='flex flex-row pb-2 w-full'>
-              <div className='mr-1'>Ingrediente:</div>
-              <input
-                className='flex-1 pl-1'
-                {...register(`ingredientes.${index}.nombre`, {
-                  required: true,
-                })}
-              />
-              <div className='ml-3 mr-1'>Cantidad:</div>
-              <input
-                className='pl-1 w-32'
-                {...register(`ingredientes.${index}.cantidad`, {
-                  required: true,
-                })}
-              />
-              <button
-                className='bg-red-600 text-white mx-1 w-6 h-full rounded-lg font-black text-center'
-                type='button'
-                onClick={() =>
-                  ingredientesFields.length > 1 && ingredientesRemove(index)
-                }
-              >
-                -
-              </button>
-            </div>
-          );
-        })}
-        <button
-          className='flex self-center justify-center bg-green-700 w-8 h-8 text-white  rounded-lg font-bold '
-          type='button'
-          onClick={() => {
-            ingredientesAppend({ nombre: "", cantidad: 0 });
-          }}
-        >
-          +
-        </button>
-        <label htmlFor='pasos'>Pasos</label>
-        {pasosFields.map((paso, index) => {
-          return (
-            <div key={paso.id} className='flex flex-row pb-2 w-full'>
-              <div>Paso</div>
-              <input
-                className='pl-1 w-7'
-                value={index + 1}
-                disabled
-                {...register(`pasos.${index}.numero`)}
-              />
-              <input
-                className='flex-1'
-                {...register(`pasos.${index}.descripcion`, { required: true })}
-              />
-              <button
-                className='bg-red-600 text-white mx-1 w-6 h-full rounded-lg font-black text-center'
-                type='button'
-                onClick={() => pasosFields.length > 1 && pasosRemove(index)}
-              >
-                -
-              </button>
-            </div>
-          );
-        })}
-        <button
-          className='flex self-center justify-center bg-green-700 w-8 h-8 text-white  rounded-lg font-bold '
-          type='button'
-          onClick={() => {
-            pasosAppend({ numero: pasosFields.length + 1, descripcion: "" });
-          }}
-        >
-          +
-        </button>
-        <div>Fotos</div>
-        <div className=''>
-          {fotosFields.map((foto, index) => {
-            return (
-              <div className='flex flex-col mb-3' key={foto.id}>
-                <div>
-                  Foto {index + 1}
-                  {index === 0 && "*"}
+      <LoadingWrapper loading={!borrador}>
+        {borrador && (
+          <>
+            <h1 className='text-center font-bold text-lg'>
+              BORRADOR {idBorrador}
+            </h1>
+            <div className='flex flex-row'>
+              <div className='w-1/2'>
+                <h2 className='text-center font-bold text-md'>RECETAS</h2>
+                <div className='flex flex-col gap-4 items-center'>
+                  {borrador.map((receta, index) => {
+                    return (
+                      <button
+                        onClick={() => setRecetaSeleccionada(index)}
+                        key={receta.id}
+                        className='bg-yellow-500 rounded-xl p-5 shadow-md w-2/3 relative'
+                      >
+                        <div className='font-semibold'>Receta {index + 1}</div>
+                        <div className='font-semibold'>{receta.titulo}</div>
+                        <div className='absolute top-0 bottom-0 right-0 m-4 flex flex-col justify-center font-semibold bg-slate-100 px-2 rounded-lg'>
+                          <div className='text-center'>Estado:</div>
+                          <div
+                            className={cn(
+                              receta.completo
+                                ? "text-green-800"
+                                : "text-red-800"
+                            )}
+                          >
+                            {receta.completo ? "completada" : "incompleta"}
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
-                <input
-                  type='url'
-                  {...register(`fotos.${index}.url`, { required: index === 0 })}
-                  placeholder='url de imagen'
-                />
+                <div className='flex flex-row justify-center'>
+                  {todoCompleto && (
+                    <button
+                      onClick={crearRecetas}
+                      className='py-4 px-7 w-2/3 mt-7 bg-gradient-to-tr from-blue-700 to-blue-500 text-white font-bold m-auto my-2 rounded-lg'
+                    >
+                      CREAR RECETAS
+                    </button>
+                  )}
+                </div>
               </div>
-            );
-          })}
-        </div>
-
-        <button
-          type='submit'
-          className='py-2 px-7 bg-blue-600 text-white font-bold w-auto m-auto my-2 rounded-lg'
-        >
-          {editar ? "GUARDAR CAMBIOS" : "CREAR"}
-        </button>
-      </form>
+              <div className='w-1/2 bg-white border border-gray-300 shadow-2xl m-4 rounded-2xl p-2'>
+                <div className='text-center font-bold text-md'>
+                  COMPLETA LA RECETA:
+                </div>
+                {borrador &&
+                  borrador.map((receta, index) => {
+                    return (
+                      <div
+                        className={cn(recetaSeleccionada !== index && "hidden")}
+                      >
+                        <FormularioBorrador
+                          receta={receta}
+                          onSubmit={onFormSubmit}
+                        />
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          </>
+        )}
+      </LoadingWrapper>
     </div>
   );
 }

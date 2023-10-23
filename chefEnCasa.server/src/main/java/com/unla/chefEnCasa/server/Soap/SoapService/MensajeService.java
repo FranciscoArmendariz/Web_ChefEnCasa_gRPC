@@ -31,7 +31,7 @@ public class MensajeService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public boolean CrearMensaje(CrearMensajeRequestDto request) {
+    public boolean CrearMensaje(PostMensajeRequest request) {
         boolean creado = false;
         MensajeModel mensaje = new MensajeModel();
         mensaje.setAsunto(request.getAsunto());

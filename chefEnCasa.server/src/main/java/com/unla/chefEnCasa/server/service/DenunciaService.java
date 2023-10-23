@@ -48,34 +48,35 @@ public class DenunciaService {
     }
 
     public boolean resolverDenuncia(long idDenuncia, boolean eliminar) {
-        Denuncia denuncia = denunciaRepository.findById(idDenuncia).orElseThrow(() -> new ServerException("No existe una denuncia con ese id", HttpStatus.BAD_REQUEST));
+        Denuncia denuncia = denunciaRepository.findById(idDenuncia)
+                .orElseThrow(() -> new ServerException("No existe una denuncia con ese id", HttpStatus.BAD_REQUEST));
 
-        if(eliminar){
+        if (eliminar) {
             denuncia.setEstado("resuelta");
-            Receta receta = recetaRepository.findById(denuncia.getReceta().getId()).orElseThrow(() -> new ServerException("No existe una receta con ese id", HttpStatus.BAD_REQUEST));
-            receta.setActiva(false); //de momento manejamos borrado logico
+            Receta receta = recetaRepository.findById(denuncia.getReceta().getId())
+                    .orElseThrow(() -> new ServerException("No existe una receta con ese id", HttpStatus.BAD_REQUEST));
+            receta.setActiva(false); // de momento manejamos borrado logico
             recetaRepository.save(receta);
             borrarRelacionesDeReceta(receta.getId());
-        }else{
+        } else {
             denuncia.setEstado("resuelta");
         }
-        try{
+        try {
             denunciaRepository.save(denuncia);
             return true;
-        }catch(Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
 
-    public void borrarRelacionesDeReceta(long idReceta){
+    public void borrarRelacionesDeReceta(long idReceta) {
         Usuario usuario = usuarioRepository.findCreadorByRecetaId(idReceta);
 
-       Receta receta = recetaRepository.findById(idReceta).orElseThrow(null);
-       usuario.getRecetasCreadas().remove(receta);
+        Receta receta = recetaRepository.findById(idReceta).orElseThrow(null);
+        usuario.getRecetasCreadas().remove(receta);
 
         usuarioRepository.save(usuario);
- 
-        
+
     }
 
 }
