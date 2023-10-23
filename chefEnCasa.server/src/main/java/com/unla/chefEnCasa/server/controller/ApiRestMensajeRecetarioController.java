@@ -84,6 +84,8 @@ public class ApiRestMensajeRecetarioController {
     @DeleteMapping("/recetario/borrar/{idrecetario}")
     public ResponseEntity<?> borrarRecetario(@PathVariable("idrecetario") long idRecetario) {
         boolean response = false;
+        RecetarioModel recetario = recetarioRespository.findById(idRecetario).orElseThrow(null);
+        recetario.getRecetas().removeAll(recetario.getRecetas());
         try {
             recetarioRespository.deleteById(idRecetario);
             response = true;
