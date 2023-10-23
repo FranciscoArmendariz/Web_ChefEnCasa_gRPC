@@ -1,4 +1,4 @@
-/*package com.unla.chefEnCasa.server;
+package com.unla.chefEnCasa.server;
 
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,7 +52,7 @@ public class ConsumerProperties {
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
-}*/
+}
 
 /*
  * package com.unla.chefEnCasa.server;

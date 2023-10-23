@@ -7,80 +7,7 @@
 
 
 
-<xs:element name="postMensajeRequest">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="idAutor" type="xs:long"/>
-        <xs:element name="idReceptor" type="xs:long"/>
-        <xs:element name="asunto" type="xs:string"/>
-        <xs:element name="mensaje" type="xs:string"/>
-        <xs:element name="respuesta" type="xs:string" minOccurs="0"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
-<xs:element name="postMensajeResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="mensaje" type="mensaje"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
- 
- 
- <xs:element name="postMensajeRespuestaRequest">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="mensajeId" type="xs:long"/>
-        <xs:element name="respuesta" type="xs:string"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
-<xs:element name="postMensajeRespuestaResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="mensaje" type="mensaje"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
-   <xs:element name="getTraerMensajePorAutorRequest">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="idAutor" type="xs:long"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-   
-   <xs:element name="getTraerMensajePorReceptorRequest">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="idReceptor" type="xs:long"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  
-   <xs:element name="getTraerMensajeResponse">
-    <xs:complexType>
-      <xs:sequence>
-            <xs:element name="mensajes" type="mensaje" maxOccurs="unbounded"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
-  <xs:complexType name="mensaje">
-        <xs:sequence>
-          <xs:element name="idMensaje" type="xs:long"/>
-          <xs:element name="nombreAutor" type="xs:string"/>
-          <xs:element name="nombreReceptor" type="xs:string"/>
-          <xs:element name="asunto" type="xs:string"/>
-          <xs:element name="mensaje" type="xs:string"/>
-          <xs:element name="respuesta" type="xs:string"/>
-        </xs:sequence>
-    </xs:complexType>
-
-  <xs:element name="postRecetarioRequest">
+<xs:element name="postRecetarioRequest">
     <xs:complexType>
       <xs:sequence>
         <xs:element name="idAutor" type="xs:long"/>
@@ -125,7 +52,7 @@
    <xs:element name="getTraerRecetariosPorUsuarioResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="recetarios" type="recetarioSoap" maxOccurs="unbounded"/>
+        <xs:element name="recetarios" type="recetario" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -141,8 +68,8 @@
     <xs:element name="getTraerRecetariosConRecetasResponse">
     <xs:complexType>
       <xs:sequence>
-            <xs:element name="recetario" type="recetarioSoap"/>
-            <xs:element name="receta" type="recetaSoap" maxOccurs="unbounded"/>
+            <xs:element name="recetario" type="recetario"/>
+            <xs:element name="receta" type="receta" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element> 
@@ -162,7 +89,7 @@
           <xs:element name="nombre" type="xs:string"/>
           <xs:element name="titulo" type="xs:string"/>
           <xs:element name="tiempoAproximado" type="xs:int"/>
-          <xs:element name="fotos" type="fotoSoap" maxOccurs="unbounded"/>
+          <xs:element name="fotos" type="foto" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -171,7 +98,7 @@
           <xs:element name="url" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
-    
-    
-  
+
+
+
 </xs:schema>

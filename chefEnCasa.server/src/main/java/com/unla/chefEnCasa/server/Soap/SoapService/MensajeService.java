@@ -16,6 +16,8 @@ import com.chefencasa.demosoap.gen.PostMensajeRequest;
 import com.chefencasa.demosoap.gen.PostMensajeRespuestaRequest;
 import com.unla.chefEnCasa.server.Soap.model.MensajeModel;
 import com.unla.chefEnCasa.server.Soap.repository.MensajeRepository;
+import com.unla.chefEnCasa.server.dto.CrearMensajeRequestDto;
+import com.unla.chefEnCasa.server.dto.ResponderMensajeRequest;
 import com.unla.chefEnCasa.server.entity.Receta;
 import com.unla.chefEnCasa.server.entity.Usuario;
 import com.unla.chefEnCasa.server.exceptions.ServerException;
@@ -29,32 +31,35 @@ public class MensajeService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public void CrearMensaje(PostMensajeRequest request) {
-        boolean creado=false;
+    public boolean CrearMensaje(CrearMensajeRequestDto request) {
+        boolean creado = false;
         MensajeModel mensaje = new MensajeModel();
         mensaje.setAsunto(request.getAsunto());
         mensaje.setAutor(usuarioRepository.findById(request.getIdAutor()).orElse(null));
         mensaje.setReceptor(usuarioRepository.findById(request.getIdReceptor()).orElse(null));
         mensaje.setMensaje(request.getMensaje());
         mensaje.setRespuesta(request.getRespuesta());
-        System.out.println("String Mensaje"+mensaje);
+        System.out.println("String Mensaje" + mensaje);
         try {
             mensajeRepository.save(mensaje);
-            creado=true;
+            creado = true;
         } catch (Exception e) {
             System.out.println(e);
         }
         System.out.println(creado);
+        return creado;
     }
 
-    public void ResponderMensaje(PostMensajeRespuestaRequest request) {
-        MensajeModel mensaje = mensajeRepository.findById(request.getMensajeId()).orElse(null);
+    public boolean ResponderMensaje(ResponderMensajeRequest request) {
+        MensajeModel mensaje = mensajeRepository.findById(request.getIdMensaje()).orElse(null);
+        boolean respondido=false;
         if (mensaje.getRespuesta() != null) {
             throw new ServerException("El mensaje ya tenia una respuesta", HttpStatus.BAD_REQUEST);
         } else {
             mensaje.setRespuesta(request.getRespuesta());
         }
         mensajeRepository.save(mensaje);
+        return respondido=true;
 
     }
 
@@ -64,7 +69,7 @@ public class MensajeService {
 
     }
 
-    public List<MensajeModel>traerMensajeModelsPorAutor(long idAutor){
+    public List<MensajeModel> traerMensajeModelsPorAutor(long idAutor) {
         Usuario usuario = usuarioRepository.findById(idAutor).orElse(null);
         return mensajeRepository.findByAutor(usuario);
     }
@@ -74,7 +79,8 @@ public class MensajeService {
         return mapMensajesToMensajeResponses(mensajeRepository.findByReceptor(usuario));
 
     }
-      public List<MensajeModel>traerMensajeModelsPorReceptor(long idAutor){
+
+    public List<MensajeModel> traerMensajeModelsPorReceptor(long idAutor) {
         Usuario usuario = usuarioRepository.findById(idAutor).orElse(null);
         return mensajeRepository.findByReceptor(usuario);
     }
@@ -97,9 +103,8 @@ public class MensajeService {
         return mensajeResponses;
     }
 
-
-    public Mensaje  mapMensajeToMensajeResponses(MensajeModel mensaje){
-        Mensaje mensajeResponse=new Mensaje();
+    public Mensaje mapMensajeToMensajeResponses(MensajeModel mensaje) {
+        Mensaje mensajeResponse = new Mensaje();
         mensajeResponse.setIdMensaje(mensaje.getId());
         mensajeResponse.setNombreAutor(mensaje.getAutor().getNombre());
         mensajeResponse.setNombreReceptor(mensaje.getReceptor().getNombre());

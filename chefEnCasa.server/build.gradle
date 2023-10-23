@@ -38,7 +38,7 @@ sourceSets {
 task genJaxb {
 	ext.sourcesDir = "build/generated-sources/jaxb"
 	ext.schema = "src/main/resources/xsd/Mensaje.xsd"
-
+	ext.schema2 = "src/main/resources/xsd/Recetario"
 	outputs.dir sourcesDir
 
 	doLast() {
@@ -53,6 +53,7 @@ task genJaxb {
 			}
 		}
 	}
+
 }
 
 compileJava.dependsOn genJaxb
@@ -80,7 +81,6 @@ dependencies {
 	implementation 'io.grpc:grpc-stub:1.43.1'
 	implementation 'org.springframework.kafka:spring-kafka:2.8.0'
     implementation 'org.apache.kafka:kafka-clients:2.8.0'
-	//SOAP
 	implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-web-services'
     implementation 'org.springframework.boot:spring-boot-devtools'

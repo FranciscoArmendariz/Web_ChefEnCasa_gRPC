@@ -1,4 +1,4 @@
-package com.unla.chefEnCasa.server.Soap.config;
+/*package com.unla.chefEnCasa.server.Soap.config;
 
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
@@ -28,7 +28,6 @@ public class   WebServiceConfig extends WsConfigurerAdapter{
         return new SimpleXsdSchema(new ClassPathResource("xsd/Mensaje.xsd"));
     }
 
-
     @Bean(name="mensajes")
     public DefaultWsdl11Definition mensajeResponseDefinition() {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
@@ -38,4 +37,6 @@ public class   WebServiceConfig extends WsConfigurerAdapter{
         wsdl11Definition.setSchema(mensajeSchema());
         return wsdl11Definition;
     }
-}
+
+
+}*/

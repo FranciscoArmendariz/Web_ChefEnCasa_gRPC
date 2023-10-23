@@ -6,6 +6,7 @@ import {
   traerRecetaPorId,
   traerRecetasPorUsuario,
 } from "@/redux/recetas/actions";
+import { denunciaApi } from "@/services/denuncias";
 import recetaApi from "@/services/receta";
 import cn from "classnames";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
@@ -111,7 +112,7 @@ export default function Receta({ idReceta }) {
   ];
 
   const handleDenunciar = (motivo) => {
-    recetaApi.crearDenuncia({ idReceta, motivo });
+    denunciaApi.crearDenuncia(idReceta, motivo);
     setToogleDenuncia(false);
   };
 
