@@ -1,0 +1,10 @@
+D:\Faculta\Sistemas distribuidos\Web_ChefEnCasa_gRPC\BackEnd-Client\SOAPService\bin\SOAPService.dll.config
+D:\Faculta\Sistemas distribuidos\Web_ChefEnCasa_gRPC\BackEnd-Client\SOAPService\bin\SOAPService.dll
+D:\Faculta\Sistemas distribuidos\Web_ChefEnCasa_gRPC\BackEnd-Client\SOAPService\bin\SOAPService.pdb
+D:\Faculta\Sistemas distribuidos\Web_ChefEnCasa_gRPC\BackEnd-Client\SOAPService\obj\Debug\SOAPService.csproj.AssemblyReference.cache
+D:\Faculta\Sistemas distribuidos\Web_ChefEnCasa_gRPC\BackEnd-Client\SOAPService\obj\Debug\SOAPService.csproj.CoreCompileInputs.cache
+D:\Faculta\Sistemas distribuidos\Web_ChefEnCasa_gRPC\BackEnd-Client\SOAPService\obj\Debug\SOAPService.dll
+D:\Faculta\Sistemas distribuidos\Web_ChefEnCasa_gRPC\BackEnd-Client\SOAPService\obj\Debug\SOAPService.pdb
+D:\Faculta\Sistemas distribuidos\Web_ChefEnCasa_gRPC\BackEnd-Client\SOAPService\bin\Newtonsoft.Json.dll
+D:\Faculta\Sistemas distribuidos\Web_ChefEnCasa_gRPC\BackEnd-Client\SOAPService\bin\Newtonsoft.Json.xml
+D:\Faculta\Sistemas distribuidos\Web_ChefEnCasa_gRPC\BackEnd-Client\SOAPService\obj\Debug\SOAPService.csproj.CopyComplete

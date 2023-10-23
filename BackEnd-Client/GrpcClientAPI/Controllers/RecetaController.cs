@@ -3,6 +3,7 @@ using Google.Protobuf.Collections;
 using Grpc.Net.Client;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Channels;
 
 namespace GrpcClientAPI.Controllers
@@ -166,6 +167,72 @@ namespace GrpcClientAPI.Controllers
 
         [HttpPost()]
         [Route("[action]")]
+        public async Task<bool> CrearRecetario(int idAutor, string nombre)
+        {
+            SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
+
+            var rta = await client.CrearRecetarioAsync(idAutor, nombre);
+
+            return true;
+        }
+
+        [HttpPost()]
+        [Route("[action]")]
+        public async Task<bool> BorrarRecetario(int idRecetario)
+        {
+            SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
+
+            var rta = await client.BorrarRecetarioAsync(idRecetario);
+
+            return true;
+        }
+
+        [HttpPost()]
+        [Route("[action]")]
+        public async Task<List<Recetario>> TraerRecetariosPorUsuario(int idUsuario)
+        {
+            SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
+
+            var rta = await client.TraerRecetariosPorUsuarioAsync(idUsuario);
+
+            return new List<Recetario>();
+        }
+
+        [HttpPost()]
+        [Route("[action]")]
+        public async Task<Recetario> TraerRecetarioConRecetas(int idRecetario)
+        {
+            SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
+
+            var rta = await client.TraerRecetarioConRecetasAsync(idRecetario);
+
+            return new Recetario();
+        }
+
+        [HttpPost()]
+        [Route("[action]")]
+        public async Task<bool> AgregarRecetaRecetario(int idRecetario, int idReceta)
+        {
+            SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
+
+            var rta = await client.AgregarRecetaRecetarioAsync(idRecetario, idReceta);
+
+            return true;
+        }
+
+        [HttpPost()]
+        [Route("[action]")]
+        public async Task<bool> RemoverRecetaRecetario(int idRecetario, int idReceta)
+        {
+            SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
+
+            var rta = await client.RemoverRecetaRecetarioAsync(idRecetario, idReceta);
+
+            return true;
+        }
+
+        [HttpPost()]
+        [Route("[action]")]
         public async Task<List<string>> VerUltimasRecetas()
         {
             var cConfig = new ConsumerConfig
@@ -264,5 +331,25 @@ namespace GrpcClientAPI.Controllers
         public string tituloReceta { get; set; }
         public string nombreDeAutor { get; set; }
         public string foto { get; set; }
+    }
+    public class Recetario
+    {
+        public int idRecetario { get; set; }
+        public string nombre { get; set; }
+        public List<Receta> recetas { get; set; }
+    }
+
+    public class Receta
+    {
+        public int IdReceta { get; set; }
+        public string titulo { get; set; }
+        public string descripcion { get; set; }
+        public string categoria { get; set; }
+        public int tiempoAprox { get; set; }
+        public decimal promedio { get; set; }
+        public List<FotoObj> Fotos { get; set; }
+        public List<IngredienteObj> Ingredientes { get; set; }
+        public List<PasoObj> Pasos { get; set; }
+        public List<string> Comentarios { get; set; }
     }
 }
