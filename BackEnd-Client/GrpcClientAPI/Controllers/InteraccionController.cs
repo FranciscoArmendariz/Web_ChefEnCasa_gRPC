@@ -87,112 +87,46 @@ namespace GrpcClientAPI.Controllers
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<string> testConsumer()
-        {
-            var cConfig = new ConsumerConfig
-            {
-                BootstrapServers = "localhost:9092",
-                GroupId = "foo",
-                AutoOffsetReset = AutoOffsetReset.Earliest
-            };
-
-            using (var c = new ConsumerBuilder<Ignore, string>(cConfig).Build())
-                {
-                c.Subscribe("test");
-
-                CancellationTokenSource cts = new CancellationTokenSource();
-                Console.CancelKeyPress += (_, e) => {
-                    e.Cancel = true; // prevent the process from terminating.
-                    cts.Cancel();
-                };
-
-                try
-                {
-                    try
-                    {
-                        var cr = c.Consume(cts.Token);
-                        Console.WriteLine($"Consumed message '{cr.Value}' at: '{cr.TopicPartitionOffset}'.");
-                    }
-                    catch (ConsumeException e)
-                    {
-                        Console.WriteLine($"Error occured: {e.Error.Reason}");
-                    }
-                }
-                catch (OperationCanceledException)
-                {
-                    c.Close();
-                }
-            }
-
-            return "";
-        }
-
-        [HttpPost()]
-        [Route("[action]")]
-        public async Task<string> testProducer()
-        {
-            var config = new ProducerConfig { BootstrapServers = "localhost:9092" };
-
-            using var producer = new ProducerBuilder<Null, string>(config).Build();
-
-            producer.Produce("test", new Message<Null, string> { Value = $"Hello, Kafka user! asd" });
-
-            return "";
-        }
-
-        [HttpPost()]
-        [Route("[action]")]
-        public async Task<string> testSOAP()
+        public async Task<bool> CrearMensaje(CrearMensajeRequest request)
         {
             SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
 
-            string rta = await client.GetDataAsync(5);
-
-            return rta;
-        }
-
-        [HttpPost()]
-        [Route("[action]")]
-        public async Task<bool> CrearMensaje(int idAutor, int idReceptor, string asunto, string mensaje)
-        {
-            SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
-
-            string rta = await client.CrearMensajeAsync(idAutor, idReceptor, asunto, mensaje);
+            string rta = await client.CrearMensajeAsync(request.idAutor, request.idReceptor, request.asunto, request.mensaje);
 
             return true;
         }
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<bool> ResponderMensaje(int idMensaje, string respuesta)
+        public async Task<bool> ResponderMensaje(ResponderMensajeRequest request)
         {
             SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
 
-            string rta = await client.ResponderMensajeAsync(idMensaje, respuesta);
+            string rta = await client.ResponderMensajeAsync(request.idMensaje, request.respuesta);
             
             return true;
         }
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<string> TraerMensajesPorAutor(int idAutor) //DEFINIR RESPUESTA
+        public async Task<List<TraerMensajesPorAutorResponse>> TraerMensajesPorAutor(TraerMensajesPorAutorRequest request) 
         {
             SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
 
-            string rta = await client.TraerMensajesPorAutorAsync(idAutor);
+            var rta = await client.TraerMensajesPorAutorAsync(request.idAutor);
 
-            return rta;
+            return JsonConvert.DeserializeObject<List<TraerMensajesPorAutorResponse>>(rta);
         }
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<string> TraerMensajesPorReceptor(int idReceptor) //DEFINIR RESPUESTA
+        public async Task<List<TraerMensajesPorReceptorResponse>> TraerMensajesPorReceptor(TraerMensajesPorReceptorRequest request) 
         {
             SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
 
-            string rta = await client.TraerMensajesPorReceptorAsync(idReceptor);
+            string rta = await client.TraerMensajesPorReceptorAsync(request.idReceptor);
 
-            return rta;
+            return JsonConvert.DeserializeObject<List<TraerMensajesPorReceptorResponse>>(rta);
         }
     }
 
@@ -207,5 +141,48 @@ namespace GrpcClientAPI.Controllers
         public long idReceta { get; set; }
         public int puntaje { get; set; }
         public bool calificacion { get; set; }
+    }
+    public class CrearMensajeRequest
+    {
+        public int idAutor { set; get; }
+        public int idReceptor { set; get; }
+        public string asunto { set; get; }
+        public string mensaje { set; get; }
+        public string respuesta { set; get; }
+    }
+
+    public class ResponderMensajeRequest
+    {
+        public int idMensaje { set; get; }
+        public string respuesta { set; get; }
+    }
+
+    public class TraerMensajesPorAutorRequest
+    {
+        public int idAutor { set; get; }
+    }
+
+    public class TraerMensajesPorReceptorRequest
+    {
+        public int idReceptor { set; get; }
+    }
+
+    public class TraerMensajesPorAutorResponse
+    {
+        public int idMensaje { set; get; }
+        public string nombreAutor { set; get; }
+        public string nombreReceptor { set; get; }
+        public string asunto { set; get; }
+        public string mensaje { set; get; }
+        public string respuesta { set; get; }
+    }
+    public class TraerMensajesPorReceptorResponse
+    {
+        public int idMensaje { set; get; }
+        public string nombreAutor { set; get; }
+        public string nombreReceptor { set; get; }
+        public string asunto { set; get; }
+        public string mensaje { set; get; }
+        public string respuesta { set; get; }
     }
 }
