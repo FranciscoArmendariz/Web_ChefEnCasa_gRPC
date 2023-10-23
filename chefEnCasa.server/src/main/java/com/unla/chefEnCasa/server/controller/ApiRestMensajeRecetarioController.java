@@ -81,7 +81,7 @@ public class ApiRestMensajeRecetarioController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/recetario/borrar/{idrecetario}")
+    @PostMapping("/recetario/borrar/{idrecetario}")
     public ResponseEntity<?> borrarRecetario(@PathVariable("idrecetario") long idRecetario) {
         boolean response = false;
         try {
