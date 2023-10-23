@@ -18,7 +18,7 @@ namespace SOAPService
         string GetData(int value);
 
         [OperationContract]
-        void CrearMensaje(int idAutor, int idReceptor, string asunto, string mensaje);
+        void CrearMensaje(int idAutor, int idReceptor, string asunto, string mensaje, string respuesta);
 
         [OperationContract]
         Task<string> ResponderMensaje(int idMensaje, string respuesta);

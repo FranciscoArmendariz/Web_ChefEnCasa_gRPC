@@ -35,7 +35,7 @@ namespace SOAPService
             return composite;
         }
 
-        public async void CrearMensaje(int idAutor, int idReceptor, string asunto, string mensaje)
+        public async void CrearMensaje(int idAutor, int idReceptor, string asunto, string mensaje, string respuesta)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace SOAPService
                         idReceptor = idReceptor,
                         asunto = asunto,
                         mensaje = mensaje,
-                        respuesta = null
+                        respuesta = respuesta
                     };
 
                     var content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
@@ -139,42 +139,41 @@ namespace SOAPService
             {
                 using (var client = new HttpClient())
                 {
-                    var values = new Dictionary<string, string>
+                    var requestData = new CrearRecetarioRequestDto
                     {
-                        { "idAutor", idAutor.ToString() },
-                        { "nombre", nombre.ToString() }
+                        idUsuario = idAutor,
+                        nombre = nombre
                     };
 
-                    var content = new FormUrlEncodedContent(values);
+                    var content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
 
-                    var response = await client.PostAsync(url, content);
+                    var response = await client.PostAsync(url + "/recetario/crear", content);
+
+                    var responseString = await response.Content.ReadAsStringAsync();
                 }
             }
             catch (HttpRequestException e)
             {
             }
+
             return true;
         }
 
         public async Task<bool> BorrarRecetario(int idRecetario)
         {
+            var responseString = "";
+
             try
             {
-                using (var client = new HttpClient())
-                {
-                    var values = new Dictionary<string, string>
-                    {
-                        { "idRecetario", idRecetario.ToString() }
-                    };
+                httpClient = new HttpClient();
+                HttpResponseMessage response = await httpClient.GetAsync(url + "/recetario/borrar/" + idRecetario.ToString());
 
-                    var content = new FormUrlEncodedContent(values);
-
-                    var response = await client.PostAsync(url, content);
-                }
+                responseString = await response.Content.ReadAsStringAsync();
             }
             catch (HttpRequestException e)
             {
             }
+
             return true;
         }
 
@@ -184,19 +183,10 @@ namespace SOAPService
 
             try
             {
-                using (var client = new HttpClient())
-                {
-                    var values = new Dictionary<string, string>
-                    {
-                        { "idUsuario", idUsuario.ToString() }
-                    };
+                httpClient = new HttpClient();
+                HttpResponseMessage response = await httpClient.GetAsync(url + "/recetario/traerRecetarios/" + idUsuario.ToString());
 
-                    var content = new FormUrlEncodedContent(values);
-
-                    var response = await client.PostAsync(url, content);
-
-                    responseString = await response.Content.ReadAsStringAsync();
-                }
+                responseString = await response.Content.ReadAsStringAsync();
             }
             catch (HttpRequestException e)
             {
@@ -211,19 +201,10 @@ namespace SOAPService
 
             try
             {
-                using (var client = new HttpClient())
-                {
-                    var values = new Dictionary<string, string>
-                    {
-                        { "idRecetario", idRecetario.ToString() }
-                    };
+                httpClient = new HttpClient();
+                HttpResponseMessage response = await httpClient.GetAsync(url + "/recetario/traerRecetario/" + idRecetario.ToString());
 
-                    var content = new FormUrlEncodedContent(values);
-
-                    var response = await client.PostAsync(url, content);
-
-                    responseString = await response.Content.ReadAsStringAsync();
-                }
+                responseString = await response.Content.ReadAsStringAsync();
             }
             catch (HttpRequestException e)
             {
@@ -234,47 +215,57 @@ namespace SOAPService
 
         public async Task<bool> AgregarRecetaRecetario(int idRecetario, int idReceta)
         {
+            var responseString = "";
+
             try
             {
                 using (var client = new HttpClient())
                 {
-                    var values = new Dictionary<string, string>
+                    var requestData = new AgregarRecetaRecetarioRequest
                     {
-                        { "idRecetario", idRecetario.ToString() },
-                        { "idReceta", idReceta.ToString() }
+                        idRecetario = idRecetario,
+                        idReceta = idReceta
                     };
 
-                    var content = new FormUrlEncodedContent(values);
+                    var content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
 
-                    var response = await client.PostAsync(url, content);
+                    var response = await client.PostAsync(url + "/recetario/agregarReceta", content);
+
+                    responseString = await response.Content.ReadAsStringAsync();
                 }
             }
             catch (HttpRequestException e)
             {
             }
+
             return true;
         }
 
         public async Task<bool> RemoverRecetaRecetario(int idRecetario, int idReceta)
         {
+            var responseString = "";
+
             try
             {
                 using (var client = new HttpClient())
                 {
-                    var values = new Dictionary<string, string>
+                    var requestData = new AgregarRecetaRecetarioRequest
                     {
-                        { "idRecetario", idRecetario.ToString() },
-                        { "idReceta", idReceta.ToString() }
+                        idRecetario = idRecetario,
+                        idReceta = idReceta
                     };
 
-                    var content = new FormUrlEncodedContent(values);
+                    var content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
 
-                    var response = await client.PostAsync(url, content);
+                    var response = await client.PostAsync(url + "/recetario/borrarReceta", content);
+
+                    responseString = await response.Content.ReadAsStringAsync();
                 }
             }
             catch (HttpRequestException e)
             {
             }
+
             return true;
         }
     }
@@ -303,4 +294,27 @@ public class TraerMensajesPorAutorRequest
 public class TraerMensajesPorReceptorRequest
 {
     public int idReceptor { set; get; }
+}
+
+public class CrearRecetarioRequestDto
+{
+    public string nombre { get; set; }
+    public int idUsuario { get; set; }
+}
+
+public class BorrarRecetarioRequest
+{
+    public int idRecetario { get; set; }
+}
+
+public class AgregarRecetaRecetarioRequest
+{
+    public int idRecetario { get; set; }
+    public int idReceta { get; set; }
+}
+
+public class RemoverRecetaRecetarioRequest
+{
+    public int idRecetario { get; set; }
+    public int idReceta { get; set; }
 }

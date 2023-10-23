@@ -14,311 +14,6 @@ namespace SOAPServiceReference
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Recetario", Namespace="http://schemas.datacontract.org/2004/07/SOAPService")]
-    public partial class Recetario : object
-    {
-        
-        private int idRecetarioField;
-        
-        private string nombreField;
-        
-        private SOAPServiceReference.Receta[] recetasField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int idRecetario
-        {
-            get
-            {
-                return this.idRecetarioField;
-            }
-            set
-            {
-                this.idRecetarioField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string nombre
-        {
-            get
-            {
-                return this.nombreField;
-            }
-            set
-            {
-                this.nombreField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public SOAPServiceReference.Receta[] recetas
-        {
-            get
-            {
-                return this.recetasField;
-            }
-            set
-            {
-                this.recetasField = value;
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Receta", Namespace="http://schemas.datacontract.org/2004/07/SOAPService")]
-    public partial class Receta : object
-    {
-        
-        private string[] ComentariosField;
-        
-        private SOAPServiceReference.FotoObj[] FotosField;
-        
-        private int IdRecetaField;
-        
-        private SOAPServiceReference.IngredienteObj[] IngredientesField;
-        
-        private SOAPServiceReference.PasoObj[] PasosField;
-        
-        private string categoriaField;
-        
-        private string descripcionField;
-        
-        private decimal promedioField;
-        
-        private int tiempoAproxField;
-        
-        private string tituloField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] Comentarios
-        {
-            get
-            {
-                return this.ComentariosField;
-            }
-            set
-            {
-                this.ComentariosField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public SOAPServiceReference.FotoObj[] Fotos
-        {
-            get
-            {
-                return this.FotosField;
-            }
-            set
-            {
-                this.FotosField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int IdReceta
-        {
-            get
-            {
-                return this.IdRecetaField;
-            }
-            set
-            {
-                this.IdRecetaField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public SOAPServiceReference.IngredienteObj[] Ingredientes
-        {
-            get
-            {
-                return this.IngredientesField;
-            }
-            set
-            {
-                this.IngredientesField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public SOAPServiceReference.PasoObj[] Pasos
-        {
-            get
-            {
-                return this.PasosField;
-            }
-            set
-            {
-                this.PasosField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string categoria
-        {
-            get
-            {
-                return this.categoriaField;
-            }
-            set
-            {
-                this.categoriaField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string descripcion
-        {
-            get
-            {
-                return this.descripcionField;
-            }
-            set
-            {
-                this.descripcionField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal promedio
-        {
-            get
-            {
-                return this.promedioField;
-            }
-            set
-            {
-                this.promedioField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int tiempoAprox
-        {
-            get
-            {
-                return this.tiempoAproxField;
-            }
-            set
-            {
-                this.tiempoAproxField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string titulo
-        {
-            get
-            {
-                return this.tituloField;
-            }
-            set
-            {
-                this.tituloField = value;
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="FotoObj", Namespace="http://schemas.datacontract.org/2004/07/SOAPService")]
-    public partial class FotoObj : object
-    {
-        
-        private string UrlField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Url
-        {
-            get
-            {
-                return this.UrlField;
-            }
-            set
-            {
-                this.UrlField = value;
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="IngredienteObj", Namespace="http://schemas.datacontract.org/2004/07/SOAPService")]
-    public partial class IngredienteObj : object
-    {
-        
-        private string CantidadField;
-        
-        private string NombreField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Cantidad
-        {
-            get
-            {
-                return this.CantidadField;
-            }
-            set
-            {
-                this.CantidadField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Nombre
-        {
-            get
-            {
-                return this.NombreField;
-            }
-            set
-            {
-                this.NombreField = value;
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PasoObj", Namespace="http://schemas.datacontract.org/2004/07/SOAPService")]
-    public partial class PasoObj : object
-    {
-        
-        private string DescripcionField;
-        
-        private int NumeroField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Descripcion
-        {
-            get
-            {
-                return this.DescripcionField;
-            }
-            set
-            {
-                this.DescripcionField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Numero
-        {
-            get
-            {
-                return this.NumeroField;
-            }
-            set
-            {
-                this.NumeroField = value;
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CompositeType", Namespace="http://schemas.datacontract.org/2004/07/SOAPService")]
     public partial class CompositeType : object
     {
@@ -363,7 +58,7 @@ namespace SOAPServiceReference
         System.Threading.Tasks.Task<string> GetDataAsync(int value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/CrearMensaje", ReplyAction="http://tempuri.org/IService1/CrearMensajeResponse")]
-        System.Threading.Tasks.Task<string> CrearMensajeAsync(int idAutor, int idReceptor, string asunto, string mensaje);
+        System.Threading.Tasks.Task CrearMensajeAsync(int idAutor, int idReceptor, string asunto, string mensaje, string respuesta);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ResponderMensaje", ReplyAction="http://tempuri.org/IService1/ResponderMensajeResponse")]
         System.Threading.Tasks.Task<string> ResponderMensajeAsync(int idMensaje, string respuesta);
@@ -381,10 +76,10 @@ namespace SOAPServiceReference
         System.Threading.Tasks.Task<bool> BorrarRecetarioAsync(int idRecetario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/TraerRecetariosPorUsuario", ReplyAction="http://tempuri.org/IService1/TraerRecetariosPorUsuarioResponse")]
-        System.Threading.Tasks.Task<SOAPServiceReference.Recetario[]> TraerRecetariosPorUsuarioAsync(int idUsuario);
+        System.Threading.Tasks.Task<string> TraerRecetariosPorUsuarioAsync(int idUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/TraerRecetarioConRecetas", ReplyAction="http://tempuri.org/IService1/TraerRecetarioConRecetasResponse")]
-        System.Threading.Tasks.Task<SOAPServiceReference.Recetario> TraerRecetarioConRecetasAsync(int idRecetario);
+        System.Threading.Tasks.Task<string> TraerRecetarioConRecetasAsync(int idRecetario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AgregarRecetaRecetario", ReplyAction="http://tempuri.org/IService1/AgregarRecetaRecetarioResponse")]
         System.Threading.Tasks.Task<bool> AgregarRecetaRecetarioAsync(int idRecetario, int idReceta);
@@ -451,9 +146,9 @@ namespace SOAPServiceReference
             return base.Channel.GetDataAsync(value);
         }
         
-        public System.Threading.Tasks.Task<string> CrearMensajeAsync(int idAutor, int idReceptor, string asunto, string mensaje)
+        public System.Threading.Tasks.Task CrearMensajeAsync(int idAutor, int idReceptor, string asunto, string mensaje, string respuesta)
         {
-            return base.Channel.CrearMensajeAsync(idAutor, idReceptor, asunto, mensaje);
+            return base.Channel.CrearMensajeAsync(idAutor, idReceptor, asunto, mensaje, respuesta);
         }
         
         public System.Threading.Tasks.Task<string> ResponderMensajeAsync(int idMensaje, string respuesta)
@@ -481,12 +176,12 @@ namespace SOAPServiceReference
             return base.Channel.BorrarRecetarioAsync(idRecetario);
         }
         
-        public System.Threading.Tasks.Task<SOAPServiceReference.Recetario[]> TraerRecetariosPorUsuarioAsync(int idUsuario)
+        public System.Threading.Tasks.Task<string> TraerRecetariosPorUsuarioAsync(int idUsuario)
         {
             return base.Channel.TraerRecetariosPorUsuarioAsync(idUsuario);
         }
         
-        public System.Threading.Tasks.Task<SOAPServiceReference.Recetario> TraerRecetarioConRecetasAsync(int idRecetario)
+        public System.Threading.Tasks.Task<string> TraerRecetarioConRecetasAsync(int idRecetario)
         {
             return base.Channel.TraerRecetarioConRecetasAsync(idRecetario);
         }

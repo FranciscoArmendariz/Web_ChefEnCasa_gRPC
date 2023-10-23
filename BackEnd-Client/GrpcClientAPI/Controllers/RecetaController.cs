@@ -167,66 +167,66 @@ namespace GrpcClientAPI.Controllers
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<bool> CrearRecetario(int idAutor, string nombre)
+        public async Task<bool> CrearRecetario(CrearRecetarioRequest request)
         {
             SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
 
-            var rta = await client.CrearRecetarioAsync(idAutor, nombre);
+            var rta = await client.CrearRecetarioAsync(request.idAutor, request.nombre);
 
             return true;
         }
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<bool> BorrarRecetario(int idRecetario)
+        public async Task<bool> BorrarRecetario(BorrarRecetarioRequest request)
         {
             SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
 
-            var rta = await client.BorrarRecetarioAsync(idRecetario);
+            var rta = await client.BorrarRecetarioAsync(request.idRecetario);
 
             return true;
         }
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<List<Recetario>> TraerRecetariosPorUsuario(int idUsuario)
+        public async Task<string> TraerRecetariosPorUsuario(TraerRecetariosPorUsuarioRequest request)
         {
             SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
 
-            var rta = await client.TraerRecetariosPorUsuarioAsync(idUsuario);
+            var rta = await client.TraerRecetariosPorUsuarioAsync(request.idUsuario);
 
-            return new List<Recetario>();
+            return rta.ToString();
         }
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<Recetario> TraerRecetarioConRecetas(int idRecetario)
+        public async Task<Recetario> TraerRecetarioConRecetas(TraerRecetarioConRecetasRequest request)
         {
             SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
 
-            var rta = await client.TraerRecetarioConRecetasAsync(idRecetario);
+            var rta = await client.TraerRecetarioConRecetasAsync(request.idRecetario);
 
             return new Recetario();
         }
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<bool> AgregarRecetaRecetario(int idRecetario, int idReceta)
+        public async Task<bool> AgregarRecetaRecetario(AgregarRecetaRecetarioRequest request)
         {
             SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
 
-            var rta = await client.AgregarRecetaRecetarioAsync(idRecetario, idReceta);
+            var rta = await client.AgregarRecetaRecetarioAsync(request.idRecetario, request.idReceta);
 
             return true;
         }
 
         [HttpPost()]
         [Route("[action]")]
-        public async Task<bool> RemoverRecetaRecetario(int idRecetario, int idReceta)
+        public async Task<bool> RemoverRecetaRecetario(RemoverRecetaRecetarioRequest request)
         {
             SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
 
-            var rta = await client.RemoverRecetaRecetarioAsync(idRecetario, idReceta);
+            var rta = await client.RemoverRecetaRecetarioAsync(request.idRecetario, request.idReceta);
 
             return true;
         }
@@ -351,5 +351,38 @@ namespace GrpcClientAPI.Controllers
         public List<IngredienteObj> Ingredientes { get; set; }
         public List<PasoObj> Pasos { get; set; }
         public List<string> Comentarios { get; set; }
+    }
+
+    public class CrearRecetarioRequest
+    {
+        public string nombre { get; set; }
+        public int idAutor { get; set; }
+    }
+    
+    public class BorrarRecetarioRequest
+    {
+        public int idRecetario { get; set; }
+    }
+    
+    public class TraerRecetariosPorUsuarioRequest
+    {
+        public int idUsuario { get; set; }
+    }
+    
+    public class TraerRecetarioConRecetasRequest
+    {
+        public int idRecetario { get; set; }
+    }
+    
+    public class AgregarRecetaRecetarioRequest
+    {
+        public int idRecetario { get; set; }
+        public int idReceta { get; set; }
+    }
+    
+    public class RemoverRecetaRecetarioRequest
+    {
+        public int idRecetario { get; set; }
+        public int idReceta { get; set; }
     }
 }

@@ -91,7 +91,7 @@ namespace GrpcClientAPI.Controllers
         {
             SOAPServiceReference.Service1Client client = new SOAPServiceReference.Service1Client();
 
-            string rta = await client.CrearMensajeAsync(request.idAutor, request.idReceptor, request.asunto, request.mensaje);
+            await client.CrearMensajeAsync(request.idAutor, request.idReceptor, request.asunto, request.mensaje, request.respuesta);
 
             return true;
         }
