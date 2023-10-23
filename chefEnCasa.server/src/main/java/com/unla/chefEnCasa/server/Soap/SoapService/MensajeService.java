@@ -43,7 +43,6 @@ public class MensajeService {
     public boolean ResponderMensaje(ResponderMensajeRequest request) {
         MensajeModel mensaje = mensajeRepository.findById(request.getIdMensaje()).orElse(null);
         boolean respondido = false;
-        System.out.println("respuesta: " + mensaje.getRespuesta());
         if (!mensaje.getRespuesta().isEmpty()) {
             throw new ServerException("El mensaje ya tenia una respuesta", HttpStatus.BAD_REQUEST);
         } else {
