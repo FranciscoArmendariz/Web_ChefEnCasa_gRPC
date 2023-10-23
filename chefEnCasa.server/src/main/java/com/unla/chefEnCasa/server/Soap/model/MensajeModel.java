@@ -1,6 +1,5 @@
 package com.unla.chefEnCasa.server.Soap.model;
 
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,23 +22,22 @@ import lombok.Setter;
 public class MensajeModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;        
+    private long id;
     @ManyToOne
-    @JoinColumn(name="autor_id")
+    @JoinColumn(name = "autor_id")
     private Usuario autor;
     @ManyToOne
-    @JoinColumn(name="receptor_id")
+    @JoinColumn(name = "receptor_id")
     private Usuario receptor;
-    
+
     private String mensaje;
     private String asunto;
     private String respuesta;
+
     @Override
     public String toString() {
         return "MensajeModel [id=" + id + ", autor=" + autor + ", receptor=" + receptor + ", mensaje=" + mensaje
                 + ", asunto=" + asunto + ", respuesta=" + respuesta + "]";
     }
 
-    
-  
 }
