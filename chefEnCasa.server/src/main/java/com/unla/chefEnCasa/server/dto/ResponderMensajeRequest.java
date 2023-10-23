@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BorrarMensajeRequestDto {
+public class ResponderMensajeRequest {
     private long idMensaje;
+    private String respuesta;
 }

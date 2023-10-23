@@ -1,4 +1,4 @@
-package com.unla.chefEnCasa.server.Soap.config;
+/*package com.unla.chefEnCasa.server.Soap.config;
 
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
@@ -11,10 +11,10 @@ import org.springframework.ws.transport.http.MessageDispatcherServlet;
 import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
-
 @EnableWs
 @Configuration
-public class WebServiceConfig extends WsConfigurerAdapter {
+public class   WebServiceConfig extends WsConfigurerAdapter{
+    
 
     @Bean
     public ServletRegistrationBean<MessageDispatcherServlet> messageDispatcherServlet(ApplicationContext context) {
@@ -23,26 +23,20 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         servlet.setTransformWsdlLocations(true);
         return new ServletRegistrationBean<>(servlet, "/ws/*");
     }
-
     @Bean
     public XsdSchema mensajeSchema() {
         return new SimpleXsdSchema(new ClassPathResource("xsd/Mensaje.xsd"));
     }
 
-<<<<<<< HEAD
     @Bean(name="mensajes")
-=======
-    @Bean(name = "mensajes")
->>>>>>> 1e20e97fe7fedf280dccbfa2d83e0340b4e75e35
     public DefaultWsdl11Definition mensajeResponseDefinition() {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("MensajeServiceSoap");
         wsdl11Definition.setLocationUri("/ws");
         wsdl11Definition.setTargetNamespace("http://www.chefEncasa.com/demosoap/gen");
         wsdl11Definition.setSchema(mensajeSchema());
-        wsdl11Definition.setCreateSoap11Binding(true);
         return wsdl11Definition;
     }
 
 
-}
+}*/

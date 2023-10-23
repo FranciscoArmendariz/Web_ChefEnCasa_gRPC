@@ -1,4 +1,4 @@
-package com.unla.chefEnCasa.server.Soap.endpoint;
+/*package com.unla.chefEnCasa.server.Soap.endpoint;
 
 import java.util.List;
 
@@ -138,8 +138,8 @@ public class MensajeEndPoint {
         List<RecetarioModel> lista= recetarioRespository.findByIdUsuario(request.getIdUsuario());
         GetTraerRecetariosPorUsuarioResponse response= new GetTraerRecetariosPorUsuarioResponse();
         return response.getRecetarios().addAll(recetarioService.recetarioModelListaArecetarioRequestLista(lista));
-    }*/
+    }
 
 
 
-}
+}*/
