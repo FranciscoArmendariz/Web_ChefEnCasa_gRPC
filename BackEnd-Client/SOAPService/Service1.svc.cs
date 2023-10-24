@@ -166,7 +166,7 @@ namespace SOAPService
             try
             {
                 httpClient = new HttpClient();
-                HttpResponseMessage response = await httpClient.GetAsync(url + "/recetario/borrar/" + idRecetario.ToString());
+                HttpResponseMessage response = await httpClient.DeleteAsync(url + "/recetario/borrar/" + idRecetario.ToString());
 
                 responseString = await response.Content.ReadAsStringAsync();
             }

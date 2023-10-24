@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
 export default function Recetarios() {
-  const idUsuario = useSelector((state) => state.user.usuarioActual.id);
+  const idUsuario = useSelector((state) => state.user.usuarioActual?.id);
   const router = useRouter();
   const [recetarios, setRecetarios] = useState();
   const { register, handleSubmit } = useForm();
@@ -68,7 +68,8 @@ export default function Recetarios() {
         <div className='flex flex-col w-full items-center gap-4'>
           <LoadingWrapper loading={!recetarios}>
             {recetarios &&
-              recetarios.map((recetario, index) => {
+              Array.isArray(recetarios) &&
+              recetarios?.map((recetario, index) => {
                 return (
                   <div
                     key={recetario.nombre}
